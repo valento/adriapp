@@ -10,8 +10,8 @@ import wpConfig from '../webpack.dev.conf.js'
 const aws_conf = {
   bucket: 'adriapp',
   credentials: {
-    secretAccessKey: '5Lxj8PMFguHSFUVrJkp9uNsOeG/DKQjseemoGwW8',
-    accessKeyId: 'AKIAIZHZWK63XTSSZADA',
+    secretAccessKey: '',
+    accessKeyId: '',
     apiVersion: '2006-03-01',
     region: 'eu-central-1'
   }
