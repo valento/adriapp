@@ -21,6 +21,7 @@ let app = express()
 
 const PORT = process.env.PORT || 8000
 const ENV = process.env.NODE_ENV || 'development'
+const ENTRY = process.env.NODE_ENV === 'production' ? '../dist/index.html' : '../client/index.html'
 
 if(ENV === 'development'){
   const compiler = webpack(wpConfig)
@@ -39,7 +40,7 @@ app.get('/client/public/css/img/:id', (req,res) => {
 })
 
 app.get('/', (req,res) => {
-  res.sendFile(path.join(__dirname, '../client/index.html'))
+  res.sendFile(path.join(__dirname, ENTRY))
 })
 
 let server = app.listen(PORT, () => {

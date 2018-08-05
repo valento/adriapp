@@ -4,8 +4,8 @@ import FaDown from 'react-icons/lib/fa/arrow-circle-down'//arrow-circle-down'
 
 function Unlock(props) {
   return (
-    <div className='main-lock' onClick={props.onClick}>
-      <FaDown color='#ffffff' size='64px'  />
+    <div className='main-lock'>
+      <FaDown onClick={props.onClick} color='#ffffff' size='64px'  />
     </div>
   )
 }

@@ -2,9 +2,11 @@ import webpack from 'webpack'
 import path from 'path'
 
 export default {
+
   devtool: 'eval-source-map',
   mode: 'development',
-  entry: [
+  entry:
+  [
     'webpack-hot-middleware/client',
     './client/index.js'
   ],

@@ -1,5 +1,5 @@
 if(module.hot){
-  module.hot.accept();
+  module.hot.accept()
 }
 
 import React from 'react'
