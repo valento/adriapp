@@ -1,12 +1,7 @@
 import express from 'express'
 import path from 'path'
 import S3 from 'aws-sdk/clients/s3'
-/* ------ for bundle ------------------------------------------ */
-import webpack from 'webpack'
-import wpMiddle from 'webpack-dev-middleware'
-import wpHot from 'webpack-hot-middleware'
-import wpConfig from '../webpack.dev.conf.js'
-/* ----   ----------------------------- */
+/* -------------------------------------------------------------- */
 const aws_conf = {
   bucket: 'adriapp',
   credentials: {
@@ -21,9 +16,15 @@ let app = express()
 
 const PORT = process.env.PORT || 8000
 const ENV = process.env.NODE_ENV || 'development'
-const ENTRY = process.env.NODE_ENV === 'production' ? '../dist/index.html' : '../client/index.html'
+console.log(ENV)
+const ENTRY = ENV === 'production' ? '../dist/index.html' : '../client/index.html'
 
 if(ENV === 'development'){
+/* ------ for in memory bundle -------------------------------------- */
+  const wpConfig = require('../webpack.conf.js')(ENV)
+  const webpack = require('webpack')
+  const wpMiddle = require('webpack-dev-middleware')
+  const wpHot = require('webpack-hot-middleware')
   const compiler = webpack(wpConfig)
   app.use(wpMiddle(compiler, {
     hot: true

@@ -6,7 +6,7 @@ module.exports = ( env ) => {
   return {
     devtool: 'eval-source-map',
   //mode: env ? 'production' : 'development',
-    entry: env ?
+    entry: env.prod ?
     {
       app: './client/index.js',
       fontawesome: [
@@ -15,14 +15,16 @@ module.exports = ( env ) => {
         '@fortawesome/free-solid-svg-icons',
         '@fortawesome/fontawesome-svg-core'
       ]
-    } :
-    [
-      'webpack-hot-middleware/client',
-      './client/index.js'
-    ],
-    output: {
-      path: env.prod ? path.resolve(__dirname, './dist') : '/',
-      filename: env.prod ? 'bundle.[name].js' : '',
+    } : [
+        'webpack-hot-middleware/client',
+        './client/index.js'
+      ],
+    output: env.prod ? {
+      path:  path.resolve(__dirname, './dist'),
+      publicPath: '/',
+      filename: 'bundle.[name].js'
+    } : {
+      path: '/',
       publicPath: '/'
     },
     plugins: [

@@ -32,18 +32,6 @@ export default class RegIni extends React.Component {
               />
             </div>
           </div>
-          <div className='row form-group'>
-            <div className='col-2'><label>pass: </label></div>
-            <div className='col-10'>
-              <input
-                onChange={this.handleInputCahnges}
-                type='text'
-                value={this.state.pass}
-                name='pass'
-                className='form-control'
-              />
-            </div>
-          </div>
           <div className='row'><Button type='submit' variant='outlined' style={{color: 'red'}}>Subscribe</Button></div>
         </form>
         <hr/>
