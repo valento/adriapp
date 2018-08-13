@@ -5,7 +5,7 @@ module.exports = ( env ) => {
   console.log(env)
   return {
     devtool: 'eval-source-map',
-  //mode: env ? 'production' : 'development',
+    mode: env.prod ? 'production' : 'development',
     entry: env.prod ?
     {
       app: './client/index.js',

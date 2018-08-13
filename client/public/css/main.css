@@ -20,14 +20,16 @@ body {
 
 .branches {
   color: #aaa;
+  padding-left: 12px;
 }
 .branches div {
-  margin-top: 2px;
+  margin-top: 4px;
+  padding-left: 2px;
 }
 .branches select {
   color: #fff;
-  font-family: 'Tangerine';
-  font-size: 28px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 14px;
 }
 .branches .small {
   font-size: 14px;!important
@@ -47,23 +49,25 @@ body {
 }
 .day_page {
   margin: 0;
-  padding: 0 6px;
+  padding: 0 10px;
 }
 .day_page .date {
   font-family: 'Poiret One';
+  font-family: 'Libre Baskerville', 'Poiret One', serif;
   font-size: 34px;
   border-bottom: 8px solid #fff;
 }
 .day_page .month {
   font-family: 'Poiret One';
+  font-family: 'Libre Baskerville', serif;
   font-size: 16px;
   border-bottom: 1px dashed #fff;
 }
 .day_page .day {
   font-size: 20px;
-  line-height: 14px;
-  margin-top: 6px;
+  margin-top: 4px;
   font-family: 'Dancing Script';
+  font-family: 'Libre Baskerville', serif;
 }
 /* ---------------------------------------------- */
 .opening {
@@ -72,6 +76,17 @@ body {
   color: #fff;
   top: 45vh;
   left: 0vw;
+}
+.opening .thin-line {
+  border-top: 1px solid #aaa;
+}
+.opening .h2-ladies {
+  float: right;
+  margin: 0;
+  margin-left: 60px;
+  font-family: 'Dancing Script';
+  font-size: 20px;
+  color: #fe8;
 }
 .register-card {
   position: relative;
@@ -110,18 +125,6 @@ body {
   font-style: italic;
   margin-bottom: 12px;
 }
-.opening .thin-line {
-  border-top: 1px solid #aaa;
-}
-.opening .h2-ladies {
-  float: right;
-  margin-top: 8px;
-  margin-left: 60px;
-  margin-bottom: 10px;
-  font-family: 'Dancing Script';
-  font-size: 20px;
-  color: #fe8;
-}
 /* ---------------------------------------------- */
 
 .top {
@@ -141,7 +144,7 @@ body {
 .shadow {
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0,0,0,.7);
 }
 
 
