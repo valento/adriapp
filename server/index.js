@@ -10,25 +10,7 @@ import passport from 'passport'
 import {Strategy as LocalStrategy} from 'passport-local'
 import bcrypt from 'bcrypt-nodejs'
 /* -------------------------------------------------------------- */
-const users = [
-  {id: 1,
-    email: 'valentin.mundrov@gmail.com',
-    username: 'admin',
-    password: '1234'},
-  {id: 2,
-    email: 'adriana.perez@gmail.com',
-    username: 'model',
-    password: '5678'}
-]
-const aws_conf = {
-  bucket: 'adriapp',
-  credentials: {
-    secretAccessKey: '',
-    accessKeyId: '',
-    apiVersion: '2006-03-01',
-    region: 'eu-central-1'
-  }
-}
+const users = []
 
 // ==== PASSPORT ============================================
 /*
@@ -122,9 +104,8 @@ app.use((req,res) => {
 */
 
 // ================================================================
-
 app.get('/client/public/css/img/:id', (req,res) => {
-  res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + aws_conf.bucket + '/' + req.params.id)
+  res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id)
 })
 
 app.get('/', (req,res) => {
