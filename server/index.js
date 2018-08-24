@@ -2,6 +2,12 @@ import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
 
+import React from 'react'
+import { Provider } from 'react-redux'
+import { renderToString } from 'react-dom/server'
+import { StaticRouter } from 'react-router'
+import template from './template'
+
 import S3 from 'aws-sdk/clients/s3'
 import sql from './api/sql'
 
@@ -23,7 +29,6 @@ passport.use(new LocalStrategy((user, done) => {
 let app = express()
 
 let db = new sql('./data/aapp.db', 'users')
-console.log('data: ', db)
 //const s3 = new S3({})
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -53,18 +58,21 @@ if(ENV === 'development'){
 // === AUTH =============================================================
 
 app.post('/auth/register', (req,res) => {
-  console.log(db)
-  if(!req.body.email || !req.body.password) {
+  console.log(req.body.user)
+  if(!req.body.user.email || !req.body.user.password) {
     res.status(400)
     .send('You must input a valid email and password')
     return
   }
-  const {email,password} = req.body
+  const {email,password} = req.body.user
+  console.log({email,password})
+
   bcrypt.hash(password, bcrypt.genSalt(8,()=>{}), null, (err, hash) => {
-    db.saveUser({email,hash})
+    db.signUpUser({email,hash})
     .then(result => res.status(200).json(result))
     .catch(err => res.status(500).json(err.message))
   })
+
 })
 // ----------------------------------------------------------
 
@@ -108,7 +116,26 @@ app.get('/client/public/css/img/:id', (req,res) => {
   res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id)
 })
 
+// === Root SERVER REndering ===========================================
+
 app.get('/', (req,res) => {
+/*
+  const store = {}
+  const params = {
+  entry: ENTRY
+}
+  const markup = renderToString(
+    <StaticRouter location={req.url}>
+      <Provider store={store}>
+          <Route component={App} />
+      </Provider>
+    </StaticRouter>
+  )
+  const iState = {
+    lan: req.headers['accept-language'].split(',')[0].split('-')[0]
+  }
+*/
+  //res.send(template(params, markup, iState))
   res.sendFile(path.join(__dirname, ENTRY))
 })
 

@@ -7,6 +7,7 @@ export default class RegIni extends React.Component {
   constructor(props){
     super(props)
     this.state = this.initialState = {
+      checked: props.checked,
       email:'',
       password:''
     }
@@ -21,6 +22,7 @@ export default class RegIni extends React.Component {
 
   onSubmit(e){
     e.preventDefault()
+
     if(!this.state.email || !this.state.password) return
     const that = this
 
@@ -28,7 +30,10 @@ export default class RegIni extends React.Component {
       email: this.state.email,
       password: this.state.password
     })
-    .then(() => this.setState(this.initialState))
+    .then(() => {
+      this.setState(this.initialState)
+      this.props.onChecked()
+    })
     .catch(err => {
       console.log(err.message)
     })

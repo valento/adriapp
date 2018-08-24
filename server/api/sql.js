@@ -62,18 +62,33 @@ SQL.prototype.locations = function(table) {
   //
 }
 
-SQL.prototype.saveUser = function(data) {
+// On Sign Up record --------------------------------------
+SQL.prototype.signUpUser = function(data) {
   console.log(data.hash)
+  let first = '',
+      last = ''
+  if (data.mail === 'valentin.mundrov@gmail.com') {
+    first = 'valentin'
+    last = 'mundrov'
+  } else if (data.mail === 'iloveaquiles09@gmail.com') {
+    first = 'adriana'
+    last = 'perez'
+  }
   const that = this
   return new Promise((resolve,reject) => {
     if(!data) {
       throw new TypeError('Empty Object provided for Save')
     }
-    let q = "INSERT INTO users (email, password)" +
-                    "VALUES ($email, $password)"
+    let q = "INSERT INTO users (email, password, role, credit, verifyed, first, last)" +
+                    "VALUES ($email, $password, $role, $credit, $verifyed, $first, $last)"
     let params = {
       $email: data.email,
-      $password: data.hash
+      $password: data.hash,
+      $role: (data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com') ? 10 : 0,
+      $credit: 50,
+      $verifyed: 0,
+      $first: first,
+      $last: last
     }
     let stm = that.db.prepare(q)
     stm.run(params, err => {

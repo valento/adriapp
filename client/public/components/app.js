@@ -1,37 +1,28 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import Top from './ui/top'
-import Unlock from './unlock'
-import NextEvent from './ui/next_event'
-import RegIni from './ui/register_init'
-import Slide from '@material-ui/core/Slide'
+import Home from './pages/home'
+import BranchPage from './pages/branch'
+import LivePage from './pages/live'
+import LadiesPage from './pages/ladies/home_ladies'
 
 class App extends React.Component {
+
   constructor(props) {
     super(props)
-    this.state = {
-      checked: false
-    }
-    this.onSlideUnlock = this.onSlideUnlock.bind(this)
-  }
-
-  onSlideUnlock(){
-    this.setState({
-      checked: !this.state.checked
-    })
   }
 
   render(){
-    const { checked } = this.state
     return(
       <div className='clearfix'>
-        <div><Top /></div>
-        <div className='calendar'><NextEvent date='September 19, 2018' /></div>
-        <div className='col-md-6 opening'>
-          <Unlock  onClick={this.onSlideUnlock} />
-          <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
-            <RegIni />
-          </Slide>
-        </div>
+        <Route location={location} path='/' component={Top} />
+        <Route location={location} exact path='/' component={Home} />
+        <Route location={location} path='/branches/:city' component={BranchPage}/>
+        <Route location={location} path='/live' component={LivePage} />
+        <Route location={location}
+          path='/ladies'
+          render={()=><LadiesPage lan='es' />}
+        />
       </div>
     )
   }

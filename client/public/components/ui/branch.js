@@ -1,49 +1,71 @@
 import React from 'react'
-import FaGlobe from 'react-icons/lib/fa/globe'
+import { Link } from 'react-router-dom'
+import { Icon } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+// ------- Actions -----------------------------------------
 
-export default class Branch extends React.Component {
+// ---------------------------------------------------------
+
+class Branch extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      branch: props.branch,
-      fontSize: true
+      branch: props.branch
     }
     this.onChange = this.onChange.bind(this)
-    this.onClick = this.onClick.bind(this)
   }
 
   onChange(e){
     e.preventDefault()
     this.setState({
-      branch: e.target.value,
-      fontSize: true
+      branch: e.target.value
     })
-  }
-  onClick(e){
-    e.preventDefault()
-    this.setState(prevState => ({
-      fontSize: !prevState.fontSize
-    }))
   }
 
   render(){
-    const sm = (this.state.fontSize)? '' : '.small'
-    console.log(sm)
+    const dest = ['Beirut','Budapest','Ibiza','Mykonos','Tel Aviv','Venice']
+
     return (
       <div className='row branches'>
-        <FaGlobe size='30px' color='#aaa'/>:
+        <Icon color='grey' size='large' name='world'/>:
         <div>
-          <select onClick={this.onClick} onChange={this.onChange} name='global' value={this.state.branch}>
-            <option value='Berlin'>Berlin</option>
-            <option value='Budapest'>Budapest</option>
-            <option value='Ibiza'>Ibiza</option>
-            <option value='Milan'>Milan</option>
-            <option value='Moscow'>Moscow</option>
-            <option value='Tel Aviv'>Tel Aviv</option>
-            <option value='Venice'>Venice</option>
+          <select onChange={this.onChange} name='global' value={this.state.branch}>
+            {dest.map((d, key) => {
+                return (
+                  <option
+                    key={key}
+                    value={d}>
+                    {d}
+                  </option>
+                )
+              })
+            }
           </select>
         </div>
+  {/* make this container component */}
+        <Link to={'/branches/' + this.state.branch} className='h2-ladies'>
+          <Icon color='grey' name='arrow right'/>
+        </Link>
       </div>
     )
   }
 }
+
+Branch.propTypes = {
+  branch: PropTypes.string.isRequired
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  console.log(ownProps.branch)
+  return {
+    onChange: () => {
+      console.log('dispatch an action')
+    }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Branch)

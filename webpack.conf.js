@@ -9,12 +9,14 @@ module.exports = ( env ) => {
     entry: env.prod ?
     {
       app: './client/index.js',
+    /*
       fontawesome: [
         '@fortawesome/react-fontawesome',
         '@fortawesome/free-brands-svg-icons',
         '@fortawesome/free-solid-svg-icons',
         '@fortawesome/fontawesome-svg-core'
       ]
+    */
     } : [
         'webpack-hot-middleware/client',
         './client/index.js'
@@ -38,7 +40,10 @@ module.exports = ( env ) => {
           loaders: [
             {
               loader: 'babel-loader',
-              options: {presets: ['babel-preset-env','babel-preset-react']}
+              options: {
+                  presets: ['babel-preset-env','babel-preset-react'],
+                  plugins: ['transform-object-rest-spread']
+                }
             }
           ]
         }

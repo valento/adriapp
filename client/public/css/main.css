@@ -1,44 +1,143 @@
 body {
   margin: 0;
-  background: #000 url("img/img_000.jpg") no-repeat top center fixed;
+  background: #000 url(img/img_000.jpg) no-repeat top center fixed;
+  background-size: 100%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  overflow: hidden;
 }
 .row {
   margin: 0;
 }
 
+/* ------- PAGEs Styles: --------------------------------- */
+.header {
+  min-height: 200px;
+}
+.pages {
+  height: 100vh;
+  width: 100vw;
+  background-color: #fff;
+}
+.pages.branch {
+  background-size: 150% auto;
+}
+.pages.branch h2 {
+  color: #fff;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2em;
+}
+.budapest {
+  background: #e6ebed url(img/budapest.jpg) no-repeat top right fixed;
+}
+.venice {
+  background: #e6ebed url(img/venice.jpg) no-repeat top center fixed;
+}
+.telaviv {
+  background: #e6ebed url(img/telaviv.jpg) no-repeat top right fixed;
+}
+.beirut {
+  background: #e6ebed url(img/beirut.jpg) no-repeat top center fixed;
+}
+.mykonos {
+  background: #e6ebed url(img/mykonos.jpg) no-repeat top right fixed;
+}
+.ibiza {
+  background: #e6ebed url(img/ibiza.jpg) no-repeat top center fixed;
+}
+
+/* -- Ladies Style: ----------------------------------- */
+.ladies {
+  background: #e6ebed url(img/ladies.jpg) no-repeat bottom center fixed;
+}
+.ladies p {
+  color: #fff;
+}
+.ladies .warning {
+  color: #440011;
+}
+.ladies .promo {
+  height: 40vh;
+  padding: 10px 8px;
+  background-color: rgba(100,0,200,.5)
+}
+.ladies .register {
+  height: 60vh;
+  background-color: rgba(200,0,100,.5)
+}
+
+/* ------------------------------------------------------- */
+/* ----- UI-Elements Styles ----------------------------- */
 .dashbar {
   width: 100vw;
   height: 48px;
-  padding: 8px 4px;
+  padding: 13px 4px;
   background-color: #000;
   border-bottom: 1px solid #777;
 }
 
+/*--- Select-Options Styles for Branch-UI -------------*/
 .branches {
   color: #aaa;
   padding-left: 12px;
 }
 .branches div {
-  margin-top: 4px;
+  margin-top: 0px;
   padding-left: 2px;
 }
 .branches select {
   color: #fff;
   font-family: 'Libre Baskerville', serif;
   font-size: 14px;
+  margin-right: 3px;
+  border: 1px solid #666;
+  background: none;
 }
 .branches .small {
   font-size: 14px;!important
 }
-
+/* -- ACCOUNT/USER SETTINGS UI ----------------------------------- */
+.dash {
+  display: inline;
+  max-width: 26px;
+  max-height: 30px;
+  color: #ccc;
+  border-right: 1px solid #000;
+}
+/* -- VIDEO UI --------------------------------------------------- */
+.video {
+  position: relative;
+  max-width: 26px;
+  margin-left: 3px;
+}
+.video .on {
+  color: white
+}
+.video .off {
+  color: #666
+}
+.label {
+  position: absolute;
+  max-width: 34px;
+  top: 12px;
+  right: 4px;
+  color: #fff;
+  font-size: 10px;
+  text-align: center;
+}
+/* -- CREDITS UI -------------------------------------------------- */
+.credit {
+  float: right;
+  position: relative;
+  max-width: 28px;
+}
+/*-- Division for Event Anouncement/Calendar ----------------------*/
 .calendar{
   position: absolute;
   top: 100px;
-  right: 20px;
+  right: 40px;
   width: 110px;
   height: 120px;
   text-align: center;
@@ -48,6 +147,8 @@ body {
   border-radius: 6px;
 }
 .day_page {
+  max-width: 100px;
+  max-height: 120px
   margin: 0;
   padding: 0 10px;
 }
@@ -55,9 +156,11 @@ body {
   font-family: 'Poiret One';
   font-family: 'Libre Baskerville', 'Poiret One', serif;
   font-size: 34px;
-  border-bottom: 8px solid #fff;
+  border-bottom: 4px solid #fff;
 }
-.day_page .month {
+.day_page .month{
+  height: 34px;
+  padding-top: 0;
   font-family: 'Poiret One';
   font-family: 'Libre Baskerville', serif;
   font-size: 16px;
@@ -68,6 +171,16 @@ body {
   margin-top: 4px;
   font-family: 'Dancing Script';
   font-family: 'Libre Baskerville', serif;
+}
+/*---- Content-Elements Styles ---------------------------*/
+/* These are boxes with Icons and link to service --------*/
+/* --- These are genereal styles... but they customize by Chapter:
+------ Branch Pages, Home Page....
+*/
+.service {
+  height: 180px;
+  text-align: center;
+  color: #fff;
 }
 /* ---------------------------------------------- */
 .opening {
@@ -86,7 +199,6 @@ body {
   margin-left: 60px;
   font-family: 'Dancing Script';
   font-size: 20px;
-  color: #fe8;
 }
 .register-card {
   position: relative;
@@ -141,13 +253,6 @@ body {
 }
 /* ---------------------------------------------- */
 
-.shadow {
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0,0,0,.7);
-}
-
-
 
 
 /* ======================================================== */
@@ -155,6 +260,49 @@ body {
 /* ======================================================== */
 
 @media only screen and (min-width: 769px) {
+  body {
+    background: url(img/wideScreen.jpg) no-repeat top center fixed;
+    -webkit-background-size: ;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  .day_page {
+    min-height: 140px;
+    max-width: 180px;
+  }
+
+  .day_page .date {
+    font-size: 42px;
+    border-bottom: 8px solid #fff;
+  }
+
+/* ---- PAGES styles: -----------------------------------------------*/
+  .pages.branch {
+    background-size: 100vw auto;
+    background-color: #fff;
+  }
+  .service {
+    height: 50vh;
+  }
+/* ----------------------------------------------------------------- */
+
+  .branches select {
+    background: transparent;
+    font-size: 18px;
+    -webkit-appearance: none;
+    border: 1px solid #666;
+  }
+  .pages.branch h2 {
+    font-size: 4em;
+  }
+  .calendar {
+    right: 120px;
+    width: 150px;
+    height: 170px;
+    padding: 10px;
+  }
   .opening {
     top: 50vh;
     left: 24vw;
@@ -184,4 +332,36 @@ hr {
     overflow: visible;
     text-align: center;
     height: 5px;
+}
+.text-shadow-10 {
+  text-shadow: #eee 1px 0 10px;
+}
+.v-center {
+  position: relative;
+  top: 45%;
+  transform: translateY(-50%);
+}
+.shadow {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,.7);
+}
+
+.white {
+  color: £fff;
+}
+.white-box {
+  padding: 6px;
+  background: rgba(255,255,255,.8)
+}
+.hidden {
+  display: none;
+}
+.warning {
+  padding: 2px 8px;
+  border: 1px solid #f79;
+  border-radius: 4px;
+  background-color: rgba(255,120,150,.5);
+  color: #77001d;
+  font-size: 10px;
 }
