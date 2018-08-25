@@ -115,6 +115,9 @@ app.use((req,res) => {
 app.get('/client/public/css/img/:id', (req,res) => {
   res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id)
 })
+app.get('/dist/img/:id', (req,res) => {
+  res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id)
+})
 
 // === Root SERVER REndering ===========================================
 

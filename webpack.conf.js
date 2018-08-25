@@ -46,7 +46,16 @@ module.exports = ( env ) => {
                 }
             }
           ]
+        },
+        ///*
+        {
+          test: /\.css$/,
+          include: path.join(__dirname, 'client'),
+          loaders: [
+            {loader: 'style!css'}
+          ]
         }
+        //*/
       ]
     },
     resolve: {

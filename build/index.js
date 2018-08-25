@@ -8,24 +8,65 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _bodyParser = require('body-parser');
+
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _server = require('react-dom/server');
+
+var _reactRouter = require('react-router');
+
+var _template = require('./template');
+
+var _template2 = _interopRequireDefault(_template);
+
 var _s = require('aws-sdk/clients/s3');
 
 var _s2 = _interopRequireDefault(_s);
 
+var _sql = require('./api/sql');
+
+var _sql2 = _interopRequireDefault(_sql);
+
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
+var _passport = require('passport');
+
+var _passport2 = _interopRequireDefault(_passport);
+
+var _passportLocal = require('passport-local');
+
+var _bcryptNodejs = require('bcrypt-nodejs');
+
+var _bcryptNodejs2 = _interopRequireDefault(_bcryptNodejs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* -------------------------------------------------------------- */
-var aws_conf = {
-  bucket: 'adriapp',
-  credentials: {
-    secretAccessKey: '',
-    accessKeyId: '',
-    apiVersion: '2006-03-01',
-    region: 'eu-central-1'
-  }
-};
+var users = [];
+
+// ==== PASSPORT ============================================
+/*
+passport.use(new LocalStrategy((user, done) => {
+  //
+}))
+*/
+// ==========================================================
+
 var app = (0, _express2.default)();
+
+var db = new _sql2.default('./data/aapp.db', 'users');
 //const s3 = new S3({})
+app.use(_bodyParser2.default.json());
+app.use(_bodyParser2.default.urlencoded({ extended: true }));
 
 var PORT = process.env.PORT || 8000;
 var ENV = process.env.NODE_ENV || 'development';
@@ -33,8 +74,8 @@ console.log(ENV);
 var ENTRY = ENV === 'production' ? '../dist/index.html' : '../client/index.html';
 
 if (ENV === 'development') {
-  /* ------ for in memory bundle -------------------------------------- */
-  var wpConfig = require('../webpack.conf.js');
+  /* ------ IN MEMORY bundle configuration ---------------------------- */
+  var wpConfig = require('../webpack.conf.js')(ENV);
   var webpack = require('webpack');
   var wpMiddle = require('webpack-dev-middleware');
   var wpHot = require('webpack-hot-middleware');
@@ -43,17 +84,100 @@ if (ENV === 'development') {
     hot: true
   }));
   app.use(wpHot(compiler));
+  app.use('/client', _express2.default.static(_path2.default.join(__dirname, '../client')));
 } else {
   // PRODUCTION configuration
+  app.use('/dist', _express2.default.static(_path2.default.join(__dirname, '../dist')));
 }
 
-app.use('/client', _express2.default.static(_path2.default.join(__dirname, '../client')));
-app.use('/dist', _express2.default.static(_path2.default.join(__dirname, '../dist')));
-app.get('/client/public/css/img/:id', function (req, res) {
-  res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + aws_conf.bucket + '/' + req.params.id);
+// === AUTH =============================================================
+
+app.post('/auth/register', function (req, res) {
+  console.log(req.body.user);
+  if (!req.body.user.email || !req.body.user.password) {
+    res.status(400).send('You must input a valid email and password');
+    return;
+  }
+  var _req$body$user = req.body.user,
+      email = _req$body$user.email,
+      password = _req$body$user.password;
+
+  console.log({ email: email, password: password });
+
+  _bcryptNodejs2.default.hash(password, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
+    db.signUpUser({ email: email, hash: hash }).then(function (result) {
+      return res.status(200).json(result);
+    }).catch(function (err) {
+      return res.status(500).json(err.message);
+    });
+  });
+});
+// ----------------------------------------------------------
+
+app.post('/auth/login', function (req, res) {
+  console.log(req.body);
+  console.log(db);
+  if (!req.body.email) {
+    // && !password
+    res.status(400).send('You must input a valid email address and password');
+    return;
+  }
+  var email = req.body.email;
+
+
+  var user = users.find(function (u) {
+    return u.email === email; // && u.password === password
+  });
+
+  if (!user) {
+    res.status(401).send('User not found...');
+    return;
+  }
+
+  var token = _jsonwebtoken2.default.sign({
+    // Object to Encript and Save
+    sub: user.id,
+    username: user.username
+    // Secrete key signe
+  }, 'mysupersicrete', {/*Options: expiresIn: '3 Hours'*/});
+
+  res.status(200).send({ access_token: token });
 });
 
+/*
+app.use((req,res) => {
+  //if(req.cookie.authenticated)
+})
+*/
+
+// ================================================================
+app.get('/client/public/css/img/:id', function (req, res) {
+  res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id);
+});
+app.get('/dist/img/:id', function (req, res) {
+  res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id);
+});
+
+// === Root SERVER REndering ===========================================
+
 app.get('/', function (req, res) {
+  /*
+    const store = {}
+    const params = {
+    entry: ENTRY
+  }
+    const markup = renderToString(
+      <StaticRouter location={req.url}>
+        <Provider store={store}>
+            <Route component={App} />
+        </Provider>
+      </StaticRouter>
+    )
+    const iState = {
+      lan: req.headers['accept-language'].split(',')[0].split('-')[0]
+    }
+  */
+  //res.send(template(params, markup, iState))
   res.sendFile(_path2.default.join(__dirname, ENTRY));
 });
 
