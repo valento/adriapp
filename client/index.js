@@ -10,7 +10,7 @@ import thunk from 'redux-thunk'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { hydrate, render } from 'react-dom'
 
-import App from './public/components/app'
+import App from './components/app'
 
 /*
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -30,39 +30,18 @@ const initState = (!window.STATE_FROM_SEVER)?
     },
     settings: {
       language: 'es',
-      branch: 'Venice'
+      branch: 'Beirut',
+      credits: 89,
+      male: true
     }
   } : window.STATE_FROM_SEVER
 
-const userReducer = (state = {}, action) => {
-  switch (action.type) {
-    case 'CHANGE_USER_NAME':
-      state.name = action.payload
-    break
-    case 'CHANGE_USER_MAIL':
-      state.mail = action.payload
-    break
-    case 'CHANGE_USER_PASSWORD' :
-      state.password = action.password
-    break
-  }
-  return state
-}
-
-const settingsReducer = (state={}, action) => {
-  switch (action.type) {
-    case 'CHANGE_LOCATION' :
-      state.settings.branch = action.payload
-    break
-  }
-  return state
-}
 
 // ----- SET REDUX -----------------------------------
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const store = createStore(
-  (state = {}) => state,
+  rootReducer,
   initState,
   composeEnhancers(applyMiddleware(thunk))
   // window.STATE_FROM_SEVER,

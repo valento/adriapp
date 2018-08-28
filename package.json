@@ -41,10 +41,6 @@
     "webpack-hot-middleware": "^2.22.3"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
-    "@fortawesome/free-brands-svg-icons": "^5.1.0-11",
-    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
-    "@fortawesome/react-fontawesome": "0.1.0-11",
     "@material-ui/core": "^1.4.2",
     "aws-sdk": "^2.282.1",
     "axios": "^0.18.0",

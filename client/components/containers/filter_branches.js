@@ -3,23 +3,23 @@ import { connect } from 'react-redux'
 import Branch from '../ui/branch'
 import { setBranchLocation } from '../../actions/'
 
-mapStateToProps = (state, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    city: ownProps.branch
-  }
-}
-
-
-mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onClick: () => {
-      console.log('dispatch an action')
+    onChange(e){
+      e.preventDefault()
+      dispatch()
     }
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    branch: state.settings.branch
+  }
+}
+
 const FilterBranches = connect(
-  null,//mapStateToProps,
+  mapStateToProps,
   mapDispatchToProps
 )(Branch)
 

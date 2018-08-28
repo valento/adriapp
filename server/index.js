@@ -57,15 +57,13 @@ if(ENV === 'development'){
 
 // === AUTH =============================================================
 
-app.post('/auth/register', (req,res) => {
-  console.log(req.body.user)
-  if(!req.body.user.email || !req.body.user.password) {
+app.post('/auth/user', (req,res) => {
+  const {email,password} = req.body.credentials
+  if(!email || !password) {
     res.status(400)
     .send('You must input a valid email and password')
     return
   }
-  const {email,password} = req.body.user
-  console.log({email,password})
 
   bcrypt.hash(password, bcrypt.genSalt(8,()=>{}), null, (err, hash) => {
     db.signUpUser({email,hash})
@@ -112,7 +110,7 @@ app.use((req,res) => {
 */
 
 // ================================================================
-app.get('/client/public/css/img/:id', (req,res) => {
+app.get('/client/css/img/:id', (req,res) => {
   res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id)
 })
 app.get('/dist/img/:id', (req,res) => {
@@ -122,20 +120,22 @@ app.get('/dist/img/:id', (req,res) => {
 // === Root SERVER REndering ===========================================
 
 app.get('/', (req,res) => {
+  const lng = req.headers['accept-language'].split(',')[0].split('-')[0]
+  console.log(lng)
 /*
   const store = {}
   const params = {
   entry: ENTRY
 }
   const markup = renderToString(
-    <StaticRouter location={req.url}>
-      <Provider store={store}>
-          <Route component={App} />
-      </Provider>
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.url}>
+        <Route component={App} />
+      </StaticRouter>
+    </Provider>
   )
   const iState = {
-    lan: req.headers['accept-language'].split(',')[0].split('-')[0]
+    lan: lng
   }
 */
   //res.send(template(params, markup, iState))

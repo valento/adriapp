@@ -16,10 +16,10 @@ export default function NextEvent(props) {
   }
   const { mon, week } = lan[props.lan]
   return (
-    <Grid padded className='day_page v-center'>
-      <Grid.Row centered className='month'>{mon[dd.getMonth()]}</Grid.Row>
-      <Grid.Row centered className='date'><span>{dd.getDate()}</span></Grid.Row>
-      <Grid.Row centered className='day'>{week[dd.getDay()]}</Grid.Row>
-    </Grid>
+    <div className='day_page v-center'>
+      <div className='month'>{mon[dd.getMonth()]}</div>
+      <div className='date'><span>{dd.getDate()}</span></div>
+      <div className='day'>{week[dd.getDay()]}</div>
+    </div>
   )
 }

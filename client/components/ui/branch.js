@@ -2,35 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 // ------- Actions -----------------------------------------
 
 // ---------------------------------------------------------
 
 class Branch extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      branch: props.branch
-    }
-    this.onChange = this.onChange.bind(this)
-  }
-
-  onChange(e){
-    e.preventDefault()
-    this.setState({
-      branch: e.target.value
-    })
-  }
 
   render(){
-    const dest = ['Beirut','Budapest','Ibiza','Mykonos','Tel Aviv','Venice']
+    const dest = ['Beirut','Budapest','Ibiza','Mykonos','Tel Aviv','Venezia']
 
     return (
       <div className='row branches'>
         <Icon color='grey' size='large' name='world'/>:
         <div>
-          <select onChange={this.onChange} name='global' value={this.state.branch}>
+          <select onChange={this.props.onChange} name='global' value={this.props.branch}>
             {dest.map((d, key) => {
                 return (
                   <option
@@ -44,7 +29,7 @@ class Branch extends React.Component {
           </select>
         </div>
   {/* make this container component */}
-        <Link to={'/branches/' + this.state.branch} className='h2-ladies'>
+        <Link to={'/branches/' + this.props.branch} className='h2-ladies'>
           <Icon color='grey' name='arrow right'/>
         </Link>
       </div>
@@ -53,19 +38,8 @@ class Branch extends React.Component {
 }
 
 Branch.propTypes = {
-  branch: PropTypes.string.isRequired
+  branch: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log(ownProps.branch)
-  return {
-    onChange: () => {
-      console.log('dispatch an action')
-    }
-  }
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Branch)
+export default Branch

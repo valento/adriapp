@@ -34,8 +34,9 @@ SQL.prototype.init = function(table) {
       "username VARCHAR," +
       "gender INTEGER," +
       "credit REAL," +//20 initial, buy on PayPal
+      "payment_metod INTEGER," +// default payment metod
       "rating REAL," +
-      "role INTEGER," +//access permissions
+      "role VARCHAR(4)," +//role access permissions
       "location VARCHAR(12)," +// Lat,Lng
       "country VARCHAR(8)," +
       "id_kickstart VARCHAR," +//access to LiveParty content
@@ -65,7 +66,7 @@ SQL.prototype.locations = function(table) {
 // On Sign Up record --------------------------------------
 SQL.prototype.signUpUser = function(data) {
   console.log(data.hash)
-  let first = '',
+  let first = 'Anon',
       last = ''
   if (data.mail === 'valentin.mundrov@gmail.com') {
     first = 'valentin'
@@ -84,8 +85,10 @@ SQL.prototype.signUpUser = function(data) {
     let params = {
       $email: data.email,
       $password: data.hash,
-      $role: (data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com') ? 10 : 0,
-      $credit: 50,
+      $role: (data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com') ?
+      9999 : 0,
+      $credit: (data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com') ?
+      0 : 50,
       $verifyed: 0,
       $first: first,
       $last: last
