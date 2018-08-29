@@ -1,5 +1,5 @@
 import { USER_LOGGED_IN } from '../types'
-import api from '../api/user'
+import api from '../api/user'// API Calls
 
 
 // Action Creators = return Actions = {type, payload}

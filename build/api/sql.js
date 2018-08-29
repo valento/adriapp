@@ -39,7 +39,8 @@ SQL.prototype.init = function (table) {
   switch (table) {
     case 'users':
       this.db.run("CREATE TABLE if not exists users (" + "id VARCHAR," + "email VARCHAR," + "password VARCHAR(12)," + "verifyed INTEGER," + "first TEXT," + "last TEXT," + "username VARCHAR," + "gender INTEGER," + "credit REAL," + //20 initial, buy on PayPal
-      "rating REAL," + "role INTEGER," + //access permissions
+      "payment_metod INTEGER," + // default payment metod
+      "rating REAL," + "role VARCHAR(4)," + //role access permissions
       "location VARCHAR(12)," + // Lat,Lng
       "country VARCHAR(8)," + "id_kickstart VARCHAR," + //access to LiveParty content
       "id_indie VARCHAR," + //access to LiveParty content
@@ -65,7 +66,7 @@ SQL.prototype.locations = function (table) {}
   var _this2 = this;
 
   console.log(data.hash);
-  var first = '',
+  var first = 'Anon',
       last = '';
   if (data.mail === 'valentin.mundrov@gmail.com') {
     first = 'valentin';
@@ -83,8 +84,8 @@ SQL.prototype.locations = function (table) {}
     var params = {
       $email: data.email,
       $password: data.hash,
-      $role: data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com' ? 10 : 0,
-      $credit: 50,
+      $role: data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com' ? 9999 : 0,
+      $credit: data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com' ? 0 : 50,
       $verifyed: 0,
       $first: first,
       $last: last

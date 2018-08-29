@@ -75,8 +75,6 @@ app.post('/auth/user', (req,res) => {
 // ----------------------------------------------------------
 
 app.post('/auth/login', (req,res) => {
-  console.log(req.body)
-  console.log(db)
   if(!req.body.email) {// && !password
     res.status(400)
     .send('You must input a valid email address and password')
@@ -114,6 +112,7 @@ app.get('/client/css/img/:id', (req,res) => {
   res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id)
 })
 app.get('/dist/img/:id', (req,res) => {
+  console.log('cssssssw')
   res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id)
 })
 

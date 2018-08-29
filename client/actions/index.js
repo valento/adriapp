@@ -1,25 +1,22 @@
-const CHANGE_BRANCH_LOCATION = 'CHANGE_BRANCH_LOCATION'
-const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE'
-const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST'
+import { BRANCH_CHANGED, LANGUAGE_CHANGED } from '../types'
 
 // Action Creators: return Actions = {type, pauload}
-export function setBranchLocation(payload) {
-  return {
-    type: CHANGE_BRANCH_LOCATION,
-    payload
-  }
-}
 
-export function setLanguage(payload) {
-  return {
-    type: CHANGE_LANGUAGE,
+export const setBranchLocation = branch => ({
+    type: BRANCH_CHANGED,
+    branch
+})
+
+export const setLanguage = payload => {
+  return dispatch => {
+    type: LANGUAGE_CHANGED,
     payload
   }
 }
 
 export function userSignUpRequest(payload) {
   return dispatch => {
-
+    //
   }
 }
 

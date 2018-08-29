@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Unlock from '../ui/unlock'
 import NextEvent from '../ui/next_event'
 import Signup from '../ui/signup'

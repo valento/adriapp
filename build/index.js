@@ -92,17 +92,15 @@ if (ENV === 'development') {
 
 // === AUTH =============================================================
 
-app.post('/auth/register', function (req, res) {
-  console.log(req.body.user);
-  if (!req.body.user.email || !req.body.user.password) {
+app.post('/auth/user', function (req, res) {
+  var _req$body$credentials = req.body.credentials,
+      email = _req$body$credentials.email,
+      password = _req$body$credentials.password;
+
+  if (!email || !password) {
     res.status(400).send('You must input a valid email and password');
     return;
   }
-  var _req$body$user = req.body.user,
-      email = _req$body$user.email,
-      password = _req$body$user.password;
-
-  console.log({ email: email, password: password });
 
   _bcryptNodejs2.default.hash(password, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
     db.signUpUser({ email: email, hash: hash }).then(function (result) {
@@ -151,7 +149,7 @@ app.use((req,res) => {
 */
 
 // ================================================================
-app.get('/client/public/css/img/:id', function (req, res) {
+app.get('/client/css/img/:id', function (req, res) {
   res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id);
 });
 app.get('/dist/img/:id', function (req, res) {
@@ -161,20 +159,22 @@ app.get('/dist/img/:id', function (req, res) {
 // === Root SERVER REndering ===========================================
 
 app.get('/', function (req, res) {
+  var lng = req.headers['accept-language'].split(',')[0].split('-')[0];
+  console.log(lng);
   /*
     const store = {}
     const params = {
     entry: ENTRY
   }
     const markup = renderToString(
-      <StaticRouter location={req.url}>
-        <Provider store={store}>
-            <Route component={App} />
-        </Provider>
-      </StaticRouter>
+      <Provider store={store}>
+        <StaticRouter location={req.url}>
+          <Route component={App} />
+        </StaticRouter>
+      </Provider>
     )
     const iState = {
-      lan: req.headers['accept-language'].split(',')[0].split('-')[0]
+      lan: lng
     }
   */
   //res.send(template(params, markup, iState))

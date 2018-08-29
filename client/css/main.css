@@ -11,6 +11,10 @@ body {
 .row {
   margin: 0;
 }
+a {
+  text-decoration: none;
+  color: #fff;
+}
 
 /* ------- PAGEs Styles: --------------------------------- */
 .header {
@@ -68,6 +72,13 @@ body {
   height: 60vh;
   background-color: rgba(200,0,100,.5)
 }
+.ladies.catalista {
+  background: #e6ebed url(img/catalista_ladies.jpg) no-repeat bottom center fixed;
+  background-size: auto 100vh;
+}
+.man.catalista {
+  background: #e6ebed url(img/catalista_man.jpg) no-repeat top center fixed;
+}
 
 .cata {
   height: 230px;
@@ -78,10 +89,16 @@ body {
   padding-top: 12px;
   margin: 0 auto;
   text-align: center;
-  border: 6px solid white;
+  border: 10px solid white;
   color: #eee;
-  font-family: 'Alex Brush';
+  font-family: 'Montserrat', sans-serif;
+  line-height: 30px;
+  font-weight: 900;
+  font-size: 18px;
+}
+.big {
   font-size: 28px;
+  line-height: 34px;
 }
 
 /* ------------------------------------------------------- */

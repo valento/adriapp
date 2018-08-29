@@ -20,7 +20,7 @@ const mapStateToProps = state => {
 
 const FilterBranches = connect(
   mapStateToProps,
-  mapDispatchToProps
+  { setBranchLocation }
 )(Branch)
 
 export default FilterBranches

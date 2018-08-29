@@ -1,9 +1,10 @@
-import { BRANCH_CHANGED } from '../types'
+import { BRANCH_CHANGED, LANGUAGE_CHANGED } from '../types'
 
-export default function updateUI(state={}, action) {
+export const settings = (state = {}, action) => {
+  console.log(state.settings)
   switch(action.type) {
     case BRANCH_CHANGED :
-      return {branch: action.payload}
+      return {...state, branch: action.branch}
     default: return state
   }
 }
