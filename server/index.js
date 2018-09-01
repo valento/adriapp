@@ -55,6 +55,17 @@ if(ENV === 'development'){
   app.use('/dist', express.static(path.join(__dirname, '../dist')))
 }
 
+// === TEST ===================
+app.get('/test/data/', (req,res) => {
+  const { email } = req.query//req.body.credentials
+  console.log(req.query)
+  db.fetchOne({ email })
+  .then(result => {
+    console.log(result)
+    res.status(200).json(result)
+  })
+})
+
 // === AUTH =============================================================
 
 app.post('/auth/user', (req,res) => {
@@ -64,7 +75,11 @@ app.post('/auth/user', (req,res) => {
     .send('You must input a valid email and password')
     return
   }
-
+/*
+  const user = db.fetchOne(u => {
+    return u.email === email// && u.password === password
+  })
+*/
   bcrypt.hash(password, bcrypt.genSalt(8,()=>{}), null, (err, hash) => {
     db.signUpUser({email,hash})
     .then(result => res.status(200).json(result))

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 class Branch extends React.Component {
 
   render(){
-    const dest = ['Beirut','Budapest','Ibiza','Mykonos','Tel Aviv','Venezia']
+    const dest = ['Beirut','Budapest','Ibiza','Mykonos','Tel Aviv','Venice']
 
     return (
       <div className='row branches'>

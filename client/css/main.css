@@ -55,6 +55,7 @@ a {
 /* -- Ladies Style: ----------------------------------- */
 .ladies {
   background: #e6ebed url(img/ladies.jpg) no-repeat bottom center fixed;
+  background-size: auto 100vh;
 }
 .ladies p {
   color: #fff;

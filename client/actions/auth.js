@@ -6,6 +6,7 @@ import api from '../api/user'// API Calls
 
 export const userSignUpRequest = user => {
   return dispatch => {
+    // use the api better:
     return axios.post('/auth/register', {user})
   }
 }
