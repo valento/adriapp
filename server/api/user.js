@@ -1,7 +1,7 @@
 import SQLite from 'sqlite3'
 import fs from 'fs'
 
-function SQL(url, table) {
+function userdb(url, table) {
   try {
     fs.stat(url, (err,res) => {
       if(err){
@@ -21,7 +21,7 @@ function SQL(url, table) {
   }
 }
 
-SQL.prototype.init = function(table) {
+userdb.prototype.init = function(table) {
   switch(table) {
     case 'users' :
     this.db.serialize(
@@ -80,12 +80,12 @@ SQL.prototype.init = function(table) {
   }
 }
 
-SQL.prototype.locations = function(table) {
+userdb.prototype.locations = function(table) {
   //
 }
 
 //Login Fetch User:
-SQL.prototype.fetchOne = function(data = []) {
+userdb.prototype.fetchOne = function(data = []) {
   console.log(data)
   const that = this
   const sql = `SELECT rowid, gender FROM users WHERE email = ?`
@@ -103,7 +103,7 @@ SQL.prototype.fetchOne = function(data = []) {
 }
 
 // On Sign Up record --------------------------------------
-SQL.prototype.signUpUser = function(data) {
+userdb.prototype.signUpUser = function(data) {
   console.log(data.hash)
   let first = 'Anon',
       last = ''
@@ -145,4 +145,4 @@ SQL.prototype.signUpUser = function(data) {
   })
 }
 
-export default SQL
+export default userdb

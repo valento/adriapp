@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Unlock from '../ui/unlock'
 import NextEvent from '../ui/next_event'
@@ -30,14 +31,14 @@ class Home extends React.Component {
       <div>
         <div className='row col-md-10'>
           <div className='col cata'>
-            <LaCatalista lan='es'/>
+            <LaCatalista lan={this.props.lan} />
           </div>
           <div className='col calendar'>
-            <NextEvent date='September 19, 2018' lan='es' />
+            <NextEvent date='September 19, 2018' lan={this.props.lan} />
           </div>
         </div>
         <div className='col-md-6 opening'>
-          <Unlock  onClick={this.onSlideUnlock} />
+          <Unlock onClick={this.onSlideUnlock} />
           <Slide direction="up" in={this.state.checked} mountOnEnter unmountOnExit>
             {/*<Signup lan='es'/>*/}
             <LoginPage history={this.props.history} onChecked={this.onSlideUnlock}/>
@@ -47,4 +48,8 @@ class Home extends React.Component {
   )}
 }
 
-export default Home
+const mapStateToProps = state => ({
+  lan: state.settings.language
+})
+
+export default connect(mapStateToProps, null)(Home)

@@ -9,7 +9,7 @@ import { StaticRouter } from 'react-router'
 import template from './template'
 
 import S3 from 'aws-sdk/clients/s3'
-import sql from './api/sql'
+import userdb from './api/user'
 
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
@@ -28,7 +28,7 @@ passport.use(new LocalStrategy((user, done) => {
 
 let app = express()
 
-let db = new sql('./data/aapp.db', 'users')
+let db = new userdb('./data/aapp.db', 'users')
 //const s3 = new S3({})
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -57,12 +57,17 @@ if(ENV === 'development'){
 
 // === TEST ===================
 app.get('/test/data/', (req,res) => {
-  const { email } = req.query//req.body.credentials
-  console.log(req.query)
-  db.fetchOne({ email })
+  //const { email } = req.query//req.body.credentials
+  db.fetchOne( req.query )
   .then(result => {
-    console.log(result)
-    res.status(200).json(result)
+    if(!result || undefined){
+      res.status(400).json({errors: {
+        global: 'Suscribe ya...'
+      }})
+    } else {
+      res.status(200).json(result)
+    }
+
   })
 })
 
@@ -70,21 +75,22 @@ app.get('/test/data/', (req,res) => {
 
 app.post('/auth/user', (req,res) => {
   const {email,password} = req.body.credentials
-  if(!email || !password) {
+  console.log(email)
+  //if(!email || !password) {
     res.status(400)
-    .send('You must input a valid email and password')
+    .json({errors: { global: 'Invalid Credentials' }})
     return
-  }
+  //}
 /*
   const user = db.fetchOne(u => {
     return u.email === email// && u.password === password
   })
-*/
   bcrypt.hash(password, bcrypt.genSalt(8,()=>{}), null, (err, hash) => {
     db.signUpUser({email,hash})
     .then(result => res.status(200).json(result))
     .catch(err => res.status(500).json(err.message))
   })
+*/
 
 })
 // ----------------------------------------------------------

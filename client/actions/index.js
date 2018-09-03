@@ -1,4 +1,8 @@
-import { BRANCH_CHANGED, LANGUAGE_CHANGED } from '../types'
+import {
+  BRANCH_CHANGED,
+  LANGUAGE_CHANGED,
+  GENDER_CHECKED
+} from '../types'
 
 // Action Creators: return Actions = {type, pauload}
 
@@ -7,10 +11,15 @@ export const setBranchLocation = branch => ({
     branch
 })
 
-export const setLanguage = payload => {
+export const setGender = gender => ({
+  type: GENDER_CHECKED,
+  gender
+})
+
+export const setLanguage = language => {
   return dispatch => {
     type: LANGUAGE_CHANGED,
-    payload
+    language
   }
 }
 

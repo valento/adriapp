@@ -12,20 +12,11 @@ import { hydrate, render } from 'react-dom'
 
 import App from './components/app'
 
-/*
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faArrowAltCircleDown, faHeart } from '@fortawesome/free-solid-svg-icons'
-
-
-library.add(fab,faArrowAltCircleDown,faHeart)
-*/
 const initState = (!window.STATE_FROM_SEVER)?
   {
     user: {
       username: '',
-      gender: 1,
+      gender: true,
       credit: 0
     },
     settings: {

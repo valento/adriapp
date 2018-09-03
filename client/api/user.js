@@ -12,6 +12,13 @@ export default {
     authorize: token =>
       axios.post('/auth/authorize', { token }),
     resetPassword: data =>
-      axios.post('/auth/reset')
+      axios.post('/auth/reset'),
+    checkMail: data => {
+      const { email } = data
+      return axios.get('test/data', { params: { email } }).then(res => {
+        console.log('axios promise resolve',res.data)
+        return res.data
+      })
+    }
   }
 }

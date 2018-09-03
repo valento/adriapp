@@ -17,13 +17,13 @@ a {
 }
 
 /* ------- PAGEs Styles: --------------------------------- */
-.header {
-  min-height: 200px;
-}
 .pages {
   height: 100vh;
   width: 100vw;
   background-color: #fff;
+}
+.pages .header {
+  min-height: 200px;
 }
 .pages.branch {
   background-size: 150% auto;
@@ -185,7 +185,8 @@ a {
 .day_page .date {
   height: 50px;
   padding-top: 14px;
-  font-family: 'Libre Baskerville', 'Poiret One', serif;
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
   font-size: 34px;
   border-bottom: 4px solid #fff;
 }
@@ -237,6 +238,7 @@ a {
   text-align: left;
   color: #fff;
 }
+/*
 .register-card label {
   margin-top: 4px;
 }
@@ -257,6 +259,7 @@ a {
   background-color: rgba(1,1,1,.5);
   border: 1px solid #aaa;
 }
+*/
 .register-card h2 {
   color: #fe8;
   font-size: 12px;

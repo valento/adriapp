@@ -4,7 +4,16 @@ import { Icon } from 'semantic-ui-react'
 function Unlock(props) {
   return (
     <div>
-      <Icon onClick={props.onClick} name='arrow alternate circle down' size='huge'/>
+      <Icon
+        onClick={
+          (e) =>{
+            e.stopPropagation()
+            props.onClick()
+          }
+        }
+        name='arrow alternate circle down'
+        size='huge'
+      />
     </div>
   )
 }
