@@ -15,16 +15,18 @@ class Signup extends React.Component {
         password: '',
       },
       lan: {
-        es: ['Ponte en la fila, corazón...', 'Ponemos el seguro!', 'Las Damas, conmigo... '],
-        en: ['Get on line, honey...', 'Lock that door!', 'Ladies, with me... ']
+        es: ['Ponte en la fila, corazón...', 'Ponemos el seguro!',
+        'Las Damas, conmigo... ', 'Primera ves? Bienvenido!... '],
+        en: ['Get on line, honey...', 'Lock that door!',
+        'Ladies, with me... ', 'Your first time? Welcome!... ']
       },
       lan_ui: {
         es: ['Suscribir', 'o', 'Login'],
         en: ['Sign up', 'or', 'Login']
       },
       loading: false,
-      email: false,
-      subscribe: true,
+      //subscribe: true,
+      pass: false,
       errors: {}
     }
     this.handleInputCahnges = this.handleInputCahnges.bind(this)
@@ -44,12 +46,23 @@ class Signup extends React.Component {
 
   checkMail(data) {
     console.log('check this: ', this.state.data.email)
-    this.setState({subscribe: false})
+    //this.setState({
+      //subscribe: false
+    //})
 ///*
     api.user.checkMail(this.state.data)
-      .then(result => console.log('react result: ',result))
+      .then(result => {
+        console.log('react result: ',result)
+        this.setState({
+          //subscribe: false,
+          pass: true
+        })
+      })
       .catch(err => {
-        this.setState({ errors: err.response.data.errors })
+        this.setState({
+          errors: err.response.data.errors,
+          pass: true
+        })
       })
 //*/
   }
@@ -57,11 +70,11 @@ class Signup extends React.Component {
   onSubmit(e) {
     e.preventDefault()
     const { data } = this.state
-    if(this.state.subscribe) {
+    if(!this.state.pass) {
       if(!data.email) return
       this.checkMail(data.email)
     }
-    if(!this.state.subscribe && !data.email || !data.password) return
+    if(!data.email || !data.password) return
 
     //this.props.userSignUpRequest(this.state.data)
     this.setState({ loading: true })
@@ -71,10 +84,10 @@ class Signup extends React.Component {
         console.log('error')
         this.setState({ errors: err.response.data.errors })
       })
-    if(this.state.errors === {}){
+    //if(this.state.errors === {}){
       this.setState(this.initialState)
       this.props.onChecked()
-    }
+    //}
 /* ----- Try REDUX Thunk Async Action:
 
     axios.post('/auth/register', {
@@ -112,14 +125,14 @@ class Signup extends React.Component {
 {/* ---- Server Error Messaging template ------ */}
               {errors.global && (
                 <Message positive size='mini'>
-                  <Message.Header>Primera ves? Bienvenido!:</Message.Header>
+                  <Message.Header>{lan[3]}</Message.Header>
                   <p>{errors.global}</p>
                 </Message>
               )}
 
             <Form.Input required inline fluid inverted
               color='black'
-              disabled={!this.state.email}
+              disabled={!this.state.pass}
               onChange={this.handleInputCahnges}
               label='password'
               value={this.state.password}
@@ -135,16 +148,16 @@ class Signup extends React.Component {
             >
               <Button
                 type='submit'
-                positive={this.state.subscribe}
-                disabled={!this.state.subscribe}
+                positive={!this.state.pass}
+                disabled={this.state.pass}
               >
                 {lan_ui[0]}
               </Button>
               <Button.Or text={lan_ui[1]} />
               <Button
                 type='submit'
-                positive={!this.state.subscribe}
-                disabled={this.state.subscribe}
+                positive={this.state.pass}
+                disabled={!this.state.pass}
               >
                 {lan_ui[2]}
               </Button>

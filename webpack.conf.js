@@ -8,15 +8,7 @@ module.exports = ( env ) => {
     mode: env.prod ? 'production' : 'development',
     entry: env.prod ?
     {
-      app: './client/index.js',
-    /*
-      fontawesome: [
-        '@fortawesome/react-fontawesome',
-        '@fortawesome/free-brands-svg-icons',
-        '@fortawesome/free-solid-svg-icons',
-        '@fortawesome/fontawesome-svg-core'
-      ]
-    */
+      app: './client/index.js'
     } : [
         'webpack-hot-middleware/client',
         './client/index.js'
@@ -52,14 +44,14 @@ module.exports = ( env ) => {
           test: /\.css$/,
           include: path.join(__dirname, 'client'),
           loaders: [
-            {loader: 'style!css'}
+            {loader: 'style!css!'}
           ]
         }
         //*/
       ]
     },
     resolve: {
-      extensions: ['.js']
+      extensions: ['.js', '.css']
     }
   }
 }

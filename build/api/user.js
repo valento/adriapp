@@ -14,7 +14,7 @@ var _fs2 = _interopRequireDefault(_fs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function SQL(url, table) {
+function userdb(url, table) {
   var _this = this;
 
   try {
@@ -35,7 +35,7 @@ function SQL(url, table) {
   }
 }
 
-SQL.prototype.init = function (table) {
+userdb.prototype.init = function (table) {
   var _this2 = this;
 
   switch (table) {
@@ -78,12 +78,12 @@ SQL.prototype.init = function (table) {
   }
 };
 
-SQL.prototype.locations = function (table) {}
+userdb.prototype.locations = function (table) {}
 //
 
 
 //Login Fetch User:
-;SQL.prototype.fetchOne = function () {
+;userdb.prototype.fetchOne = function () {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
   console.log(data);
@@ -102,7 +102,7 @@ SQL.prototype.locations = function (table) {}
 };
 
 // On Sign Up record --------------------------------------
-SQL.prototype.signUpUser = function (data) {
+userdb.prototype.signUpUser = function (data) {
   var _this3 = this;
 
   console.log(data.hash);
@@ -142,5 +142,5 @@ SQL.prototype.signUpUser = function (data) {
   });
 };
 
-exports.default = SQL;
-//# sourceMappingURL=sql.js.map
+exports.default = userdb;
+//# sourceMappingURL=user.js.map

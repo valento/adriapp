@@ -1,0 +1,26 @@
+CREATE TABLE users (user_id integer PRIMARY KEY NOT NULL,
+email varchar not null unique,
+password varchar not null unique,
+verified integer default 0,
+first text,
+last text,
+username varchar,
+gender integer,
+lastlog integer,
+credit real default 10,
+role varchar(4) default 1000,
+rating real default 0,
+location varchar,
+country varchar,
+payment_metod integer,
+likes real default 0,
+kickstarter_id integer,
+indiegogo_id integer,
+instagram_id integer,
+fb_id integer,
+refs varchar);
+
+
+
+
+INSERT INTO users (id_user, email,gender,role,lastlog,credit,verifyed) VALUES (100000001, 'valentin.mundrov@gmail.com', 1, 9999, $lastlog, $credit, $verifyed)

@@ -56,7 +56,7 @@ if(ENV === 'development'){
 }
 
 // === TEST ===================
-app.get('/test/data/', (req,res) => {
+app.get('/auth/test', (req,res) => {
   //const { email } = req.query//req.body.credentials
   db.fetchOne( req.query )
   .then(result => {
@@ -74,23 +74,21 @@ app.get('/test/data/', (req,res) => {
 // === AUTH =============================================================
 
 app.post('/auth/user', (req,res) => {
-  const {email,password} = req.body.credentials
-  console.log(email)
-  //if(!email || !password) {
+  const { email, password } = req.body.credentials
+  console.log('Server Auth User: ', email)
+  if(!email || !password) {
     res.status(400)
-    .json({errors: { global: 'Invalid Credentials' }})
+    .json({errors: { global: 'Missing Credentials' }})
     return
-  //}
-/*
-  const user = db.fetchOne(u => {
-    return u.email === email// && u.password === password
-  })
+  }
+
   bcrypt.hash(password, bcrypt.genSalt(8,()=>{}), null, (err, hash) => {
-    db.signUpUser({email,hash})
-    .then(result => res.status(200).json(result))
+    db.signUpUser({ email, hash })
+    .then(result => {
+      res.status(200).json(result)
+    })
     .catch(err => res.status(500).json(err.message))
   })
-*/
 
 })
 // ----------------------------------------------------------

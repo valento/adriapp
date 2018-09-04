@@ -30,9 +30,9 @@ var _s = require('aws-sdk/clients/s3');
 
 var _s2 = _interopRequireDefault(_s);
 
-var _sql = require('./api/sql');
+var _user = require('./api/user');
 
-var _sql2 = _interopRequireDefault(_sql);
+var _user2 = _interopRequireDefault(_user);
 
 var _jsonwebtoken = require('jsonwebtoken');
 
@@ -63,7 +63,7 @@ passport.use(new LocalStrategy((user, done) => {
 
 var app = (0, _express2.default)();
 
-var db = new _sql2.default('./data/aapp.db', 'users');
+var db = new _user2.default('./data/aapp.db', 'users');
 //const s3 = new S3({})
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
@@ -90,6 +90,20 @@ if (ENV === 'development') {
   app.use('/dist', _express2.default.static(_path2.default.join(__dirname, '../dist')));
 }
 
+// === TEST ===================
+app.get('/test/data/', function (req, res) {
+  //const { email } = req.query//req.body.credentials
+  db.fetchOne(req.query).then(function (result) {
+    if (!result || undefined) {
+      res.status(400).json({ errors: {
+          global: 'Suscribe ya...'
+        } });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
 // === AUTH =============================================================
 
 app.post('/auth/user', function (req, res) {
@@ -97,18 +111,21 @@ app.post('/auth/user', function (req, res) {
       email = _req$body$credentials.email,
       password = _req$body$credentials.password;
 
-  if (!email || !password) {
-    res.status(400).send('You must input a valid email and password');
-    return;
-  }
-
-  _bcryptNodejs2.default.hash(password, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
-    db.signUpUser({ email: email, hash: hash }).then(function (result) {
-      return res.status(200).json(result);
-    }).catch(function (err) {
-      return res.status(500).json(err.message);
-    });
-  });
+  console.log(email);
+  //if(!email || !password) {
+  res.status(400).json({ errors: { global: 'Invalid Credentials' } });
+  return;
+  //}
+  /*
+    const user = db.fetchOne(u => {
+      return u.email === email// && u.password === password
+    })
+    bcrypt.hash(password, bcrypt.genSalt(8,()=>{}), null, (err, hash) => {
+      db.signUpUser({email,hash})
+      .then(result => res.status(200).json(result))
+      .catch(err => res.status(500).json(err.message))
+    })
+  */
 });
 // ----------------------------------------------------------
 

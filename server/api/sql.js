@@ -27,21 +27,22 @@ SQL.prototype.init = function(table) {
     this.db.serialize(
       () => {
         this.db.run("CREATE TABLE if not exists users (" +
-        "id VARCHAR," +
-        "email VARCHAR," +
-        "password VARCHAR(12)," +
-        "verifyed INTEGER," +
+        "user_id INTEGER PRIMARY KEY NOT NULL," +
+        "email VARCHAR NOT NULL UNIQUE," +
+        "password VARCHAR(12) NOT NULL UNIQUE," +
+        "verified INTEGER DEFAULT 0," +
         "first TEXT," +
         "last TEXT," +
-        "username VARCHAR," +
+        "username TEXT," +
         "gender INTEGER," +
         "lastlog INTEGER," +// DATE: last login date to calculate rating/activitie
-        "credit REAL," +//20 initial, buy on PayPal
+        "credit REAL default 10," +//20 initial, buy on PayPal
         "payment_metod INTEGER," +// default payment metod
-        "rating REAL," +
-        "role VARCHAR(4)," +//role access permissions
+        "rating REAL DEFAULT 0," +
+        "role VARCHAR(4) default 1000," +//role access permissions
         "location VARCHAR(12)," +// Lat,Lng
-        "country VARCHAR(8)," +
+        "country VARCHAR(5)," +
+        "likes REAL DEFAULT 0," +
         "id_kickstart VARCHAR," +//access to LiveParty content
         "id_indie VARCHAR," +//access to LiveParty content
         "id_insta VARCHAR," +//passport-session
@@ -49,15 +50,16 @@ SQL.prototype.init = function(table) {
         "refs VARCHAR" +// referential program ??: How To
         ");")
 
-      const q = this.db.prepare("INSERT INTO users (email,gender,role,lastlog,credit,verifyed)" +
-                      "VALUES ($email, $gender, $role, $lastlog, $credit, $verifyed)")
+      const q = this.db.prepare("INSERT INTO users (user_id, email,gender,role,lastlog,credit,verifed)" +
+                      "VALUES ($user_id, $email, $gender, $role, $lastlog, $credit, $verifyed)")
       const params = {
+        $user_id: 100000001,
         $email: 'valentin.mundrov@gmail.com',
         $gender: 1,
         $role: 9999,
         $lastlog: Date.now(),
-        $credit: 1000,
-        $verifyed: true
+        $credit: 999,
+        $verified: true
       }
 
       q.run(params)
@@ -69,7 +71,6 @@ SQL.prototype.init = function(table) {
     break
     case 'events' :
       this.db.run("CREATE TABLE if not exists events (" +
-        "id VARCHAR," +
         "state INTEGER," +//(0=promo, 1=confirmed-comingup, 2=LiveNow!, 3=onKickstarter)
         "event VARCHAR," +//(for LIVE: Time included)
         "location VARCHAR," +
@@ -119,16 +120,17 @@ SQL.prototype.signUpUser = function(data) {
     if(!data) {
       throw new TypeError('Empty Object provided for Save')
     }
-    let q = "INSERT INTO users (email, password, role, credit, verifyed)" +
-                    "VALUES ($email, $password, $role, $credit, $verifyed)"
+    let q = "INSERT INTO users (user_id, email, password, role, credit, verifyed)" +
+                    "VALUES ($user_id, $email, $password, $role, $credit, $verifyed)"
     let params = {
+      $user_id: 100000001,
       $email: data.email,
       $password: data.hash,
       $role: (data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com') ?
-      9999 : 0,
+      9999 : 1000,
       $credit: (data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com') ?
-      0 : 50,
-      $verifyed: 0
+      999 : 10,
+      $verified: 0
     }
     let stm = that.db.prepare(q)
     stm.run(params, err => {
