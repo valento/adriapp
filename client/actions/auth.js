@@ -17,7 +17,12 @@ export const userLoggedIn = user => ({
   user
 })
 
-//
+// ---- SIGNUP: New Users -----------------------------
+export const signup = credentials => dispatch =>
+  api.user.signup(credentials)
+    .then(user => dispatch(userLoggedIn(user)))
+
+// ---- LOGIN: Old Users ------------------------------
 export const login = credentials => dispatch =>
   api.user.login(credentials)
     .then(user => dispatch(userLoggedIn(user)))

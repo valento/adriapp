@@ -4,7 +4,7 @@ password varchar not null unique,
 verified integer default 0,
 first text,
 last text,
-username varchar,
+username varchar default 'Anon',
 gender integer,
 lastlog integer,
 credit real default 10,
@@ -18,7 +18,7 @@ kickstarter_id integer,
 indiegogo_id integer,
 instagram_id integer,
 fb_id integer,
-refs varchar);
+refs varchar default 0);
 
 
 

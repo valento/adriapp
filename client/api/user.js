@@ -2,14 +2,14 @@ import axios from 'axios'
 
 export default {
   user: {
-    signup: user =>
-      axios.post('/auth/register', { user }).then(res => {
-        console.log(res.data.user)
-        return res.data.user
-      }),
 
+// handle: Signup Form => Axios returns Promise to React Component
+    signup: credentials =>
+      axios.post('/auth/signup', { credentials }).then(res => res.data.user),
+
+// handle: Login Form => Axios returns Promise to React Component
     login: credentials =>
-      axios.post('/auth/user', { credentials }).then(res => res.data.user),
+      axios.post('/auth/login', { credentials }).then(res => res.data.user),
 
     authorize: token =>
       axios.post('/auth/authorize', { token }),
@@ -17,6 +17,7 @@ export default {
     resetPassword: data =>
       axios.post('/auth/reset'),
 
+// handle: Check email (Exists)? Login : Signup
     checkMail: data => {
       const { email } = data
       return axios.get('/auth/test', { params: { email } }).then(res => {

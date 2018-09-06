@@ -12,8 +12,14 @@ class LoginPage extends React.Component {
     this.onLadies = this.onLadies.bind(this)
   }
 
-  onSubmit(data) {
-    return this.props.login(data).then(() => this.props.history.push('/'))
+  onSubmit(old, data) {
+    if(!old) {
+      return this.props.login(data).then(() => this.props.history.push('/'))
+    } else {
+      console.log('Handle this Old user Login')
+      return this.props.signup(data).then(() => this.props.history.push('/'))
+    }
+
   }
 
   onLadies(gender) {

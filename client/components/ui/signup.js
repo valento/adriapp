@@ -16,9 +16,9 @@ class Signup extends React.Component {
       },
       lan: {
         es: ['Ponte en la fila, corazón...', 'Ponemos el seguro!',
-        'Las Damas, conmigo... ', 'Primera ves? Bienvenido!... '],
+        'Las Damas, conmigo... ', 'Primera ves? Bienvenido!... ', 'Me alegra que volviste!... '],
         en: ['Get on line, honey...', 'Lock that door!',
-        'Ladies, with me... ', 'Your first time? Welcome!... ']
+        'Ladies, with me... ', 'Your first time? Welcome!... ', 'Pleasure to see you back!... ']
       },
       lan_ui: {
         es: ['Suscribir', 'o', 'Login'],
@@ -27,7 +27,9 @@ class Signup extends React.Component {
       loading: false,
       //subscribe: true,
       pass: false,
-      errors: {}
+      new_user: true,
+      errors: {},
+      messages: {}
     }
     this.handleInputCahnges = this.handleInputCahnges.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -41,48 +43,51 @@ class Signup extends React.Component {
 
   handleInputCahnges(e) {
     const {name,value} = e.target
-    this.setState({data: {...this.state.data, [name]: value}})
+    this.setState({
+      data: {...this.state.data, [name]: value},
+      messages: {},
+      errors: {}
+    })
   }
 
-  checkMail(data) {
+  checkMail() {
     console.log('check this: ', this.state.data.email)
-    //this.setState({
-      //subscribe: false
-    //})
-///*
     api.user.checkMail(this.state.data)
       .then(result => {
-        console.log('react result: ',result)
+        console.log('react result: ',result.message)
         this.setState({
-          //subscribe: false,
-          pass: true
+          messages: result.message,
+          pass: true,
+          new_user: false,
+          loading: false
         })
       })
       .catch(err => {
         this.setState({
           errors: err.response.data.errors,
-          pass: true
+          pass: true,
+          loading: false
         })
       })
-//*/
   }
 
   onSubmit(e) {
     e.preventDefault()
-    const { data } = this.state
+    this.setState({ loading: true })
+    const { data , new_user } = this.state
     if(!this.state.pass) {
       if(!data.email) return
-      this.checkMail(data.email)
+      this.checkMail()
     }
     if(!data.email || !data.password) return
 
     //this.props.userSignUpRequest(this.state.data)
-    this.setState({ loading: true })
     this.props
-      .submit(this.state.data)
+      .submit(new_user, data)
+      .then(result => this.setState({ messages: result.data.username, loading: false }))
       .catch(err => {
         console.log('error')
-        this.setState({ errors: err.response.data.errors })
+        this.setState({ errors: err.response.data.errors, loading: false })
       })
     //if(this.state.errors === {}){
       this.setState(this.initialState)
@@ -107,11 +112,11 @@ class Signup extends React.Component {
   render(){
     const lan = this.state.lan[this.props.lan]
     const lan_ui = this.state.lan_ui[this.props.lan]
-    const { errors } = this.state
+    const { errors, messages, pass, new_user, loading } = this.state
     return (
       <div className='register-card'>
         <h2>{lan[0]}</h2>
-        <Form size='mini' inverted onSubmit={this.onSubmit}>
+        <Form size='mini' inverted onSubmit={this.onSubmit} loading={loading}>
 
             <Form.Input required inline fluid inverted
               color='black'
@@ -121,16 +126,19 @@ class Signup extends React.Component {
               name='email'
               type='email'
               placeholder='example@email.com'
+              disabled={pass}
             />
 {/* ---- Server Error Messaging template ------ */}
-              {errors.global && (
+              {(errors.global || messages.global && pass)? (
                 <Message positive size='mini'>
-                  <Message.Header>{lan[3]}</Message.Header>
-                  <p>{errors.global}</p>
+                  <Message.Header>{(messages.global)? lan[4] : lan[3]}</Message.Header>
+                  <p>{(messages.global)? messages.global : errors.global}</p>
                 </Message>
-              )}
+              ) : null}
 
             <Form.Input required inline fluid inverted
+              iconPosition='left'
+              icon={<Icon name='key' inverted />}
               color='black'
               disabled={!this.state.pass}
               onChange={this.handleInputCahnges}
@@ -143,35 +151,25 @@ class Signup extends React.Component {
             <Button.Group
               size='tiny'
               color='orange'
-              inverted
-              floated='right'
+              className='buttons'
             >
               <Button
                 type='submit'
-                positive={!this.state.pass}
-                disabled={this.state.pass}
+                positive={new_user}
+                disabled={!new_user}
               >
                 {lan_ui[0]}
               </Button>
               <Button.Or text={lan_ui[1]} />
               <Button
                 type='submit'
-                positive={this.state.pass}
-                disabled={!this.state.pass}
+                positive={!new_user}
+                disabled={new_user}
               >
                 {lan_ui[2]}
               </Button>
             </Button.Group>
             <div className='clearfix'></div>
-{/*
-          <Button disabled={!this.state.subscribe} size='mini' floated='left' type='submit'>
-            {lan_ui[0]}
-          </Button>
-          <span>{lan_ui[1]}</span>
-          <Button disabled={this.state.subscribe} size='mini' floated='right' type='submit'>
-            {lan_ui[2]}
-          </Button>
-*/}
         </Form>
 
         {(this.props.gender)? (

@@ -91,10 +91,10 @@ userdb.prototype.login = function(credentials) {
 }
 
 // ------ Fetch User: ------------------------------
-userdb.prototype.fetchOne = function(data = []) {
-  console.log(data)
+userdb.prototype.fetchOne = function(data = [], result_set = ['email']) {
+  console.log('DB: check this email: ', data)
   const that = this
-  const sql = `SELECT user_id, gender FROM users WHERE email = ?`
+  const sql = `SELECT ${result_set}, username FROM users WHERE email = ?`
   return new Promise ((resolve, reject) => {
     that.db.get(sql, [ data.email ], (err,row) => {
       if(err){
@@ -110,32 +110,35 @@ userdb.prototype.fetchOne = function(data = []) {
 
 // On Sign Up record --------------------------------------
 userdb.prototype.signUpUser = function(data) {
-  console.log(data.hash)
-  let first = 'Anon',
-      last = ''
-  if (data.mail === 'valentin.mundrov@gmail.com') {
-    first = 'valentin'
-    last = 'mundrov'
-  } else if (data.mail === 'iloveaquiles09@gmail.com') {
-    first = 'adriana'
-    last = 'perez'
+  let username = 'Anon',
+      role = 1000,
+      credit = 10,
+      user_id = undefined
+  if (data.email === 'valentin.mundrov@gmail.com') {
+    username = 'Valento',
+    user_id = 100000001,
+    role = 9999,
+    credit = 999
+  } else if (data.email === 'iloveaquiles09@gmail.com') {
+    username = 'Adri',
+    user_id = 100000002,
+    role = 9999,
+    credit = 999
   }
   const that = this
   return new Promise((resolve,reject) => {
     if(!data) {
       throw new TypeError('Empty Object provided for Save')
     }
-    let q = "INSERT INTO users (user_id, email, password, role, credit, verified)" +
-                    "VALUES ($user_id, $email, $password, $role, $credit, $verified)"
+    let q = "INSERT INTO users (user_id, username, email, password, role, credit)" +
+                    "VALUES ($user_id, $username, $email, $password, $role, $credit)"
     let params = {
-      $user_id: (data.email === 'valentin.mundrov@gmail.com')? 100000001 : undefined,
+      $user_id: user_id,
+      $username: username,
       $email: data.email,
       $password: data.hash,
-      $role: (data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com') ?
-      9999 : 1000,
-      $credit: (data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com') ?
-      999 : 50,
-      $verified: 0
+      $role: role,
+      $credit: credit
     }
     let stm = that.db.prepare(q)
     stm.run(params, err => {

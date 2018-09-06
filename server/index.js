@@ -55,25 +55,61 @@ if(ENV === 'development'){
   app.use('/dist', express.static(path.join(__dirname, '../dist')))
 }
 
-// === TEST ===================
+// ==== AUTHORIZATION ROOTS ==========================
+// ==== Check: if user-email exist ===================
 app.get('/auth/test', (req,res) => {
   //const { email } = req.query//req.body.credentials
   db.fetchOne( req.query )
   .then(result => {
     if(!result || undefined){
-      res.status(400).json({errors: {
-        global: 'Suscribe ya...'
-      }})
+  // If not: invite to subscribe
+      res.status(400).json({
+        errors: {
+          global: 'Suscribe ya...'
+        }
+      })
     } else {
-      res.status(200).json(result)
+      res.status(200).json({
+        message: {
+          global: 'Hola, mi ' + result.username + '!'
+        }
+      })
     }
 
   })
 })
+// ----- AUTH: Signup with crdentials: ----------------
+app.post('/auth/login', (req,res) => {
+  const { email, password } = req.body.credentials
+  if(!email || !password) {
+    res.status(400).json({
+      errors: { global: 'Missing Credentials!' }
+    })
+    return
+  }
+  var data = ['email','password','username','gender','credit','role','user_id']
+  db.fetchOne( { email }, data ).then( user => {
+    if(user && bcrypt.compareSync(password, user.password)){
+      res.status(200).json({
+        user: {
+          username: user.username,
+          email: user.email,
+          gender: user.gender,
+          credit: user.credit,
+          role: user.role,
+          user_id: user.user_id
+        }
+      })
+      res.end()
+    }
 
-// === AUTH =============================================================
+  })
 
-app.post('/auth/user', (req,res) => {
+  //res.status(200).end()
+  // check DB for All Credentials:
+})
+// ----- AUTH: Save all crdentials: ------------------
+app.post('/auth/signup', (req,res) => {
   const { email, password } = req.body.credentials
   console.log('Server Auth User: ', email)
   if(!email || !password) {
@@ -81,7 +117,7 @@ app.post('/auth/user', (req,res) => {
     .json({errors: { global: 'Missing Credentials' }})
     return
   }
-
+// ------ Encrypt and send to API: --------------------
   bcrypt.hash(password, bcrypt.genSalt(8,()=>{}), null, (err, hash) => {
     db.signUpUser({ email, hash })
     .then(result => {
@@ -93,13 +129,13 @@ app.post('/auth/user', (req,res) => {
 })
 // ----------------------------------------------------------
 
-app.post('/auth/login', (req,res) => {
-  if(!req.body.email) {// && !password
+app.post('/auth/user', (req,res) => {
+  if(!req.body.email && !password) {
     res.status(400)
     .send('You must input a valid email address and password')
     return
   }
-  const {email} = req.body
+  const { email, password } = req.body
 
   const user = users.find(u => {
     return u.email === email// && u.password === password
