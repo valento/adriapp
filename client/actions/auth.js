@@ -25,4 +25,7 @@ export const signup = credentials => dispatch =>
 // ---- LOGIN: Old Users ------------------------------
 export const login = credentials => dispatch =>
   api.user.login(credentials)
-    .then(user => dispatch(userLoggedIn(user)))
+    .then(user => {
+      localStorage.catalistaJWT = user.token
+      dispatch(userLoggedIn(user))
+    })

@@ -13,7 +13,7 @@ import userdb from './api/user'
 
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
-import {Strategy as LocalStrategy} from 'passport-local'
+import { Strategy as LocalStrategy } from 'passport-local'
 import bcrypt from 'bcrypt-nodejs'
 /* -------------------------------------------------------------- */
 const users = []
@@ -88,25 +88,35 @@ app.post('/auth/login', (req,res) => {
     return
   }
   var data = ['email','password','username','gender','credit','role','user_id']
-  db.fetchOne( { email }, data ).then( user => {
+  db.fetchOne( { email }, data )
+  .then( user => {
     if(user && bcrypt.compareSync(password, user.password)){
+      const token = jwt.sign({
+        email: user.email,
+        username: user.username,
+        gender: user.gender,
+        credit: user.credit,
+        role: user.role,
+        user_id: user.user_id
+      }, 'mysecrethere')
       res.status(200).json({
         user: {
+          token: token,
           username: user.username,
-          email: user.email,
           gender: user.gender,
           credit: user.credit,
           role: user.role,
           user_id: user.user_id
         }
       })
-      res.end()
+    } else {
+      res.status(400).json({
+        errors: {
+          global: 'Wrong Credentials...'
+        }
+      })
     }
-
   })
-
-  //res.status(200).end()
-  // check DB for All Credentials:
 })
 // ----- AUTH: Save all crdentials: ------------------
 app.post('/auth/signup', (req,res) => {
@@ -117,11 +127,33 @@ app.post('/auth/signup', (req,res) => {
     .json({errors: { global: 'Missing Credentials' }})
     return
   }
-// ------ Encrypt and send to API: --------------------
   bcrypt.hash(password, bcrypt.genSalt(8,()=>{}), null, (err, hash) => {
     db.signUpUser({ email, hash })
-    .then(result => {
-      res.status(200).json(result)
+    .then( data => {
+  // !!!! Correct data set:
+      const { email } = data
+      var params = ['email','password','username','gender','credit','role','user_id']
+      db.fetchOne( { email }, params )
+      .then( user => {
+        const token = jwt.sign({
+          email: user.email,
+          username: user.username,
+          gender: user.gender,
+          credit: user.credit,
+          role: user.role,
+          user_id: user.user_id
+        }, 'mysecrethere')
+        res.status(200).json({
+          user: {
+            token: token,
+            username: user.username,
+            gender: user.gender,
+            credit: user.credit,
+            role: user.role,
+            user_id: user.user_id
+          }
+        })
+      })
     })
     .catch(err => res.status(500).json(err.message))
   })
@@ -130,28 +162,13 @@ app.post('/auth/signup', (req,res) => {
 // ----------------------------------------------------------
 
 app.post('/auth/user', (req,res) => {
-  if(!req.body.email && !password) {
-    res.status(400)
-    .send('You must input a valid email address and password')
-    return
-  }
-  const { email, password } = req.body
-
-  const user = users.find(u => {
-    return u.email === email// && u.password === password
-  })
-
-  if(!user) {
-    res.status(401).send('User not found...')
-    return
-  }
 
   const token = jwt.sign({
     // Object to Encript and Save
     sub: user.id,
     username: user.username
     // Secrete key signe
-  }, 'mysupersicrete', {/*Options: expiresIn: '3 Hours'*/})
+  }, 'mysupersecrete', {/*Options: expiresIn: '3 Hours'*/})
 
   res.status(200).send({access_token: token})
 })
@@ -173,7 +190,7 @@ app.get('/dist/img/:id', (req,res) => {
 
 // === Root SERVER REndering ===========================================
 
-app.get('/', (req,res) => {
+app.get('*', (req,res) => {
   const lng = req.headers['accept-language'].split(',')[0].split('-')[0]
   console.log(lng)
 /*

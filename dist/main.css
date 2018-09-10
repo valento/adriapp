@@ -238,10 +238,13 @@ a {
   text-align: left;
   color: #fff;
 }
-/*
-.register-card label {
-  margin-top: 4px;
+
+.register-card .buttons {
+  width: 80%;
+  margin: 0 8%;
+  text-align: center;
 }
+/*
 .register-card input {
   margin: 0;
   width: 100%;
@@ -362,8 +365,6 @@ a {
     height: 30vh;
     text-align: left;
     color: #fff;
-    border: 2px solid #aaa;
-    border-radius: 3px;
   }
   .hidden {
     display: block;

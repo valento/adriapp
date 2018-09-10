@@ -25,7 +25,7 @@ function userdb(url, table) {
         _this.db = new _sqlite2.default.Database(url, function (err) {
           if (!err) console.log('DB: Success');
           if (table) {
-            _this.init(table);
+            //this.init(table)
           }
         });
       }
@@ -41,26 +41,26 @@ userdb.prototype.init = function (table) {
   switch (table) {
     case 'users':
       this.db.serialize(function () {
-        _this2.db.run("CREATE TABLE if not exists users (" + "id VARCHAR," + "email VARCHAR," + "password VARCHAR(12)," + "verifyed INTEGER," + "first TEXT," + "last TEXT," + "username VARCHAR," + "gender INTEGER," + "lastlog INTEGER," + // DATE: last login date to calculate rating/activitie
-        "credit REAL," + //20 initial, buy on PayPal
+        _this2.db.run("CREATE TABLE if not exists users (" + "user_id INTEGER PRIMARY KEY NOT NULL," + "email VARCHAR NOT NULL UNIQUE," + "password VARCHAR NOT NULL UNIQUE," + "verifyed INTEGER DEFAULT 0," + "first TEXT," + "last TEXT," + "username VARCHAR," + "gender INTEGER," + "lastlog INTEGER," + // DATE: last login date to calculate rating/activitie
+        "credit REAL DEFAULT 10," + //20 initial, buy on PayPal
         "payment_metod INTEGER," + // default payment metod
-        "rating REAL," + "role VARCHAR(4)," + //role access permissions
+        "rating REAL DEFAULT 10," + "role VARCHAR(4) DEFAULT 1000," + //role access permissions
         "location VARCHAR(12)," + // Lat,Lng
-        "country VARCHAR(8)," + "id_kickstart VARCHAR," + //access to LiveParty content
+        "country VARCHAR(5)," + "likes REAL DEFAULT 0," + "id_kickstart VARCHAR," + //access to LiveParty content
         "id_indie VARCHAR," + //access to LiveParty content
         "id_insta VARCHAR," + //passport-session
         "id_fb VARCHAR," + //passport-session
         "refs VARCHAR" + // referential program ??: How To
         ");");
 
-        var q = _this2.db.prepare("INSERT INTO users (email,gender,role,lastlog,credit,verifyed)" + "VALUES ($email, $gender, $role, $lastlog, $credit, $verifyed)");
+        var q = _this2.db.prepare("INSERT INTO users (user_id,email, gender, role, lastlog, credit)" + "VALUES ($user_id, $email, $gender, $role, $lastlog, $credit)");
         var params = {
+          $user_id: 100000001,
           $email: 'valentin.mundrov@gmail.com',
           $gender: 1,
           $role: 9999,
           $lastlog: Date.now(),
-          $credit: 1000,
-          $verifyed: true
+          $credit: 999
         };
 
         q.run(params);
@@ -78,17 +78,23 @@ userdb.prototype.init = function (table) {
   }
 };
 
-userdb.prototype.locations = function (table) {}
+// ------- Login: Check PASSWORD!!! ----------------
+userdb.prototype.locations = function (table) {
+  //
+};
+
+userdb.prototype.login = function (credentials) {}
 //
 
 
-//Login Fetch User:
+// ------ Fetch User: ------------------------------
 ;userdb.prototype.fetchOne = function () {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var result_set = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ['email'];
 
-  console.log(data);
+  console.log('DB: check this email: ', data);
   var that = this;
-  var sql = 'SELECT rowid, gender FROM users WHERE email = ?';
+  var sql = 'SELECT ' + result_set + ', username FROM users WHERE email = ?';
   return new Promise(function (resolve, reject) {
     that.db.get(sql, [data.email], function (err, row) {
       if (err) {
@@ -105,34 +111,34 @@ userdb.prototype.locations = function (table) {}
 userdb.prototype.signUpUser = function (data) {
   var _this3 = this;
 
-  console.log(data.hash);
-  var first = 'Anon',
-      last = '';
-  if (data.mail === 'valentin.mundrov@gmail.com') {
-    first = 'valentin';
-    last = 'mundrov';
-  } else if (data.mail === 'iloveaquiles09@gmail.com') {
-    first = 'adriana';
-    last = 'perez';
+  var username = 'Anon',
+      role = 1000,
+      credit = 10,
+      user_id = undefined;
+  if (data.email === 'valentin.mundrov@gmail.com') {
+    username = 'Valento', user_id = 100000001, role = 9999, credit = 999;
+  } else if (data.email === 'iloveaquiles09@gmail.com') {
+    username = 'Adri', user_id = 100000002, role = 9999, credit = 999;
   }
   var that = this;
   return new Promise(function (resolve, reject) {
     if (!data) {
       throw new TypeError('Empty Object provided for Save');
     }
-    var q = "INSERT INTO users (email, password, role, credit, verifyed)" + "VALUES ($email, $password, $role, $credit, $verifyed)";
+    var q = "INSERT INTO users (user_id, username, email, password, role, credit)" + "VALUES ($user_id, $username, $email, $password, $role, $credit)";
     var params = {
+      $user_id: user_id,
+      $username: username,
       $email: data.email,
       $password: data.hash,
-      $role: data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com' ? 9999 : 0,
-      $credit: data.email === 'valentin.mundrov@gmail.com' || data.email === 'iloveaquiles09@gmail.com' ? 0 : 50,
-      $verifyed: 0
+      $role: role,
+      $credit: credit
     };
     var stm = that.db.prepare(q);
     stm.run(params, function (err) {
       if (err) {
         if (_this3.changes == 0) {
-          reject(new Error('Nothing saved'));
+          reject('Nothing saved');
         }
         reject(err.message);
       } else {

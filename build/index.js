@@ -90,52 +90,89 @@ if (ENV === 'development') {
   app.use('/dist', _express2.default.static(_path2.default.join(__dirname, '../dist')));
 }
 
-// === TEST ===================
-app.get('/test/data/', function (req, res) {
+// ==== AUTHORIZATION ROOTS ==========================
+// ==== Check: if user-email exist ===================
+app.get('/auth/test', function (req, res) {
   //const { email } = req.query//req.body.credentials
   db.fetchOne(req.query).then(function (result) {
     if (!result || undefined) {
-      res.status(400).json({ errors: {
+      // If not: invite to subscribe
+      res.status(400).json({
+        errors: {
           global: 'Suscribe ya...'
-        } });
+        }
+      });
     } else {
-      res.status(200).json(result);
+      res.status(200).json({
+        message: {
+          global: 'Hola, mi ' + result.username + '!'
+        }
+      });
     }
   });
 });
-
-// === AUTH =============================================================
-
-app.post('/auth/user', function (req, res) {
+// ----- AUTH: Signup with crdentials: ----------------
+app.post('/auth/login', function (req, res) {
   var _req$body$credentials = req.body.credentials,
       email = _req$body$credentials.email,
       password = _req$body$credentials.password;
 
-  console.log(email);
-  //if(!email || !password) {
-  res.status(400).json({ errors: { global: 'Invalid Credentials' } });
-  return;
-  //}
-  /*
-    const user = db.fetchOne(u => {
-      return u.email === email// && u.password === password
-    })
-    bcrypt.hash(password, bcrypt.genSalt(8,()=>{}), null, (err, hash) => {
-      db.signUpUser({email,hash})
-      .then(result => res.status(200).json(result))
-      .catch(err => res.status(500).json(err.message))
-    })
-  */
+  if (!email || !password) {
+    res.status(400).json({
+      errors: { global: 'Missing Credentials!' }
+    });
+    return;
+  }
+  var data = ['email', 'password', 'username', 'gender', 'credit', 'role', 'user_id'];
+  db.fetchOne({ email: email }, data).then(function (user) {
+    if (user && _bcryptNodejs2.default.compareSync(password, user.password)) {
+      res.status(200).json({
+        user: {
+          username: user.username,
+          email: user.email,
+          gender: user.gender,
+          credit: user.credit,
+          role: user.role,
+          user_id: user.user_id
+        }
+      });
+      res.end();
+    }
+  });
+
+  //res.status(200).end()
+  // check DB for All Credentials:
+});
+// ----- AUTH: Save all crdentials: ------------------
+app.post('/auth/signup', function (req, res) {
+  var _req$body$credentials2 = req.body.credentials,
+      email = _req$body$credentials2.email,
+      password = _req$body$credentials2.password;
+
+  console.log('Server Auth User: ', email);
+  if (!email || !password) {
+    res.status(400).json({ errors: { global: 'Missing Credentials' } });
+    return;
+  }
+  // ------ Encrypt and send to API: --------------------
+  _bcryptNodejs2.default.hash(password, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
+    db.signUpUser({ email: email, hash: hash }).then(function (result) {
+      res.status(200).json(result);
+    }).catch(function (err) {
+      return res.status(500).json(err.message);
+    });
+  });
 });
 // ----------------------------------------------------------
 
-app.post('/auth/login', function (req, res) {
-  if (!req.body.email) {
-    // && !password
+app.post('/auth/user', function (req, res) {
+  if (!req.body.email && !password) {
     res.status(400).send('You must input a valid email address and password');
     return;
   }
-  var email = req.body.email;
+  var _req$body = req.body,
+      email = _req$body.email,
+      password = _req$body.password;
 
 
   var user = users.find(function (u) {

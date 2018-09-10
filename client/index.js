@@ -6,6 +6,8 @@ import React from 'react'
 import rootReducer from './rootReducer.js'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
+import { userLoggedIn } from './actions/auth'
+import decode from 'jwt-decode'
 import thunk from 'redux-thunk'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { hydrate, render } from 'react-dom'
@@ -16,14 +18,13 @@ const initState = (!window.STATE_FROM_SEVER)?
   {
     user: {
       username: '',
-      gender: true,
-      credit: 0
+      gender: null,
+      credit: 0,
+      role: 4000
     },
     settings: {
       language: 'es',
-      branch: 'Beirut',
-      credits: 89,
-      male: true
+      branch: 'Beirut'
     }
   } : window.STATE_FROM_SEVER
 
@@ -38,6 +39,20 @@ const store = createStore(
   // window.STATE_FROM_SEVER,
 )
 
+if(localStorage.catalistaJWT){
+  console.log(localStorage.catalistaJWT)
+  const payload = decode(localStorage.catalistaJWT)
+  const user = {
+    token: localStorage.catalistaJWT,
+    email: payload.email,
+    username: payload.username,
+    role: payload.role,
+    credit: payload.credit,
+    gender: payload.gender,
+    user_id: payload.user_id,
+  }
+  store.dispatch(userLoggedIn(user))
+}
 
 // -------- ROUTES --------------------------
 const routes = (

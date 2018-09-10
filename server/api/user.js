@@ -149,9 +149,11 @@ userdb.prototype.signUpUser = function(data) {
         reject(err.message)
       }
       else {
-        resolve()
+        console.log(data)
+        resolve(data)
       }
     })
+    stm.finalize()
   })
 }
 

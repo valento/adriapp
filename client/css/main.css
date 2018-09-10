@@ -6,7 +6,6 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  overflow: hidden;
 }
 .row {
   margin: 0;
@@ -17,18 +16,18 @@ a {
 }
 
 /* ------- PAGEs Styles: --------------------------------- */
-.pages {
-  height: 100vh;
+.location {
   width: 100vw;
+  min-height: 100vh;
   background-color: #fff;
 }
-.pages .header {
-  min-height: 200px;
+.location.header {
+  height: 200px;
 }
-.pages.branch {
-  background-size: 150% auto;
+.location.bkg {
+  background-size: 160vw auto;
 }
-.pages.branch h2 {
+.location .header h2 {
   color: #fff;
   font-family: 'Libre Baskerville', serif;
   font-size: 2em;
@@ -51,7 +50,56 @@ a {
 .ibiza {
   background: #e6ebed url(img/ibiza.jpg) no-repeat top center fixed;
 }
-
+/* -- Any HOME Page ------------------------------------ */
+.home {
+  background: #000 url(img/img_000.jpg) no-repeat center fixed
+}
+/* -- USER Welcome Page -------------------------------- */
+.welcome {
+  /**/
+}
+.user {
+  font-size:
+}
+/* -- GAME Page --------------------------------------- */
+.game {
+  padding: 10px 15px;
+  background-image: url(img/game_man.jpg);
+  min-height: 100vh;
+  text-align: center;
+  color: #fff;
+}
+.game h1 {
+  margin-bottom: -5px;
+}
+.game h2 {
+  padding: 0 10px;
+  float: left;
+  margin-bottom: 0px;
+  background-color: #222;
+}
+.quiz {
+  width:
+}
+.black-question {
+  height: 36px;
+  margin: 12px 0;
+  text-align: left;
+  background-color: #222;
+  border-radius: 6px;
+  border: 1px solid #000;
+}
+.black-question>span {
+  display: inline-block;
+  margin-top: 6px;
+  margin-left: 12px;
+}
+.mask {
+  position: relative;
+  width: 50vw;
+  height: 50vh;
+  background-color: blue;
+}
 /* -- Ladies Style: ----------------------------------- */
 .ladies {
   background: #e6ebed url(img/ladies.jpg) no-repeat bottom center fixed;
@@ -153,10 +201,9 @@ a {
   color: #666
 }
 .label {
-  position: absolute;
+  position: relative;
   max-width: 34px;
-  top: 12px;
-  right: 4px;
+  top: -8px;
   color: #fff;
   font-size: 10px;
   text-align: center;
@@ -166,6 +213,15 @@ a {
   float: right;
   position: relative;
   max-width: 28px;
+}
+.credit-big {
+  font-size: 3em;
+  line-height: 2em;
+}
+.credit-big p {
+  text-align: center;
+  font-size: .5em;
+  line-height: 1em;
 }
 /*-- Division for Event Anouncement/Calendar ----------------------*/
 .calendar{
@@ -177,32 +233,30 @@ a {
 }
 .day_page {
   max-width: 100px;
-  max-height: 120px;
+  min-height: 120px;
+  max-height: 140px;
   margin: auto;
   padding: 6px 10px;
   background-color: rgba(1,1,1,.5);
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  line-height: normal;
+  font-style: italic;
 }
 .day_page .date {
-  height: 50px;
-  padding-top: 14px;
-  font-family: 'Libre Baskerville', serif;
-  font-style: italic;
   font-size: 34px;
+  line-height: 1.3em;
   border-bottom: 4px solid #fff;
 }
 .day_page .month{
-  height: 28px;
-  padding-top: 0;
-  font-family: 'Poiret One';
-  font-family: 'Libre Baskerville', serif;
   font-size: 16px;
+  line-height: 1.7em;
   border-bottom: 1px dashed #fff;
 }
 .day_page .day {
-  font-size: 20px;
   margin-top: 4px;
-  font-family: 'Dancing Script';
-  font-family: 'Libre Baskerville', serif;
+  font-size: 20px;
+  line-height: 1.5em;
 }
 /*---- Content-Elements Styles ---------------------------*/
 /* These are boxes with Icons and link to service --------*/
@@ -318,7 +372,7 @@ a {
   }
 
 /* ---- PAGES styles: -----------------------------------------------*/
-  .pages.branch {
+  .location .header {
     background-size: 100vw auto;
     background-color: #fff;
   }
@@ -344,7 +398,7 @@ a {
     -webkit-appearance: none;
     border: 1px solid #666;
   }
-  .pages.branch h2 {
+  .location.branch h2 {
     font-size: 4em;
   }
   .calendar {
@@ -423,4 +477,22 @@ hr {
 }
 .hidden {
   display: none
+}
+
+/* ====== ANIMATIONS: ===================================== */
+@keyframes scale-up {
+  0% {
+    transform: scaleY(1%);
+  }
+  100% {
+    transform: scaleY(100%);
+  }
+}
+@-webkit-keyframes scale-up {
+  0% {
+    transform: scaleY(-14em);
+  }
+  100% {
+    transform: none;
+  }
 }

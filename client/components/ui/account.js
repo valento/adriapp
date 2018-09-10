@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from 'semantic-ui-react'
+import HeartBeats from './heartBeats'
 
 export default class Account extends React.Component {
   constructor(props) {
@@ -11,12 +12,7 @@ export default class Account extends React.Component {
     return (
       <div className='dash credit'>
         <Link to='/account'>
-          <Icon
-            name='heartbeat'
-            color='grey'
-            size='large'
-          />
-          <div className={this.props.live ? 'label center' : 'label alert'}>99</div>
+          <HeartBeats credit={this.props.credit} view={this.props.view} role={this.props.role}/>
         </Link>
       </div>
     )

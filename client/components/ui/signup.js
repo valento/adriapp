@@ -84,29 +84,13 @@ class Signup extends React.Component {
     //this.props.userSignUpRequest(this.state.data)
     this.props
       .submit(new_user, data)
-      .then(result => this.setState({ messages: result.data.username, loading: false }))
+      .then(result => {
+        this.setState(this.initialState)
+        this.props.onChecked()
+      })
       .catch(err => {
-        console.log('error')
         this.setState({ errors: err.response.data.errors, loading: false })
       })
-    //if(this.state.errors === {}){
-      this.setState(this.initialState)
-      this.props.onChecked()
-    //}
-/* ----- Try REDUX Thunk Async Action:
-
-    axios.post('/auth/register', {
-      email: data.email,
-      password: data.password
-    })
-    .then(() => {
-      this.setState(this.initialState)
-      this.props.onChecked()
-    })
-    .catch(err => {
-      console.log(err.message)
-    })
-*/
   }
 
   render(){
@@ -158,7 +142,7 @@ class Signup extends React.Component {
                 positive={new_user}
                 disabled={!new_user}
               >
-                {lan_ui[0]}
+                {!this.state.pass ? 'Check-in' : lan_ui[0]}
               </Button>
               <Button.Or text={lan_ui[1]} />
               <Button
@@ -172,7 +156,7 @@ class Signup extends React.Component {
             <div className='clearfix'></div>
         </Form>
 
-        {(this.props.gender)? (
+        {(!this.props.gender)? (
           <div>
             <hr/>
             <Link to='/ladies' onClick={this.onClick} className='h2-ladies'>
@@ -191,38 +175,3 @@ Signup.propTypes = {
 }
 
 export default Signup
-//export default connect(null, { userSignUpRequest })(Signup)
-
-/*
-
-<form onSubmit={this.onSubmit}>
-  <div className='row form-group'>
-    <div className='col-2'><label>email: </label></div>
-    <div className='col-10'>
-      <input
-        onChange={this.handleInputCahnges}
-        id='email'
-        type='email'
-        value={this.state.email}
-        name='email'
-        className='form-control'
-      />
-    </div>
-  </div>
-  <div className='row form-group'>
-    <div className='col-2'><label>pass: </label></div>
-    <div className='col-10'>
-      <input
-        onChange={this.handleInputCahnges}
-        id='password'
-        type='password'
-        value={this.state.password}
-        name='password'
-        className='form-control'
-      />
-    </div>
-  </div>
-  <div className='row'><Button type='submit' variant='outlined' style={{color: 'red'}}>Subscribe</Button></div>
-</form>
-
-*/

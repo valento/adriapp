@@ -2,7 +2,7 @@ import React from 'react'
 import Signup from '../ui/signup'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { login } from '../../actions/auth'
+import { login, signup } from '../../actions/auth'
 import { setGender } from '../../actions/'
 
 class LoginPage extends React.Component {
@@ -16,7 +16,7 @@ class LoginPage extends React.Component {
     if(!old) {
       return this.props.login(data).then(() => this.props.history.push('/'))
     } else {
-      console.log('Handle this Old user Login')
+      console.log('Handle this New user Login')
       return this.props.signup(data).then(() => this.props.history.push('/'))
     }
 
@@ -46,6 +46,7 @@ LoginPage.propTypes = {
     push: PropTypes.func.isRequired
   }).isRequired,
   login: PropTypes.func.isRequired,
+  signup: PropTypes.func.isRequired,
   lan: PropTypes.string.isRequired,
   setGender: PropTypes.func.isRequired
 }
@@ -57,4 +58,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { login, setGender })(LoginPage)
+  { login, signup, setGender })(LoginPage)
