@@ -126,22 +126,32 @@ app.post('/auth/login', function (req, res) {
   var data = ['email', 'password', 'username', 'gender', 'credit', 'role', 'user_id'];
   db.fetchOne({ email: email }, data).then(function (user) {
     if (user && _bcryptNodejs2.default.compareSync(password, user.password)) {
+      var token = _jsonwebtoken2.default.sign({
+        email: user.email,
+        username: user.username,
+        gender: user.gender,
+        credit: user.credit,
+        role: user.role,
+        user_id: user.user_id
+      }, 'mysecrethere');
       res.status(200).json({
         user: {
+          token: token,
           username: user.username,
-          email: user.email,
           gender: user.gender,
           credit: user.credit,
           role: user.role,
           user_id: user.user_id
         }
       });
-      res.end();
+    } else {
+      res.status(400).json({
+        errors: {
+          global: 'Wrong Credentials...'
+        }
+      });
     }
   });
-
-  //res.status(200).end()
-  // check DB for All Credentials:
 });
 // ----- AUTH: Save all crdentials: ------------------
 app.post('/auth/signup', function (req, res) {
@@ -154,10 +164,32 @@ app.post('/auth/signup', function (req, res) {
     res.status(400).json({ errors: { global: 'Missing Credentials' } });
     return;
   }
-  // ------ Encrypt and send to API: --------------------
   _bcryptNodejs2.default.hash(password, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
-    db.signUpUser({ email: email, hash: hash }).then(function (result) {
-      res.status(200).json(result);
+    db.signUpUser({ email: email, hash: hash }).then(function (data) {
+      // !!!! Correct data set:
+      var email = data.email;
+
+      var params = ['email', 'password', 'username', 'gender', 'credit', 'role', 'user_id'];
+      db.fetchOne({ email: email }, params).then(function (user) {
+        var token = _jsonwebtoken2.default.sign({
+          email: user.email,
+          username: user.username,
+          gender: user.gender,
+          credit: user.credit,
+          role: user.role,
+          user_id: user.user_id
+        }, 'mysecrethere');
+        res.status(200).json({
+          user: {
+            token: token,
+            username: user.username,
+            gender: user.gender,
+            credit: user.credit,
+            role: user.role,
+            user_id: user.user_id
+          }
+        });
+      });
     }).catch(function (err) {
       return res.status(500).json(err.message);
     });
@@ -166,30 +198,13 @@ app.post('/auth/signup', function (req, res) {
 // ----------------------------------------------------------
 
 app.post('/auth/user', function (req, res) {
-  if (!req.body.email && !password) {
-    res.status(400).send('You must input a valid email address and password');
-    return;
-  }
-  var _req$body = req.body,
-      email = _req$body.email,
-      password = _req$body.password;
-
-
-  var user = users.find(function (u) {
-    return u.email === email; // && u.password === password
-  });
-
-  if (!user) {
-    res.status(401).send('User not found...');
-    return;
-  }
 
   var token = _jsonwebtoken2.default.sign({
     // Object to Encript and Save
     sub: user.id,
     username: user.username
     // Secrete key signe
-  }, 'mysupersicrete', {/*Options: expiresIn: '3 Hours'*/});
+  }, 'mysupersecrete', {/*Options: expiresIn: '3 Hours'*/});
 
   res.status(200).send({ access_token: token });
 });
@@ -211,7 +226,7 @@ app.get('/dist/img/:id', function (req, res) {
 
 // === Root SERVER REndering ===========================================
 
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
   var lng = req.headers['accept-language'].split(',')[0].split('-')[0];
   console.log(lng);
   /*

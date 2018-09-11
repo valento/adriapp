@@ -28,8 +28,11 @@ class Top extends React.Component {
           <Branch branch={this.props.branch} onChange={this.onChange} />
         </div>
         <div className="col-3 col-md-3">
-          <Account view={0} live={true} credit={this.props.credit} role={this.props.role}/>
-          {/*<Live live={false} />*/}
+          <Account view={0} live={true}
+            isAuthenticated={this.props.isAuthenticated}
+            credit={this.props.credit}
+            role={this.props.role}
+          />
         </div>
       </div>
   )}
@@ -37,13 +40,13 @@ class Top extends React.Component {
 
 Top.propTypes = {
   branch: PropTypes.string.isRequired,
-  setBranchLocation: PropTypes.func.isRequired
+  setBranchLocation: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => {
-// inject Store.State Global Object to Component:
-console.log(state.settings.branch);
   return {
+    isAuthenticated: !!state.user.token,
     branch: state.settings.branch,
     credit: state.user.credit,
     lan: state.settings.language,

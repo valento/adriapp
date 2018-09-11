@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Input, Button, Container } from 'semantic-ui-react'
+import { Icon, Button } from 'semantic-ui-react'
 
 class GamesPage extends React.Component {
   constructor(props){
@@ -12,18 +12,21 @@ class GamesPage extends React.Component {
       },
       quiz: {
         es: [
-          {q: 'Ella es una Influencer ', a: 0, y: '', n: 'No - ella monta la ola que se viene...'},
-          {q: 'Ella te mantiene despierto ', a: 1, y: 'Eh, si, es agotador,.. duh!',
+          {q: 'Ella es una Influencer ', a: 0, y: '',
+            n: 'No - ella monta la ola que se viene... Las Catalistas!'},
+          {q: 'Ella es... ', a: 1, y: 'Eh, si, es agotador,.. duh!',
             n: 'Dele un tiempo - no le durara'},
-          {q: 'Ella te vuelve loco ', a: 1, y: 'Eso, tambien, duh!', n: 'Sos un budista? Salud!'},
-          {q: 'Tu la sigues ', a: 0, y: 'No - ella va donde Usted la quiere... Ya veras - quedate en contacto!',
+          {q: 'Ella ... ', a: 1, y: 'Eso, tambien, duh!', n: 'Sos un budista? Salud!'},
+          {q: 'Tu l... ', a: 0, y: 'No - ella va donde Usted la quiere... Ya veras - quedate en contacto!',
             n: 'Correcto! Ella sigue sus deseos...'},
-          {q: 'Ella rumbea mucho ', a: 1, y: '...hasta mas, pero tambien trabaja duro... en el maquillaje',
+          {q: 'Ella es una Influencer ', a: 0, y: '',
+            n: 'No - ella monta la ola que se viene... Las Catalistas!'},
+          {q: 'Ella ... ', a: 1, y: '...hasta mas, pero tambien trabaja duro... en el maquillaje',
             n: 'Oprimiste mal?!'},
-            {q: 'Tu la sigues ', a: 0, y: 'No - ella va donde Usted la quiere... Ya veras - quedate en contacto!',
-              n: 'Correcto! Ella sigue sus deseos...'},
-            {q: 'Ella rumbea mucho ', a: 1, y: '...hasta mas, pero tambien trabaja duro... en el maquillaje',
-              n: 'Oprimiste mal?!'}
+          {q: 'Tu ... ', a: 0, y: 'No - ella va donde Usted la quiere... Ya veras - quedate en contacto!',
+            n: 'Correcto! Ella sigue sus deseos...'},
+          {q: 'Ella... mucho ', a: 1, y: '...hasta mas, pero tambien trabaja duro... en el maquillaje',
+            n: 'Oprimiste mal?!'}
         ],
         en: [
           {q: 'She is an Influencer ', a: 0, y: 'No, Sir - she rides the next wave...',
@@ -54,6 +57,7 @@ class GamesPage extends React.Component {
             options.map((option,i) => {
               return (
                 <div className='black-question'>
+                  <Icon name='question circle' color='orange' />
                   <span>{option.q}</span>
                   <Button.Group floated='right' color='orange' inverted>
                     <Button>{ans[0]}</Button>

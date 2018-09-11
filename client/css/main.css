@@ -84,21 +84,22 @@ a {
 .black-question {
   height: 36px;
   margin: 12px 0;
+  padding-left: 8px;
   text-align: left;
   background-color: #222;
-  border-radius: 6px;
-  border: 1px solid #000;
+  border-radius: 5px;
 }
 .black-question>span {
-  display: inline-block;
-  margin-top: 6px;
-  margin-left: 12px;
+  margin-left: 2px;
+  line-height: 2.5em;
+}
+.no-left-corner {
+  border-radius: 0px 6px 6px 6px;
 }
 .mask {
   position: relative;
   width: 50vw;
   height: 50vh;
-  background-color: blue;
 }
 /* -- Ladies Style: ----------------------------------- */
 .ladies {

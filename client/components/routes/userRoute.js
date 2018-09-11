@@ -6,7 +6,7 @@ import PleaseAuthenticate from '../messages/please.js'
 
 const AuthRoute = ({isAuthenticated, component: Component, ...rest}) => (
   (isAuthenticated)? <Route {...rest} render={ props => <Component {...props} />} /> :
-  <Route {...rest} render={ props => <PleaseAuthenticate {...props} />} /> 
+  <PleaseAuthenticate {...props} />
 )
 
 AuthRoute.propTypes = {

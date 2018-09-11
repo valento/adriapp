@@ -36,7 +36,11 @@ class App extends React.Component {
             <CatalistaPage lan={this.props.lan} male={this.props.gender} />
           )
         }}/>
-        <AuthRoute exact lan={this.props.lan} location={this.props.location} path='/games' component={GamesPage} />
+        <AuthRoute exact path='/games'
+          lan={this.props.lan}
+          location={this.props.location}
+          component={GamesPage}
+        />
       </div>
     )
   }
