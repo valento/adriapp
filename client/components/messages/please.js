@@ -12,7 +12,7 @@ export default class PleaseAuthenticate extends React.Component {
     }
   }
   render() {
-    const lan = this.state.lan[this.props.lan]
+    const lan = this.state.lan.es
     return (
       <Message positive size='mini'>
         <Message.Header>(from Adri with Love...):</Message.Header>

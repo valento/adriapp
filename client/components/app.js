@@ -8,6 +8,7 @@ import BranchPage from './pages/branch'
 import LivePage from './pages/live'
 import LadiesPage from './pages/ladies/home_ladies'
 import CatalistaPage from './pages/home_catalista'
+import Account from './pages/account'
 import GamesPage from './pages/home_games'
 import AuthRoute from './routes/userRoute.js'
 
@@ -31,6 +32,7 @@ class App extends React.Component {
           path='/ladies'
           component={LadiesPage}
         />
+        <Route location={location} path='/account' exact component={Account} />
         <Route location={this.props.location} path='/catalista/home' exact render={() => {
           return (
             <CatalistaPage lan={this.props.lan} male={this.props.gender} />

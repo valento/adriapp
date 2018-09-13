@@ -12,13 +12,19 @@ export default class Account extends React.Component {
   render() {
     return (
       <div className='dash credit'>
-        {this.props.isAuthenticated ?
-          (<Link to='/account'>
+          <Link to='/account'>
             <HeartBeats credit={this.props.credit} view={this.props.view} role={this.props.role}/>
-          </Link>) :
-          <PleaseAuthenticate lan={this.props.lan} />
-        }
+          </Link>
       </div>
     )
   }
 }
+
+/*
+{this.props.isAuthenticated ?
+  (<Link to='/account'>
+    <HeartBeats credit={this.props.credit} view={this.props.view} role={this.props.role}/>
+  </Link>) :
+  <PleaseAuthenticate lan={this.props.lan} />
+}
+*/

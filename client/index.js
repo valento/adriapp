@@ -14,6 +14,8 @@ import { hydrate, render } from 'react-dom'
 
 import App from './components/app'
 
+const lng = (window.navigator.language != 'es') ? 'en' : 'es'
+
 const initState = (!window.STATE_FROM_SEVER)?
   {
     user: {
@@ -23,11 +25,10 @@ const initState = (!window.STATE_FROM_SEVER)?
       role: 4000
     },
     settings: {
-      language: 'es',
+      language: lng,
       branch: 'Beirut'
     }
   } : window.STATE_FROM_SEVER
-
 
 // ----- SET REDUX -----------------------------------
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

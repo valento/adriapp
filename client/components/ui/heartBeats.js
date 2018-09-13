@@ -7,11 +7,10 @@ export default class HeartBeats extends React.Component {
     this.state = {
       lan: {
         es: ['Cardio', 'Adrenalinate',
-          'El color de tu Cardio refleja tu nivel de acceso...'
+            'El color de tu Cardio refleja tu nivel de acceso...'
           ],
-        en: [
-          'HeartBeats', 'Level-up',
-          'The color of yout HeartBeats shows your secutiry clearance...'
+        en: ['HeartBeats', 'Level-up',
+            'The color of yout HeartBeats shows your secutiry clearance...'
           ]
     }}
   }
@@ -21,7 +20,8 @@ export default class HeartBeats extends React.Component {
     if(r > 3) r = 3
     if(this.props.credit < 10) r = 4
     console.log(r)
-    const s = ['large', 'huge', 'massive']
+    const st = ['','credit-big','credit-middle']
+    const s = ['large', 'huge', 'big']
     const c = ['grey', 'blue','purple','yellow','red']
     return (
       <div>
@@ -34,24 +34,22 @@ export default class HeartBeats extends React.Component {
               />
               <div className='label'>{this.props.credit}</div>
             </div>
-          ) :
-          this.props.view === 1 ? (
+          ) : (
             <div>
-              <span className='credit-big'>&#123;</span>
+              <span className={st[this.props.view]}>&#123;</span>
                 <Icon
                   name='heartbeat'
                   color={c[r]}
                   size={s[this.props.view]}
                 />
-              <span className='credit-big'>&#125;</span>
-              <div className=' credit-big'>
+              <span className={st[this.props.view]}>&#125;</span>
+              <div className={st[this.props.view]}>
                 <p>{lan[0]}</p>
                 <Button size='tiny' color='blue' content={lan[1]} />
               </div>
-              <span>{lan[2]}</span>
+              <i>{lan[2]}</i>
             </div>
-          ) :
-          ''
+          )
         }
       </div>
     )

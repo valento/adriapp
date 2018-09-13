@@ -54,12 +54,18 @@ a {
 .home {
   background: #000 url(img/img_000.jpg) no-repeat center fixed
 }
-/* -- USER Welcome Page -------------------------------- */
-.welcome {
-  /**/
+/* -- USER
+ome Page -------------------------------- */
+.account {
+  color: #fff;
+  text-align: center;
+}
+.account .left {
+  text-align: left;
 }
 .user {
-  font-size:
+  min-height: 100vh;
+  padding-top: 6px;
 }
 /* -- GAME Page --------------------------------------- */
 .game {
@@ -78,8 +84,20 @@ a {
   margin-bottom: 0px;
   background-color: #222;
 }
+.game h3 {
+  padding: 0 10px;
+  float: left;
+  margin: 2px auto;
+  background-color: #222;
+}
+.game p {
+  text-align: left;
+}
+.game .negative, .game .info {
+  margin: 0;
+}
 .quiz {
-  width:
+  border-bottom: dashed 1px #fff;
 }
 .black-question {
   height: 36px;
@@ -100,6 +118,22 @@ a {
   position: relative;
   width: 50vw;
   height: 50vh;
+}
+.ui.styled.accordion, .ui.styled.accordion .accordion, .ui.accordion .title:not(.ui),
+.ui.styled.accordion .accordion .title, .ui.styled.accordion .title,
+.ui.styled.accordion .accordion .active.title, .ui.styled.accordion .accordion .title:hover,
+.ui.styled.accordion .active.title, .ui.styled.accordion .title:hover {
+  background: none;
+  color: #fff;
+}
+.ui.styled.accordion .active.title {
+  color: #fff;
+}
+.accordion.accordion-white-title {
+  color: #fff;
+}
+.answer-disabled {
+  background-color: yellow;
 }
 /* -- Ladies Style: ----------------------------------- */
 .ladies {
@@ -219,10 +253,15 @@ a {
   font-size: 3em;
   line-height: 2em;
 }
-.credit-big p {
+.credit-middle {
+  font-size: 2em;
+  line-height: 2em;
+}
+.credit-big p, .credit-middle p {
   text-align: center;
   font-size: .5em;
   line-height: 1em;
+  margin-bottom: 0;
 }
 /*-- Division for Event Anouncement/Calendar ----------------------*/
 .calendar{

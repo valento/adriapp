@@ -191,8 +191,10 @@ app.get('/dist/img/:id', (req,res) => {
 // === Root SERVER REndering ===========================================
 
 app.get('*', (req,res) => {
-  const lng = req.headers['accept-language'].split(',')[0].split('-')[0]
+  let lng = req.headers['accept-language'].split(',')[0].split('-')[0]
   console.log(lng)
+  lng = (lng === 'en')? 'es' : 'en-US'
+  res.set({'Content-Language': lng}).sendFile(path.join(__dirname, ENTRY))
 /*
   const store = {}
   const params = {
@@ -210,7 +212,6 @@ app.get('*', (req,res) => {
   }
 */
   //res.send(template(params, markup, iState))
-  res.sendFile(path.join(__dirname, ENTRY))
 })
 
 let server = app.listen(PORT, () => {

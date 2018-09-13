@@ -2,11 +2,11 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import PleaseAuthenticate from '../messages/please.js'
+//import PleaseAuthenticate from '../messages/please.js'
 
 const AuthRoute = ({isAuthenticated, component: Component, ...rest}) => (
-  (isAuthenticated)? <Route {...rest} render={ props => <Component {...props} />} /> :
-  <PleaseAuthenticate {...props} />
+  //(isAuthenticated)?
+  <Route {...rest} render={ props => <Component {...props} />} />
 )
 
 AuthRoute.propTypes = {
