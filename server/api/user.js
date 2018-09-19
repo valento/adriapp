@@ -92,7 +92,7 @@ userdb.prototype.login = function(credentials) {
 
 // ------ Fetch User: ------------------------------
 userdb.prototype.fetchOne = function(data = [], result_set = ['email']) {
-  console.log('DB: check this email: ', data)
+  console.log('Login: check this email: ', data)
   const that = this
   const sql = `SELECT ${result_set}, username FROM users WHERE email = ?`
   return new Promise ((resolve, reject) => {
@@ -102,6 +102,48 @@ userdb.prototype.fetchOne = function(data = [], result_set = ['email']) {
       } else {
     //sqlite returns rows = array
         resolve(row)
+      }
+    })
+  })
+
+}
+
+userdb.prototype.fetchById = function(data = [], result_set) {
+  console.log('User Data: check this user: ', data)
+  const that = this
+  const sql = `SELECT ${result_set} FROM users WHERE user_id = ?`
+  return new Promise ((resolve, reject) => {
+    that.db.get(sql, [ data.user_id ], (err,row) => {
+      if(err){
+        reject(err)
+      } else {
+        console.log('DB returns: ' , row)
+    //sqlite returns rows = array
+        resolve(row)
+      }
+    })
+  })
+
+}
+
+// ------ Update User Data: -----------------------------
+userdb.prototype.updateUserData = function(data = [], update_set) {
+  const update_fields = []
+  for(var key in update_set.data){
+    if(key !== 'user_id') {
+      update_fields.push(`${key}=${update_set.data[key]}`)
+    }
+  }
+  console.log('Object to update: ', update_fields)
+  const that = this
+  const sql = `UPDATE users SET ${update_fields} WHERE user_id = ?`
+  return new Promise ((resolve, reject) => {
+    this.db.run(sql, [ data.user_id ], function(err) {
+      if(err){
+        reject(err)
+      } else {
+//console.log(this)
+        resolve()
       }
     })
   })

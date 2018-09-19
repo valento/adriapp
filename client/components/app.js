@@ -28,21 +28,14 @@ class App extends React.Component {
         <Route location={this.props.location} exact path='/' exact component={Home} />
         <Route location={this.props.location} path='/branches/:city' component={BranchPage}/>
         <Route location={this.props.location} path='/live' exact component={LivePage} />
-        <Route location={this.props.location}
-          path='/ladies'
-          component={LadiesPage}
-        />
+        <Route location={this.props.location} path='/ladies' component={LadiesPage} />
         <Route location={location} path='/account' exact component={Account} />
         <Route location={this.props.location} path='/catalista/home' exact render={() => {
           return (
             <CatalistaPage lan={this.props.lan} male={this.props.gender} />
           )
         }}/>
-        <AuthRoute exact path='/games'
-          lan={this.props.lan}
-          location={this.props.location}
-          component={GamesPage}
-        />
+        <AuthRoute exact path='/games'lan={this.props.lan} location={this.props.location} component={GamesPage} />
       </div>
     )
   }
@@ -59,9 +52,7 @@ App.propTypes = {
 const mapStateToProps = state => {
   return {
     isAuthenicated: !!state.user.token,
-    lan: state.settings.language,
-    gender: state.user.gender,
-    credit: state.user.credit
+    lan: state.settings.language
   }
 }
 export default connect(mapStateToProps)(App)

@@ -41,7 +41,8 @@ class Top extends React.Component {
 Top.propTypes = {
   branch: PropTypes.string.isRequired,
   setBranchLocation: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  role: PropTypes.number.isRequired
 }
 
 const mapStateToProps = state => {

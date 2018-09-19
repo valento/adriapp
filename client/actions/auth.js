@@ -20,12 +20,12 @@ export const userLoggedIn = user => ({
 // ---- SIGNUP: New Users -----------------------------
 export const signup = credentials => dispatch =>
   api.user.signup(credentials)
-    .then(user => dispatch(userLoggedIn(user)))
+  .then(user => dispatch(userLoggedIn(user)))
 
 // ---- LOGIN: Old Users ------------------------------
 export const login = credentials => dispatch =>
   api.user.login(credentials)
-    .then(user => {
-      localStorage.catalistaJWT = user.token
-      dispatch(userLoggedIn(user))
-    })
+  .then(user => {
+    localStorage.catalistaJWT = user.token
+    dispatch(userLoggedIn(user))
+  })

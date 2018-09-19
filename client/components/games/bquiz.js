@@ -1,14 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import BQuestion from './ui/question'
+import { Button } from 'semantic-ui-react'
 
 class Bquiz extends React.Component {
   constructor(props) {
     super()
-    this.onAnswer = this.onAnswer.bind(this)
-    this.state = {
+    //this.onAnswer = this.onAnswer.bind(this)
+    this.state = this.initialState = {
       correct: null,
       answered: null,
+      credit: props.credit,
+      cancel_game: false,
       quiz: {
         es: [
           {q: 'Ella es una Influencer ', a: 0, win: 3,
@@ -18,7 +21,7 @@ class Bquiz extends React.Component {
             y: 'Claro que SI! Solo debes descubrir la manera - estas en el sitio correcto!',
             n: 'Definitivamente - Si! Ella viene por Usted -  invitela y quedata aquí!'},
           {q: 'Ella habla Chino ', a: 0, win: 3,
-            y: 'NO! Todavia No... PERO: ella sabe conectarse con mucho, menos o sin palabras',
+            y: 'Todavia No... PERO: ella sabe conectarse con mucho, menos o sin palabras',
             n: 'Correcto: la vida es demasiado corta para aprender Chino... pero La Catlista sabe hablar mucho, menos o nada. Gan Bei!'},
           {q: 'Ella se Baña o se Ducha ', o: ['B','D'] , a: 0, win: 4,
             y: 'Ducha por supuesto - es más grande... mejor',
@@ -32,8 +35,8 @@ class Bquiz extends React.Component {
             y: '?! Injusto... Ella cataliza, no lucha! Pierde o gana, Chuck, da igual - Usted recibe los 4 Creditos',
             n: '?! Injusto... Ella cataliza, no lucha! Pierde o gana, Chuck, da igual - Usted recibe los 4 Creditos'},
           {q: 'Le gustan los hombres ' , a: 0, win: 4,
-            y: 'No! Ella disgusta cualquier mandato, requerimiento, regla... Esta claro?',
-            n: 'Correcto! Ella disgusta cualquier mandato, requerimiento, regla... Usted entiende!'}
+            y: 'Incorrecto! Ella disgusta cualquier mandato, regla, requerimiento... Esta claro?',
+            n: 'Correcto! Ella disgusta cualquier mandato, regla, requerimiento... Usted entiende!'}
         ],
         en: [
           {q: 'Is she the next Influencer ', a: 0, win: 3,
@@ -58,37 +61,61 @@ class Bquiz extends React.Component {
             y: '?! That\'s not fair... She is to Catalyze, not to fight you... So - he\'ll just give up... plus - you still get 4 credits',
             n: '?! True! She is to Catalyze, not to fight you... So - he\'ll just give up... plus - you still get 4 credits'},
           {q: 'She likes men ' , a: 0, win: 4,
-            y: 'No! She dislikes anything demanding, requiering, insisting... Clear enough?',
+            y: 'Incorrect! She dislikes anything demanding, requiering, insisting... Clear enough?',
             n: 'Correct! She dislikes anything demanding, requiering, insisting... You\'ve got that right'}
         ]
       }
     }
+    this.addCredit = this.addCredit.bind(this)
+    this.saveCredit = this.saveCredit.bind(this)
   }
 
-  onAnswer(a){
-    if(a) {
+  addCredit(add) {
+    this.setState({
+      credit: this.state.credit + add
+    })
+  }
+
+  saveCredit(e) {
+    const { credit } = this.state
+    const { user_id } = this.props
+    const data = { credit, user_id }
+    console.log('Representation Component: ', { data })
+    //if(credit > this.initialState.credit){
+      this.props.saveCredit({data})
       this.setState({
-        add: 0
+        cancel_game: true
       })
-    }
+    //}
   }
 
   render() {
     const options = this.state.quiz[this.props.lan]
     return (
-      <div className='col-12 quiz'>
+      <div className='quiz'>
         {options.map((option,i) =>
             <BQuestion lan={this.props.lan}
-              onAnswer={this.onAnswer}
+              onAnswer={this.addCredit}
               style='black'
               btn_color='orange'
               messaging={true}
+              cancel_game={this.state.cancel_game}
               key={i}
               que={option}
               index={i}
             />
-          )
-        }
+        )}
+        <div>
+          <Button primary floated='right'
+            onClick={this.saveCredit}
+            disabled={(this.state.credit > this.initialState.credit) ? false : true}
+          >
+            <Button.Content visible >
+              {(this.props.lan === 'es') ? ('Guarda ' + this.state.credit + ' ya!') : ('Save ' + this.state.credit + ' Now')}
+            </Button.Content>
+          </Button>
+        </div>
+        <div className="clearfix"></div>
       </div>
     )
   }

@@ -7,22 +7,22 @@ import rootReducer from './rootReducer.js'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { userLoggedIn } from './actions/auth'
+import { setUser } from './actions/'
 import decode from 'jwt-decode'
 import thunk from 'redux-thunk'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { hydrate, render } from 'react-dom'
+import api from './api/user'
 
 import App from './components/app'
 
-const lng = (window.navigator.language != 'es') ? 'en' : 'es'
+const lng = window.PRELOADED_INIT_STATE
 
 const initState = (!window.STATE_FROM_SEVER)?
   {
     user: {
-      username: '',
-      gender: null,
       credit: 0,
-      role: 4000
+      role: 1000
     },
     settings: {
       language: lng,
@@ -46,13 +46,13 @@ if(localStorage.catalistaJWT){
   const user = {
     token: localStorage.catalistaJWT,
     email: payload.email,
-    username: payload.username,
-    role: payload.role,
-    credit: payload.credit,
-    gender: payload.gender,
     user_id: payload.user_id,
+    credit: initState.user.credit,
+    role: initState.user.role,
   }
   store.dispatch(userLoggedIn(user))
+  store.dispatch(setUser(user))
+
 }
 
 // -------- ROUTES --------------------------

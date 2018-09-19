@@ -2,6 +2,9 @@ import axios from 'axios'
 
 export default {
   user: {
+// handle: Signup Form => Axios returns Promise to React Component
+    saveUserData: data =>
+      axios.post('/user/data/' + data.data.user_id.toString(), { data } ).then(res => res.data),
 
 // handle: Signup Form => Axios returns Promise to React Component
     signup: credentials =>
@@ -24,6 +27,13 @@ export default {
         console.log('axios promise resolve: ',res.data)
         return res.data
       })
-    }
+    },
+
+// USER DATA: GET, UPDATE, INSERT
+    getInitialUser: id =>
+      axios.get('/user/data/' + id.toString()).then(res => res.data)
+
+
+
   }
 }

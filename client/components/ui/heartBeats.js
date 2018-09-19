@@ -10,7 +10,7 @@ export default class HeartBeats extends React.Component {
             'El color de tu Cardio refleja tu nivel de acceso...'
           ],
         en: ['HeartBeats', 'Level-up',
-            'The color of yout HeartBeats shows your secutiry clearance...'
+            'The color of your HeartBeats shows your security clearance...'
           ]
     }}
   }
@@ -18,7 +18,7 @@ export default class HeartBeats extends React.Component {
     const lan = this.state.lan[this.props.lan]
     let r = Math.floor((this.props.role.toString().slice(0,1))/2)
     if(r > 3) r = 3
-    if(this.props.credit < 10) r = 4
+    //if(this.props.credit < 10) r = 4
     console.log(r)
     const st = ['','credit-big','credit-middle']
     const s = ['large', 'huge', 'big']

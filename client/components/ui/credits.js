@@ -8,10 +8,10 @@ export default class Credits extends React.Component {
     this.state = {
       lan: {
         es: ['Creditos', 'Quiero +',
-            'Los Creditos le compran cosas...'
+            'Los Creditos le compran cosas... Vaya ganandolos'
           ],
         en: ['Credits', 'Get +',
-            'You need these to buy stuff...'
+            'You need these to buy stuff... Lot\'s of it'
           ]
     }}
   }
