@@ -1,5 +1,6 @@
 import { USER_LOGGED_IN } from '../types'
 import api from '../api/user'// API Calls
+import setAuthorizationHeader from '../utils/setAuthorizationHeader'
 
 
 // Action Creators = return Actions = {type, payload}
@@ -27,5 +28,6 @@ export const login = credentials => dispatch =>
   api.user.login(credentials)
   .then(user => {
     localStorage.catalistaJWT = user.token
+    setAuthorizationHeader(user.token)
     dispatch(userLoggedIn(user))
   })

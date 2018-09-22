@@ -98,9 +98,11 @@ ome Page -------------------------------- */
 }
 .quiz {
   border-bottom: dashed 1px #fff;
+  margin-bottom: 14px;
+  padding-bottom: 8px
 }
 .black-question {
-  height: 36px;
+  height: 30px;
   margin: 12px 0;
   padding-left: 8px;
   text-align: left;
@@ -109,7 +111,7 @@ ome Page -------------------------------- */
 }
 .black-question>span {
   margin-left: 2px;
-  line-height: 2.5em;
+  line-height: 2.2em;
 }
 .no-left-corner {
   border-radius: 0px 6px 6px 6px;
@@ -133,7 +135,8 @@ ome Page -------------------------------- */
   color: #fff;
 }
 .answer-disabled {
-  background-color: yellow;
+  background-color: rgba(255,255,255,.7);
+  margin-bottom: 2px;
 }
 /* -- Ladies Style: ----------------------------------- */
 .ladies {
@@ -250,7 +253,7 @@ ome Page -------------------------------- */
   max-width: 28px;
 }
 .credit-big {
-  font-size: 3em;
+  font-size: 2.6em;
   line-height: 2em;
 }
 .credit-middle {

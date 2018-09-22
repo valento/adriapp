@@ -13,6 +13,7 @@ import thunk from 'redux-thunk'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { hydrate, render } from 'react-dom'
 import api from './api/user'
+import setAuthorizationHeader from './utils/setAuthorizationHeader'
 
 import App from './components/app'
 
@@ -41,7 +42,6 @@ const store = createStore(
 )
 
 if(localStorage.catalistaJWT){
-  console.log(localStorage.catalistaJWT)
   const payload = decode(localStorage.catalistaJWT)
   const user = {
     token: localStorage.catalistaJWT,
@@ -50,6 +50,7 @@ if(localStorage.catalistaJWT){
     credit: initState.user.credit,
     role: initState.user.role,
   }
+  setAuthorizationHeader(localStorage.catalistaJWT)
   store.dispatch(userLoggedIn(user))
   store.dispatch(setUser(user))
 

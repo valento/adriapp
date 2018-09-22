@@ -170,7 +170,7 @@ userdb.prototype.signUpUser = function(data) {
   const that = this
   return new Promise((resolve,reject) => {
     if(!data) {
-      throw new TypeError('Empty Object provided for Save')
+      reject('Nothing to save')
     }
     let q = "INSERT INTO users (user_id, username, email, password, role, credit)" +
                     "VALUES ($user_id, $username, $email, $password, $role, $credit)"

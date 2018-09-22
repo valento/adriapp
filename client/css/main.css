@@ -21,11 +21,11 @@ a {
   min-height: 100vh;
   background-color: #fff;
 }
-.location.header {
+.location .header {
   height: 200px;
 }
 .location.bkg {
-  background-size: 160vw auto;
+  background-size: auto 248px;
 }
 .location .header h2 {
   color: #fff;

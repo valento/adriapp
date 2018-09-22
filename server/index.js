@@ -6,17 +6,16 @@ import bodyParser from 'body-parser'
 //import { Provider } from 'react-redux'
 //import { renderToString } from 'react-dom/server'
 //import { StaticRouter } from 'react-router'
-import {template} from './template'
-//
-//import S3 from 'aws-sdk/clients/s3'
-import userdb from './api/user'
-
+import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
-import passport from 'passport'
-import { Strategy as LocalStrategy } from 'passport-local'
 import bcrypt from 'bcrypt-nodejs'
+
+import userRouter from './routes/user'
+import { template } from './template'
+import userdb from './api/user'
 /* -------------------------------------------------------------- */
 const users = []
+dotenv.config({ silent: true })
 
 // ==== PASSPORT ============================================
 /*
@@ -28,7 +27,7 @@ passport.use(new LocalStrategy((user, done) => {
 
 let app = express()
 
-let db = new userdb('./data/aapp.db', 'users')
+let db = new userdb(process.env.DB_USER, 'users')
 //const s3 = new S3({})
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -68,43 +67,7 @@ app.use('/user/data/', (req,res) => {
 */
 
 // ==== AUTHORIZATION ROOTS ==========================
-// ---- Get User Data: ------------------------------
-app.get('/user/data/:user_id', (req,res) =>{
-  var data = ['username','gender','credit','role']
-  db.fetchById( req.params , data ).then( user => {
-    res.status(200).json({
-      user: {
-        username: user.username,
-        credit: user.credit,
-        role: Number(user.role),
-        gender: (user.gender !== null) ? user.gender : -1
-      }
-    })
-  })
-  .catch( error => console.log(error.message))
-})
-
-// ---- Save User Data: ------------------------------
-
-app.post('/user/data/:user_id', (req,res) => {
-  const { data } = req.body.data
-  console.log(data)
-  db.updateUserData(req.params, { data }).then((err,user) => {
-    if(err){
-      res.status(400).json({
-        errors: {
-          global: err.msg
-        }
-      })
-    } else {
-      res.status(200).json({
-        message: {
-          globals: 'Data saved successfully...'
-        }
-      })
-    }
-  })
-})
+app.use('/user', userRouter)
 
 // ==== Check: if user-email exist ===================
 app.get('/auth/test', (req,res) => {
@@ -145,7 +108,7 @@ app.post('/auth/login', (req,res) => {
       const token = jwt.sign({
         email: user.email,
         user_id: user.user_id
-      }, 'mysecrethere')
+      }, process.env.JWT_SECRET)
       res.status(200).json({
         user: {
           token: token,
@@ -187,7 +150,7 @@ app.post('/auth/signup', (req,res) => {
         const token = jwt.sign({
           email: user.email,
           user_id: user.user_id
-        }, 'mysecrethere')
+        }, process.env.JWT_SECRET)
         res.status(200).json({
           user: {
             token: token,
@@ -239,7 +202,8 @@ app.get('*', (req,res) => {
   lng = req.headers['accept-language'].split(',')[0].split('-')[0]
   const lan = (lng.match(/^(es)/))? 'es' : 'en'
   const params = {
-    ln: lan
+    ln: lan,
+    env: ENV
   }
   const markup = template(params)
   res.send(markup)
