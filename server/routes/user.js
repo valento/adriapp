@@ -1,13 +1,15 @@
 import express from 'express'
-import userdb from '../api/user'
+import database from '../api/user'
 import bodyParser from 'body-parser'
-
+import dotenv from 'dotenv'
 import checkAuth from '../middleware/check_auth'
+
+dotenv.config({ silent: true })
 
 const userRouter = express.Router({
   mergeParams: true
 })
-const db = new userdb('./data/aapp.db', 'users')
+const db = new database(process.env.DB, 'users')
 
 userRouter.use(bodyParser.json())
 userRouter.use(bodyParser.urlencoded({extended: true}))

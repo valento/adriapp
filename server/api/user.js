@@ -1,7 +1,7 @@
 import SQLite from 'sqlite3'
 import fs from 'fs'
 
-function userdb(url, table) {
+function database(url, table) {
   try {
     fs.stat(url, (err,res) => {
       if(err){
@@ -21,7 +21,7 @@ function userdb(url, table) {
   }
 }
 
-userdb.prototype.init = function(table) {
+database.prototype.init = function(table) {
   switch(table) {
     case 'users' :
       this.db.serialize(
@@ -82,17 +82,16 @@ userdb.prototype.init = function(table) {
 }
 
 // ------- Login: Check PASSWORD!!! ----------------
-userdb.prototype.locations = function(table) {
+database.prototype.locations = function(table) {
   //
 }
 
-userdb.prototype.login = function(credentials) {
+database.prototype.login = function(credentials) {
   //
 }
 
 // ------ Fetch User: ------------------------------
-userdb.prototype.fetchOne = function(data = [], result_set = ['email']) {
-  console.log('Login: check this email: ', data)
+database.prototype.fetchOne = function(data = [], result_set = ['email']) {
   const that = this
   const sql = `SELECT ${result_set}, username FROM users WHERE email = ?`
   return new Promise ((resolve, reject) => {
@@ -108,8 +107,7 @@ userdb.prototype.fetchOne = function(data = [], result_set = ['email']) {
 
 }
 
-userdb.prototype.fetchById = function(data = [], result_set) {
-  console.log('User Data: check this user: ', data)
+database.prototype.fetchById = function(data = [], result_set) {
   const that = this
   const sql = `SELECT ${result_set} FROM users WHERE user_id = ?`
   return new Promise ((resolve, reject) => {
@@ -126,8 +124,21 @@ userdb.prototype.fetchById = function(data = [], result_set) {
 
 }
 
+database.prototype.fetchLocations = function(){
+  const sql = `SELECT location from locations ORDER BY location`
+  return new Promise ((resolve, reject) => {
+    this.db.all(sql, (err, res) => {
+      if (err) {
+        reject(err)
+      } else (
+        resolve(res)
+      )
+    })
+  })
+}
+
 // ------ Update User Data: -----------------------------
-userdb.prototype.updateUserData = function(data = [], update_set) {
+database.prototype.updateUserData = function(data = [], update_set) {
   const update_fields = []
   for(var key in update_set.data){
     if(key !== 'user_id') {
@@ -151,7 +162,7 @@ userdb.prototype.updateUserData = function(data = [], update_set) {
 }
 
 // On Sign Up record --------------------------------------
-userdb.prototype.signUpUser = function(data) {
+database.prototype.signUpUser = function(data) {
   let username = 'Anon',
       role = 1000,
       credit = 10,
@@ -199,4 +210,4 @@ userdb.prototype.signUpUser = function(data) {
   })
 }
 
-export default userdb
+export default database

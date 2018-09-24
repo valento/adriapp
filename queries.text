@@ -24,3 +24,10 @@ refs varchar default 0);
 
 
 INSERT INTO users (id_user, email,gender,role,lastlog,credit,verifyed) VALUES (100000001, 'valentin.mundrov@gmail.com', 1, 9999, $lastlog, $credit, $verifyed)
+
+Ibiza: 38.911066, 1.427160
+Tel Aviv: 32.065715, 34.773010
+Bogota: 4.668792, -74.054226
+Budapest: 47.490384, 19.066452
+Beirut: 33.895483, 35.473555
+Venice: 45.433945, 12.338029
