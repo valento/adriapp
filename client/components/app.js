@@ -25,7 +25,7 @@ class App extends React.Component {
         <Route location={this.props.location} path='/'
           render={() => (<Top />)}
         />
-        <Route location={this.props.location} exact path='/' exact component={Home} />
+        <Route location={this.props.location} path='/' exact component={Home} />
         <Route location={this.props.location} path='/branches/:city' component={BranchPage}/>
         <Route location={this.props.location} path='/live' exact component={LivePage} />
         <Route location={this.props.location} path='/ladies' component={LadiesPage} />

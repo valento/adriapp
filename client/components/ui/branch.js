@@ -1,30 +1,39 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Icon } from 'semantic-ui-react'
-import PropTypes from 'prop-types'
+import { getLocations } from '../../actions/'
 // ------- Actions -----------------------------------------
 
 // ---------------------------------------------------------
 
 class Branch extends React.Component {
 
-  render(){
-    const dest = ['Beirut','Budapest','Ibiza','Mykonos','Tel Aviv','Venice']
+  componentDidMount() {
+    this.props.getLocations()
+  }
 
+  onChange(e) {
+    this.props.onChange()
+  }
+
+  render() {
+    console.log(this.props)
+    const { locations } = this.props
+    //const local = locations[2].location
     return (
       <div className='row branches'>
         <Icon color='grey' size='large' name='world'/>:
         <div>
           <select onChange={this.props.onChange} name='global' value={this.props.branch}>
-            {dest.map((d, key) => {
+            {
+              locations.map((loc, key) => {
                 return (
-                  <option
-                    key={key}
-                    value={d}>
-                    {d}
-                  </option>
+                  <option key={key} value={key}>{loc.location}</option>
                 )
               })
+            }
             }
           </select>
         </div>
@@ -35,11 +44,18 @@ class Branch extends React.Component {
       </div>
     )
   }
+
 }
 
 Branch.propTypes = {
-  branch: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  locations: PropTypes.array.isRequired,
+  getLocations: PropTypes.func.isRequired
 }
 
-export default Branch
+const mapStateToProps = state => {
+  return {
+    locations: state.locations
+  }
+}
+
+export default connect( mapStateToProps, { getLocations } )(Branch)

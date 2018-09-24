@@ -25,7 +25,7 @@ class Top extends React.Component {
           <Sign color='#cc0000' size='24' fontsize='24px' />
         </Link>
         <div className="col-6 col-md-6">
-          <Branch branch={this.props.branch} onChange={this.onChange} />
+          <Branch onChange={this.onChange} branch={this.props.branch}/>
         </div>
         <div className="col-3 col-md-3">
           <Account view={0} live={true}
@@ -39,10 +39,10 @@ class Top extends React.Component {
 }
 
 Top.propTypes = {
-  branch: PropTypes.string.isRequired,
+  branch: PropTypes.number.isRequired,
   setBranchLocation: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  role: PropTypes.number.isRequired
+  role: PropTypes.number.isRequired,
 }
 
 const mapStateToProps = state => {
@@ -51,7 +51,7 @@ const mapStateToProps = state => {
     branch: state.settings.branch,
     credit: state.user.credit,
     lan: state.settings.language,
-    role: state.user.role
+    role: state.user.role,
   }
 }
 

@@ -27,8 +27,9 @@ const initState = (!window.STATE_FROM_SEVER)?
     },
     settings: {
       language: lng,
-      branch: 'Beirut'
-    }
+      branch: 2
+    },
+    locations: []
   } : window.STATE_FROM_SEVER
 
 // ----- SET REDUX -----------------------------------
@@ -48,7 +49,7 @@ if(localStorage.catalistaJWT){
     email: payload.email,
     user_id: payload.user_id,
     credit: initState.user.credit,
-    role: payload.role,
+    role: Number(payload.role),
   }
   setAuthorizationHeader(localStorage.catalistaJWT)
   store.dispatch(userLoggedIn(user))

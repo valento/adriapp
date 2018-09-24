@@ -1,5 +1,6 @@
 import {
   BRANCH_CHANGED,
+  LOCATIONS_SET,
   LANGUAGE_CHANGED,
   GENDER_CHECKED,
   USER_ROLE,
@@ -9,12 +10,18 @@ import {
   USER_SET
 } from '../types'
 import api from '../api/user'// API Calls
+import locationsApi from '../api/locations'
 
 // Action Creators: return Actions = {type, payload}
 
 export const setBranchLocation = branch => ({
   type: BRANCH_CHANGED,
   branch
+})
+
+export const setLocations = data => ({
+  type: LOCATIONS_SET,
+  data
 })
 
 export const setInitUser = user => ({
@@ -36,6 +43,13 @@ export const setUserCredit = user => ({
   type: USER_CREDIT,
   user
 })
+
+export const getLocations = () => dispatch => {
+  locationsApi.locations.getAll().then( data => {
+    console.log('Client API: ', data);
+    dispatch(setLocations( data ))
+  })
+}
 
 export const setUser = user => dispatch => {
   api.user.getInitialUser(user.user_id).then( data => {

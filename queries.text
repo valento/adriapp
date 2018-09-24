@@ -31,3 +31,19 @@ Bogota: 4.668792, -74.054226
 Budapest: 47.490384, 19.066452
 Beirut: 33.895483, 35.473555
 Venice: 45.433945, 12.338029
+
+
+CREATE TABLE locations (
+location_id INTEGER PRIMARY KEY UNIQUE NOT NULL,
+location TEXT NOT NULL UNIQUE,
+lat REAL NOT NULL,
+lng REAL NOT NULL,
+votes INTEGER DEFAULT 0
+);
+
+insert into locations (location,lat,lng) values ('Venice',45.433945,12.338029);
+insert into locations (location,lat,lng) values ('Ibiza',38.911066,1.427160);
+insert into locations (location,lat,lng) values ('Bogota',4.668792,-74.054226);
+insert into locations (location,lat,lng) values ('Budapest',47.490384,19.066452);
+insert into locations (location,lat,lng) values ('Tel Aviv',32.065715,34.773010);
+insert into locations (location,lat,lng) values ('Beirut',33.894741,35.469779);

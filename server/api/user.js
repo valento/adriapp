@@ -8,7 +8,7 @@ function database(url, table) {
         throw err
       } else {
         this.db = new SQLite.Database(url, err => {
-          if(!err) console.log('DB: Success')
+          if(!err) console.log('Users DB: Success')
           if(table) {
             //this.init(table)
           }

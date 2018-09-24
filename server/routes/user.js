@@ -13,9 +13,9 @@ const db = new database(process.env.DB, 'users')
 
 userRouter.use(bodyParser.json())
 userRouter.use(bodyParser.urlencoded({extended: true}))
-userRouter.all('*', checkAuth)
+//userRouter.all('*', checkAuth)
 // ---- Get User Data: ------------------------------
-userRouter.get('/data/:user_id', (req, res, next) => {
+userRouter.get('/data/:user_id', checkAuth, (req, res, next) => {
   var data = ['username','gender','credit','role']
   db.fetchById( req.params , data ).then( user => {
     res.status(200).json({
@@ -32,7 +32,7 @@ userRouter.get('/data/:user_id', (req, res, next) => {
 
 // ---- Save User Data: ------------------------------
 
-userRouter.post('/data/:user_id', (req, res, next) => {
+userRouter.post('/data/:user_id', checkAuth, (req, res, next) => {
   const { data } = req.body.data
   console.log(data)
   db.updateUserData(req.params, { data }).then((err,user) => {

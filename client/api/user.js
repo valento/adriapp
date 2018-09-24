@@ -22,7 +22,6 @@ export default {
 
 // handle: Check email (Exists)? Login : Signup
     checkMail: data => {
-      console.log('Client API: ', data)
       const { email } = data
       return axios.get('/auth/test', { params: { email } }).then(res => {
         console.log('axios promise resolve: ',res.data)

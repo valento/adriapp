@@ -43,11 +43,11 @@ if(ENV === 'development'){
   app.use('/dist', express.static(path.join(__dirname, '../dist')))
 }
 
-// ==== USER DATA ROUTES ==========================
+// ==== USER DATA ROUTES ==============================
 app.use('/user', userRouter)
 // ==== AUTHORIZATION ROUTES ==========================
 app.use('/auth', authRouter)
-// ==== TIMELINE ROUTES ==========================
+// ==== TIMELINE ROUTES ===============================
 app.use('/data', dataRouter)
 // ----------------------------------------------------------
 
