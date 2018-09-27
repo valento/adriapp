@@ -5,7 +5,8 @@ import {
   USER_ROLE_UPGRADED,
   USER_CREDIT,
   USER_CREDIT_CHANGED,
-  USER_SET
+  USER_SET,
+  USER_UPDATED
 } from '../types'
 
 export default function user(state={}, action) {
@@ -23,11 +24,9 @@ export default function user(state={}, action) {
     case USER_CREDIT_CHANGED:
       return {...state, credit: action.user.credit }
     case USER_SET:
-      return {...state,
-        credit: action.user.credit,
-        role: action.user.role,
-        username: action.user.username
-      }
+      return {...state, ...action.user}
+    case USER_UPDATED:
+      return {...state, ...action.user}
     default: return state
   }
 }

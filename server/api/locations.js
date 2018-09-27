@@ -22,7 +22,7 @@ function database(url, table) {
 }
 
 database.prototype.fetchLocations = function(table) {
-  const sql = `SELECT location FROM ${table} ORDER BY location`
+  const sql = `SELECT location, location_id FROM ${table} ORDER BY location`
   return new Promise((resolve, reject) => {
     this.db.all(sql, (err,res) => {
       if(err){

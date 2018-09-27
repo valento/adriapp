@@ -30,8 +30,8 @@ export default {
     },
 
 // USER DATA: GET, UPDATE, INSERT
-    getInitialUser: id =>
-      axios.get('/user/data/' + id.toString()).then(res => res.data)
+    getInitialUser: () => //id
+      axios.get('/user/data/').then(res => res.data)
 
 
 

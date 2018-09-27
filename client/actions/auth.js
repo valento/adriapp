@@ -4,7 +4,6 @@ import setAuthorizationHeader from '../utils/setAuthorizationHeader'
 
 
 // Action Creators = return Actions = {type, payload}
-
 export const userSignUpRequest = user => {
   return dispatch => {
     // use the api better:
@@ -21,7 +20,11 @@ export const userLoggedIn = user => ({
 // ---- SIGNUP: New Users -----------------------------
 export const signup = credentials => dispatch =>
   api.user.signup(credentials)
-  .then(user => dispatch(userLoggedIn(user)))
+  .then(user => {
+    localStorage.catalistaJWT = user.token
+    setAuthorizationHeader(user.token)
+    dispatch(userLoggedIn(user))
+  })
 
 // ---- LOGIN: Old Users ------------------------------
 export const login = credentials => dispatch =>

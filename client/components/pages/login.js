@@ -34,7 +34,6 @@ class LoginPage extends React.Component {
           onChecked={this.props.onChecked}
           lan={this.props.lan}
           onLadies={this.onLadies}
-          gender={this.props.gender}
         />
       </div>
     )
@@ -47,8 +46,7 @@ LoginPage.propTypes = {
   }).isRequired,
   login: PropTypes.func.isRequired,
   signup: PropTypes.func.isRequired,
-  lan: PropTypes.string.isRequired,
-  setGender: PropTypes.func.isRequired
+  lan: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({

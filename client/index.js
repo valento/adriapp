@@ -49,7 +49,7 @@ if(localStorage.catalistaJWT){
     email: payload.email,
     user_id: payload.user_id,
     credit: initState.user.credit,
-    role: Number(payload.role),
+    role: payload.role
   }
   setAuthorizationHeader(localStorage.catalistaJWT)
   store.dispatch(userLoggedIn(user))

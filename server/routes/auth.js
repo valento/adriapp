@@ -123,7 +123,8 @@ authRouter.post('/signup', (req,res) => {
             token: token,
             username: user.username,
             gender: user.gender,
-            credit: user.credit
+            credit: user.credit,
+            role: user.role
           }
         })
       })

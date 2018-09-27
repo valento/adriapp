@@ -38,7 +38,7 @@ class GamesPage extends React.Component {
           saveCredit={this.saveCredit}
           user_id={this.props.user_id}
         />
-        <Button color='black' inverted floated='right'>{lan[4]+' >>'}</Button>
+        <Button color='black' inverted floated='right' content={lan[4]} icon='arrow right' labelPosition='right' />
       </div>
     )
   }

@@ -14,7 +14,7 @@ var _fs2 = _interopRequireDefault(_fs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function userdb(url, table) {
+function database(url, table) {
   var _this = this;
 
   try {
@@ -23,7 +23,7 @@ function userdb(url, table) {
         throw err;
       } else {
         _this.db = new _sqlite2.default.Database(url, function (err) {
-          if (!err) console.log('DB: Success');
+          if (!err) console.log('Users DB: Success');
           if (table) {
             //this.init(table)
           }
@@ -35,7 +35,7 @@ function userdb(url, table) {
   }
 }
 
-userdb.prototype.init = function (table) {
+database.prototype.init = function (table) {
   var _this2 = this;
 
   switch (table) {
@@ -79,20 +79,19 @@ userdb.prototype.init = function (table) {
 };
 
 // ------- Login: Check PASSWORD!!! ----------------
-userdb.prototype.locations = function (table) {
+database.prototype.locations = function (table) {
   //
 };
 
-userdb.prototype.login = function (credentials) {}
+database.prototype.login = function (credentials) {}
 //
 
 
 // ------ Fetch User: ------------------------------
-;userdb.prototype.fetchOne = function () {
+;database.prototype.fetchOne = function () {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var result_set = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ['email'];
 
-  console.log('Login: check this email: ', data);
   var that = this;
   var sql = 'SELECT ' + result_set + ', username FROM users WHERE email = ?';
   return new Promise(function (resolve, reject) {
@@ -107,11 +106,10 @@ userdb.prototype.login = function (credentials) {}
   });
 };
 
-userdb.prototype.fetchById = function () {
+database.prototype.fetchById = function () {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var result_set = arguments[1];
 
-  console.log('User Data: check this user: ', data);
   var that = this;
   var sql = 'SELECT ' + result_set + ' FROM users WHERE user_id = ?';
   return new Promise(function (resolve, reject) {
@@ -128,7 +126,7 @@ userdb.prototype.fetchById = function () {
 };
 
 // ------ Update User Data: -----------------------------
-userdb.prototype.updateUserData = function () {
+database.prototype.updateUserData = function () {
   var _this3 = this;
 
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -156,7 +154,7 @@ userdb.prototype.updateUserData = function () {
 };
 
 // On Sign Up record --------------------------------------
-userdb.prototype.signUpUser = function (data) {
+database.prototype.signUpUser = function (data) {
   var _this4 = this;
 
   var username = 'Anon',
@@ -171,7 +169,7 @@ userdb.prototype.signUpUser = function (data) {
   var that = this;
   return new Promise(function (resolve, reject) {
     if (!data) {
-      throw new TypeError('Empty Object provided for Save');
+      reject('Nothing to save');
     }
     var q = "INSERT INTO users (user_id, username, email, password, role, credit)" + "VALUES ($user_id, $username, $email, $password, $role, $credit)";
     var params = {
@@ -198,5 +196,5 @@ userdb.prototype.signUpUser = function (data) {
   });
 };
 
-exports.default = userdb;
+exports.default = database;
 //# sourceMappingURL=user.js.map

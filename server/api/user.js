@@ -108,10 +108,11 @@ database.prototype.fetchOne = function(data = [], result_set = ['email']) {
 }
 
 database.prototype.fetchById = function(data = [], result_set) {
+  console.log(data)
   const that = this
   const sql = `SELECT ${result_set} FROM users WHERE user_id = ?`
   return new Promise ((resolve, reject) => {
-    that.db.get(sql, [ data.user_id ], (err,row) => {
+    that.db.get(sql, [ data ], (err,row) => {
       if(err){
         reject(err)
       } else {
@@ -122,19 +123,6 @@ database.prototype.fetchById = function(data = [], result_set) {
     })
   })
 
-}
-
-database.prototype.fetchLocations = function(){
-  const sql = `SELECT location from locations ORDER BY location`
-  return new Promise ((resolve, reject) => {
-    this.db.all(sql, (err, res) => {
-      if (err) {
-        reject(err)
-      } else (
-        resolve(res)
-      )
-    })
-  })
 }
 
 // ------ Update User Data: -----------------------------
@@ -153,7 +141,6 @@ database.prototype.updateUserData = function(data = [], update_set) {
       if(err){
         reject(err)
       } else {
-//console.log(this)
         resolve()
       }
     })

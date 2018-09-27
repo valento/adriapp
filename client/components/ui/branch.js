@@ -30,7 +30,7 @@ class Branch extends React.Component {
             {
               locations.map((loc, key) => {
                 return (
-                  <option key={key} value={key}>{loc.location}</option>
+                  <option key={key} value={loc.location_id}>{loc.location}</option>
                 )
               })
             }

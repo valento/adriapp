@@ -1,9 +1,10 @@
 import serialize from 'serialize-javascript'
 
 export const template = function(params) {//{ params, body, initialState }
-console.log(params)
+const env = (params.env === 'production')? '' : 'DEV'
 const ENTRY = (params.env === 'production')? '../dist/bundle.app.js' : 'main.js'
 const CSS = (params.env === 'production')? '../dist/main.css' : 'client/css/main.css'
+console.log(ENTRY)
 const lan = params.ln
 /*
   `<!doctype html>
@@ -53,7 +54,7 @@ return (`<!DOCTYPE html>
     <body>
 
       <div id="app" class="shadow">
-        <h1>DEV</h1>
+        <h1>${env}</h1>
       </div>
 
       <script type="module" src=${ENTRY}></script>
