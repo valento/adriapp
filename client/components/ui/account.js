@@ -12,9 +12,15 @@ export default class Account extends React.Component {
   render() {
     return (
       <div className='dash credit'>
-          <Link to='/account'>
+        {(this.props.isAuthenticated)?
+          (<Link to='/account'>
             <HeartBeats credit={this.props.credit} view={this.props.view} role={this.props.role}/>
-          </Link>
+          </Link>):
+          <span>
+            <HeartBeats credit={this.props.credit} view={this.props.view} role={this.props.role}/>
+          </span>
+        }
+
       </div>
     )
   }

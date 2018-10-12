@@ -24,6 +24,10 @@ var _check_auth = require('../middleware/check_auth');
 
 var _check_auth2 = _interopRequireDefault(_check_auth);
 
+var _get_user_id = require('../middleware/get_user_id');
+
+var _get_user_id2 = _interopRequireDefault(_get_user_id);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config({ silent: true });
@@ -37,9 +41,9 @@ userRouter.use(_bodyParser2.default.json());
 userRouter.use(_bodyParser2.default.urlencoded({ extended: true }));
 //userRouter.all('*', checkAuth)
 // ---- Get User Data: ------------------------------
-userRouter.get('/data/:user_id', _check_auth2.default, function (req, res, next) {
+userRouter.get('/data/', _get_user_id2.default, function (req, res, next) {
   var data = ['username', 'gender', 'credit', 'role'];
-  db.fetchById(req.params, data).then(function (user) {
+  db.fetchById(req.user_id, data).then(function (user) {
     res.status(200).json({
       user: {
         username: user.username,
@@ -58,7 +62,7 @@ userRouter.get('/data/:user_id', _check_auth2.default, function (req, res, next)
 userRouter.post('/data/:user_id', _check_auth2.default, function (req, res, next) {
   var data = req.body.data.data;
 
-  console.log(data);
+
   db.updateUserData(req.params, { data: data }).then(function (err, user) {
     if (err) {
       res.status(400).json({
@@ -68,9 +72,7 @@ userRouter.post('/data/:user_id', _check_auth2.default, function (req, res, next
       });
     } else {
       res.status(200).json({
-        message: {
-          globals: 'Data saved successfully...'
-        }
+        changes: true
       });
     }
   });

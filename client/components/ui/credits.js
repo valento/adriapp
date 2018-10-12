@@ -29,7 +29,7 @@ export default class Credits extends React.Component {
               <div className={s[this.props.view]}>
                 {'{' + this.props.credit + '}'}
                 <p>{lan[0]}</p>
-                <Link to='/games'>
+                <Link to='/credits'>
                   <Button size='tiny' color='blue' content={lan[1]} />
                 </Link>
               </div>

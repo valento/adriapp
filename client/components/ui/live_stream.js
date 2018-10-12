@@ -21,7 +21,7 @@ class Live extends React.Component {
             color={(this.state.live)? 'red' : 'grey'}
             size='large'
           />
-          <div className={this.props.live ? 'label' : 'hidden'}>LIVE</div>
+          <div className={this.props.live ? 'video-label' : 'hidden'}>LIVE</div>
         </Link>
       </div>
     )

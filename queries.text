@@ -22,10 +22,7 @@ instagram_id integer,
 fb_id integer,
 refs integet default 0);
 
-
-
-
-INSERT INTO users (id_user, email,gender,role,lastlog,credit,verifyed) VALUES (100000001, 'valentin.mundrov@gmail.com', 1, 9999, $lastlog, $credit, $verifyed)
+// Locations Table Data
 
 Ibiza: 38.911066, 1.427160
 Tel Aviv: 32.065715, 34.773010
@@ -38,6 +35,7 @@ Venice: 45.433945, 12.338029
 CREATE TABLE locations (
 location_id INTEGER PRIMARY KEY UNIQUE NOT NULL,
 location TEXT NOT NULL UNIQUE,
+active INTEGER DEFAULT 1,
 lat REAL NOT NULL,
 lng REAL NOT NULL,
 votes INTEGER DEFAULT 0
@@ -49,3 +47,78 @@ insert into locations (location,lat,lng) values ('Bogota',4.668792,-74.054226);
 insert into locations (location,lat,lng) values ('Budapest',47.490384,19.066452);
 insert into locations (location,lat,lng) values ('Tel Aviv',32.065715,34.773010);
 insert into locations (location,lat,lng) values ('Beirut',33.894741,35.469779);
+
+// EVENTS Table:
+CREATE TABLE events (
+event_id integer unique not null,
+location_id integer not null,
+resource_id integer not null,
+date text not null,
+type integer not null,
+state integer default 1,
+campaign_id integer,
+followers varchar,
+title varchar,
+PRIMARY KEY (event_id, location_id),
+FOREIGN KEY (location_id)
+REFERENCES locations (location_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+FOREIGN KEY (resource_id) REFERENCES resources (resource_id) ON DELETE CASCADE ON UPDATE NO ACTION
+);
+
+// TIMELINE Table:
+
+CREATE TABLE timeline (
+entry_id INTEGER PRIMARY KEY UNIQUE NOT NULL,
+location_id INTEGER,
+day TEXT DEFAULT (DATETIME('now','localtime')),
+timestamp TEXT DEFAULT current_timestamp,
+title TEXT DEFAULT 'Just one more day...',
+description TEXT,
+category INTEGER DEFAULT,
+access_ctrl INTEGER DEFAULT 1199,
+FOREIGN KEY (location_id) REFERENCES locations (location_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO timeline (node_id, location_id, date, timestamp, access_ctrl) VALUES (2);
+
+# CREATE TABLE entries (
+# entry_id INTEGER PRIMARY KEY UNIQUE NOT NULL,
+# timestamp TEXT DEFAULT current_timestamp,
+# node_id INTEGER PRIMARY KEY NO NULL,
+# FOREIGN KEY (node_id) REFERENCES timeline (node_id)
+# );
+
+CREATE TABLE resources (
+resource_id INTEGER PRIMARY KEY UNIQUE NOT NULL,
+entry_id INTEGER,
+category INTEGER NOT NULL,
+arn INTEGER,
+gender INTEGER DEFAULT -1,
+price INTEGER,
+access_ctrl INTEGER DEFAULT 1000,
+FOREIGN KEY (entry_id) REFERENCES entries (entry_id) ON DELETE CASCADE ON UPDATE NO ACTION
+);
+
+CREATE TABLE likes (
+user_id INTEGER PRIMARY KEY,
+resource_id INTEGER PRIMARY KEY,
+like INTEGER,
+FOREIGN KEY (resource_id) REFERENCES resources (resource_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+);
+
+CREATE TABLE tags (
+user_id INTEGER PRIMARY KEY,
+resource_id INTEGER PRIMARY KEY,
+tag TEXT,
+FOREIGN KEY (resource_id) REFERENCES resources (resource_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+);
+
+CREATE TABLE comments (
+user_id INTEGER PRIMARY KEY,
+resource_id INTEGER PRIMARY KEY,
+comment TEXT,
+FOREIGN KEY (resource_id) REFERENCES resources (resource_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+);

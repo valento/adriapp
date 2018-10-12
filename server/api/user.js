@@ -9,75 +9,12 @@ function database(url, table) {
       } else {
         this.db = new SQLite.Database(url, err => {
           if(!err) console.log('Users DB: Success')
-          if(table) {
-            //this.init(table)
-          }
         })
       }
     })
   }
   catch(err) {
     console.log('Wrong DB: ' + err.message)
-  }
-}
-
-database.prototype.init = function(table) {
-  switch(table) {
-    case 'users' :
-      this.db.serialize(
-        () => {
-          this.db.run("CREATE TABLE if not exists users (" +
-          "user_id INTEGER PRIMARY KEY NOT NULL," +
-          "email VARCHAR NOT NULL UNIQUE," +
-          "password VARCHAR NOT NULL UNIQUE," +
-          "verifyed INTEGER DEFAULT 0," +
-          "first TEXT," +
-          "last TEXT," +
-          "username VARCHAR," +
-          "gender INTEGER," +
-          "lastlog INTEGER," +// DATE: last login date to calculate rating/activitie
-          "credit REAL DEFAULT 10," +//20 initial, buy on PayPal
-          "payment_metod INTEGER," +// default payment metod
-          "rating REAL DEFAULT 10," +
-          "role VARCHAR(4) DEFAULT 1000," +//role access permissions
-          "location VARCHAR(12)," +// Lat,Lng
-          "country VARCHAR(5)," +
-          "likes REAL DEFAULT 0," +
-          "id_kickstart VARCHAR," +//access to LiveParty content
-          "id_indie VARCHAR," +//access to LiveParty content
-          "id_insta VARCHAR," +//passport-session
-          "id_fb VARCHAR," +//passport-session
-          "refs VARCHAR" +// referential program ??: How To
-          ");")
-
-        const q = this.db.prepare("INSERT INTO users (user_id,email, gender, role, lastlog, credit)" +
-                        "VALUES ($user_id, $email, $gender, $role, $lastlog, $credit)")
-        const params = {
-          $user_id: 100000001,
-          $email: 'valentin.mundrov@gmail.com',
-          $gender: 1,
-          $role: 9999,
-          $lastlog: Date.now(),
-          $credit: 999
-        }
-
-      q.run(params)
-      q.finalize()
-    }
-      //
-    )
-
-    break
-    case 'events' :
-      this.db.run("CREATE TABLE if not exists events (" +
-        "id VARCHAR," +
-        "state INTEGER," +//(0=promo, 1=confirmed-comingup, 2=LiveNow!, 3=onKickstarter)
-        "event VARCHAR," +//(for LIVE: Time included)
-        "location VARCHAR," +
-        "venue VARCHAR," +
-        "time VARCHAR" +
-        ");")
-    break
   }
 }
 

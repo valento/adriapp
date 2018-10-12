@@ -38,7 +38,7 @@ function database(url, table) {
 database.prototype.fetchLocations = function (table) {
   var _this2 = this;
 
-  var sql = 'SELECT location, location_id FROM ' + table + ' ORDER BY location';
+  var sql = 'SELECT location, location_id, active, votes FROM ' + table + ' ORDER BY location';
   return new Promise(function (resolve, reject) {
     _this2.db.all(sql, function (err, res) {
       if (err) {

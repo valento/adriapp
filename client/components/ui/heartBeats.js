@@ -32,7 +32,7 @@ export default class HeartBeats extends React.Component {
                 color={c[r]}
                 size={s[this.props.view]}
               />
-              <div className='label'>{this.props.credit}</div>
+              <div className='menu-icon-label'>{this.props.credit}</div>
             </div>
           ) : (
             <div>

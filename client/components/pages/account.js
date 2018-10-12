@@ -12,30 +12,30 @@ class Account extends React.Component {
     this.state = {
       activeIndex: 0,
       lan: {
-        es: ['!Hola, ', 'Aqui esta su balance: '
+        es: ['!Hola, ', 'Aquí está su balance: '
         ],
         en: ['Hi, ', 'Here\'s what you have: '
         ]
       },
       faq: {
-        es: [{q:'Para que los Creditos?',
-              a:'Cada accion en este app le \'costara\' Creditos! Usted los necesita en gran cantidad y debe trbajar duro para conseguir mas en cada oportunidad!'
+        es: [{q:'"Para qué los Creditos?',
+              a:'Cada acción en este app le \'costará\' Creditos! Usted los necesita en gran cantidad y debe trbajar duro para conseguir más en cada oportunidad!'
             },
-            {q:'Y que es el Latido',
-              a:'El acceso del contenido en este app es regulado por niveles - Miembro, Fan, Capitan, Mayor y VIP. El Latido de su corazon mide el nivel de acceso que Usted tiene. Debe subir la adrenalina para acesar lo mas emocionante!'
+            {q:'"Qué es el Latido',
+              a:'El acceso del contenido en mi app es regulado por niveles - Miembro, Fan y VIP. El Latido de su corazón mide el nivel de acceso que Usted tiene. Debes subir la adrenalina para accesar lo más emocionante!'
             },
-            {q: 'Donde conseguir mas Creditos!?',
-              a: 'Hay dos maneras: comprandolos por cuenta de PayPal o jugando cada juego que se le atraviesa... Usted encontrara suficiente de esos. Sin miedo - soy generosa!'
+            {q: 'Donde conseguir más Creditos!?',
+              a: 'Hay dos maneras: comprandolos por cuenta de PayPal o jugando cada juego que se le atraviesa... Usted encontrará suficiente de juegos. No tengas miedo - soy generosa!'
             }
         ],
         en: [{q: 'What\'s the Credits for?',
               a: 'You\'ll need Credits all the time! We\'ll give you enough - but you\'ll have to work hard for the rest if you don\'t wanna miss the most exciting stuff!'
             },
             {q:'Why the Heartbeats for?',
-              a:'You access every content in this application with Role Based Access Control. There is 5 levels - Member, Fan, Captain, Major and VIP. Guess, you\'ve got the picture already - you only access what you can! You should Level-up your Heartbeats in order to see the most breathtaking stuff'
+              a:'You access every content in this application with Role Based Access Control. There is 3 levels - Member, Fan and VIP. There is also 100Club Membership, but that\'s another story! Guess, you\'ve got the picture already - you only access what you can! You should Level-up your Heartbeats in order to see the most breathtaking stuff'
             },
             {q: 'How to Get more Credits!?',
-              a: 'You can buy Credits anytime trough your Account Page... OR: you can just play for Credits - soon you\'ll see Games to play. Don\'t be worried - I\'m genereous enough!'}
+              a: 'You can easily buy Credits anytime trough your Account Page... OR: you can just play for Credits - you\'ll see plenty of Games to play. Don\'t be worried - I\'m genereous enough!'}
         ]
       }
     }

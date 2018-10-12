@@ -14,8 +14,14 @@ a {
   text-decoration: none;
   color: #fff;
 }
-
-/* ------- PAGEs Styles: --------------------------------- */
+.home {
+  min-height: 100vh;
+}
+.home .cover {
+  min-height: inherit;
+  background-color: rgba(0,0,0,.6)
+}
+/* ------- LOCATIONS PAGEs Styles: --------------------------------- */
 .location {
   width: 100vw;
   min-height: 100vh;
@@ -50,12 +56,26 @@ a {
 .ibiza {
   background: #e6ebed url(img/ibiza.jpg) no-repeat top center fixed;
 }
-/* -- Any HOME Page ------------------------------------ */
-.home {
-  background: #000 url(img/img_000.jpg) no-repeat center fixed
+
+/* -- HOME PAGES: ------------------------------------------------------ */
+/* -- CREDITS Home Page: ------------------------------ */
+.credits {
+  background: url(img/catalista_ladies.jpg) no-repeat top center fixed;
+  background-size: cover;
+  color: white;
 }
-/* -- USER
-ome Page -------------------------------- */
+.credits .cover {
+  padding: 10px;
+  /*background-color: rgba(68,14,0,.8)*/
+}
+.cover span {
+  display: block;
+}
+.cover .btn {
+  width: 100vw;
+  text-align: center;
+}
+/* -- USER Home Page -------------------------------- */
 .account {
   color: #fff;
   text-align: center;
@@ -67,7 +87,7 @@ ome Page -------------------------------- */
   min-height: 100vh;
   padding-top: 6px;
 }
-/* -- GAME Page --------------------------------------- */
+/* -- GAMEs Home Page --------------------------------------- */
 .game {
   padding: 10px 15px;
   background-image: url(img/game_man.jpg);
@@ -138,7 +158,7 @@ ome Page -------------------------------- */
   background-color: rgba(255,255,255,.7);
   margin-bottom: 2px;
 }
-/* -- Ladies Style: ----------------------------------- */
+/* -- LADIES Home Page: ----------------------------------- */
 .ladies {
   background: #e6ebed url(img/ladies.jpg) no-repeat bottom center fixed;
   background-size: auto 100vh;
@@ -238,7 +258,7 @@ ome Page -------------------------------- */
 .video .off {
   color: #666
 }
-.label {
+.menu-icon-label {
   position: relative;
   max-width: 34px;
   top: -8px;
@@ -306,10 +326,13 @@ ome Page -------------------------------- */
 /* --- These are genereal styles... but they customize by Chapter:
 ------ Branch Pages, Home Page....
 */
-.service {
+.branch-header {
   height: 180px;
   text-align: center;
   color: #fff;
+}
+.branch-header .city {
+  margin-top: 40px;
 }
 /* ---------------------------------------------- */
 .opening {
@@ -520,6 +543,14 @@ hr {
 }
 .hidden {
   display: none
+}
+
+.total {
+  margin: 8px 0;
+}
+.sbmt {
+  margin: 8px auto;
+  text-align: center;
 }
 
 /* ====== ANIMATIONS: ===================================== */

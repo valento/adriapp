@@ -58,7 +58,7 @@ if(localStorage.catalistaJWT){
 }
 
 // -------- ROUTES --------------------------
-const routes = (
+const Routes = (
   <Provider store={store}>
     <Router>
       <Route component={App} />
@@ -66,4 +66,4 @@ const routes = (
   </Provider>
 )
 
-render(routes, document.getElementById('app'))
+render(Routes, document.getElementById('app'))

@@ -50,7 +50,7 @@ class Bquiz extends React.Component {
             n: 'Life is too short to learn Chinese, but she speaks with many, little or no words at all... Gan Bei!'},
           {q: 'She is to shower or to bath ', o: ['S','B'] , a: 1, win: 4,
             y: 'Shower, of course! - it\'s bigger... better',
-            n: 'Shower, of course! - it\'s bigger... better'},
+            n: 'Wrong! - shower, of course! - it\'s bigger... better'},
           {q: 'Know what when with her ', a: -1, win: 4,
             y: 'Yeah... that was tough one. No body knows what but it certainly will!... plus - you still get 4 credits',
             n: 'Yeah... that was tough one. No body knows what but it certainly will!... plus - you still get 4 credits'},
@@ -58,10 +58,10 @@ class Bquiz extends React.Component {
             y: '...even more - she can catalize with books, images, stories, reality... and imagination',
             n: '?!. Wrong button? Yes, she does - she can catalyze with books, images, stories, reality... and imagination'},
           {q: 'She can beat Chuck Noris ' , a: -1, win: 4,
-            y: '?! That\'s not fair... She is to Catalyze, not to fight you... So - he\'ll just give up... plus - you still get 4 credits',
-            n: '?! True! She is to Catalyze, not to fight you... So - he\'ll just give up... plus - you still get 4 credits'},
+            y: '?! That\'s not fair... She is to Catalyze, not to fight... Maybe, he\'ll just give up... plus - you still get 4 credits',
+            n: '?! True! She is to Catalyze, not to fight... Eventually, he\'ll just give up... plus - you still get 4 credits'},
           {q: 'She likes men ' , a: 0, win: 4,
-            y: 'Incorrect! She dislikes anything demanding, requiering, insisting... Clear enough?',
+            y: 'Negative! She dislikes anything demanding, requiering, insisting... Clear enough?',
             n: 'Correct! She dislikes anything demanding, requiering, insisting... You\'ve got that right'}
         ]
       }
@@ -105,7 +105,7 @@ class Bquiz extends React.Component {
               index={i}
             />
         )}
-        <div>
+        <div className='total'>
           <Button primary floated='right'
             onClick={this.saveCredit}
             disabled={(this.state.credit > this.initialState.credit) ? false : true}
