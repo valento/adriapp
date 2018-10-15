@@ -20,7 +20,7 @@ let app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-let lng
+let lng, agent
 const PORT = process.env.PORT || 8000
 const ENV = process.env.NODE_ENV || 'development'
 console.log(ENV)
@@ -61,10 +61,12 @@ app.get('/dist/img/:id', (req,res) => {
 // === ENTRY Route ===========================================
 app.get('*', (req,res) => {
   lng = req.headers['accept-language'].split(',')[0].split('-')[0]
+  agent = (req.headers['user-agent']).match(/(Mobile)/g)
   const lan = (lng.match(/^(es)/))? 'es' : 'en'
   const params = {
     ln: lan,
-    env: ENV
+    env: ENV,
+    agent: agent
   }
   const markup = template(params)
   res.send(markup)

@@ -16,6 +16,7 @@ a {
 }
 .home {
   min-height: 100vh;
+  color: white;
 }
 .home .cover {
   min-height: inherit;
@@ -50,6 +51,9 @@ a {
 .beirut {
   background: #e6ebed url(img/beirut.jpg) no-repeat top center fixed;
 }
+.bogota {
+  background: #e6ebed url(img/bogota.jpg) no-repeat top center fixed;
+}
 .mykonos {
   background: #e6ebed url(img/mykonos.jpg) no-repeat top right fixed;
 }
@@ -62,9 +66,8 @@ a {
 .credits {
   background: url(img/catalista_ladies.jpg) no-repeat top center fixed;
   background-size: cover;
-  color: white;
 }
-.credits .cover {
+.cover {
   padding: 10px;
   /*background-color: rgba(68,14,0,.8)*/
 }
@@ -74,6 +77,16 @@ a {
 .cover .btn {
   width: 100vw;
   text-align: center;
+}
+/* -- PAYMENTS Home Page: ------------------------------ */
+.payment {
+  background: url(img/payment.jpg) no-repeat top center fixed;
+  background-size: cover;
+}
+/* -- PAYMENTS Home Page: ------------------------------ */
+.profile {
+  background: url(img/profile.jpg) no-repeat top center fixed;
+  background-size: cover;
 }
 /* -- USER Home Page -------------------------------- */
 .account {

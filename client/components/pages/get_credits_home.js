@@ -33,12 +33,16 @@ class CreditsHome extends React.Component {
               <Divider inverted horizontal>Or</Divider>
             <span>{lng[1]}</span>
             <div className='btn'>
-              <Button content={lng[5]} icon='dollar' labelPosition='left' />
+              <Link to='/payment'>
+                <Button content={lng[5]} icon='dollar' labelPosition='left' />
+              </Link>
             </div>
             <Divider inverted horizontal>Or</Divider>
             <span>{lng[2]}</span>
             <div className='btn'>
-              <Button content={lng[6]} icon='database' labelPosition='left' />
+              <Link to='/profile'>
+                <Button content={lng[6]} icon='database' labelPosition='left' />
+              </Link>
             </div>
           </Segment>
         </div>

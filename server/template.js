@@ -2,10 +2,14 @@ import serialize from 'serialize-javascript'
 
 export const template = function(params) {//{ params, body, initialState }
 const env = (params.env === 'production')? '' : 'DEV'
-const ENTRY = (params.env === 'production')? '../dist/bundle.app.js' : 'main.js'
-const CSS = (params.env === 'production')? '../dist/main.css' : 'client/css/main.css'
-console.log(ENTRY)
+let ENTRY = (params.env === 'production')? '../dist/bundle.app.js' : 'main.js'
+let CSS = (params.env === 'production')? '../dist/main.css' : 'client/css/main.css'
 const lan = params.ln
+const agent = params.agent
+if (agent === null || agent.length == 0) {
+  ENTRY = '',
+  CSS = CSS.replace('main','station')
+}
 /*
   `<!doctype html>
   <html>

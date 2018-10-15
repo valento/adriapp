@@ -12,6 +12,8 @@ import Account from './pages/account'
 import GamesPage from './pages/home_games'
 import AuthRoute from './routes/userRoute'
 import CreditsHome from './pages/get_credits_home'
+import PaymentHome from './pages/payment_home'
+import ProfileHome from './pages/profile_home'
 
 class App extends React.Component {
 
@@ -35,6 +37,10 @@ class App extends React.Component {
             <CatalistaPage lan={this.props.lan} male={this.props.gender} />
           )
         }}/>
+        <AuthRoute path='/credits' exact
+          location={this.props.location}
+          component={CreditsHome}
+        />
         <AuthRoute path='/account' exact
           location={this.props.location}
           component={Account}
@@ -43,9 +49,13 @@ class App extends React.Component {
           location={this.props.location}
           component={GamesPage}
         />
-        <AuthRoute path='/credits' exact
+        <AuthRoute path='/profile' exact
           location={this.props.location}
-          component={CreditsHome}
+          component={ProfileHome}
+        />
+        <AuthRoute path='/payment' exact
+          location={this.props.location}
+          component={PaymentHome}
         />
       </div>
     )
