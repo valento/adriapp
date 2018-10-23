@@ -6,13 +6,12 @@ import React from 'react'
 import rootReducer from './rootReducer.js'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
-import { userLoggedIn } from './actions/auth'
-import { setUser } from './actions/'
 import decode from 'jwt-decode'
 import thunk from 'redux-thunk'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { hydrate, render } from 'react-dom'
-import api from './api/user'
+import { userLoggedIn } from './actions/auth'
+import { setUser } from './actions/'
 import setAuthorizationHeader from './utils/setAuthorizationHeader'
 
 import App from './components/app'
@@ -23,7 +22,10 @@ const initState = (!window.STATE_FROM_SEVER)?
   {
     user: {
       credit: 0,
-      role: 1000
+      role: 1000,
+      username: 'Anon',
+      country:'',
+      gender: -1
     },
     settings: {
       language: lng,
@@ -49,7 +51,10 @@ if(localStorage.catalistaJWT){
     email: payload.email,
     user_id: payload.user_id,
     credit: initState.user.credit,
-    role: payload.role
+    role: payload.role,
+    gender: initState.user.country,
+    username: initState.user.username,
+    country: initState.user.country,
   }
   setAuthorizationHeader(localStorage.catalistaJWT)
   store.dispatch(userLoggedIn(user))

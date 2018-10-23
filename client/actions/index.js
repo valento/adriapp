@@ -59,7 +59,7 @@ export const getLocations = () => dispatch => {
 export const setUser = user => dispatch => {
   api.user.getInitialUser().then( data => {//user.user_id
     const { user } = data
-    console.log(user)
+    console.log('Redux Action setUser: ',user)
     dispatch(setInitUser( user ))
   })
 }

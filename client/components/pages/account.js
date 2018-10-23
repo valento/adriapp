@@ -55,7 +55,7 @@ class Account extends React.Component {
     const ques = this.state.faq[this.props.lan]
     const { activeIndex } = this.state
     return (
-      <div className='container account user'>
+      <div className='container account'>
         <div className='row col-12 col-md-6'>
           <h3>{lan[0] + this.props.user}</h3>
         </div>

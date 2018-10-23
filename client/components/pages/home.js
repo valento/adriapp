@@ -8,7 +8,6 @@ import LaCatalista from '../brand/lacatalista'
 import LoginPage from '../pages/login'
 import WelcomeUserPage from '../pages/welcomeUserPage'
 import Slide from '@material-ui/core/Slide'
-import { Grid } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
 class Home extends React.Component {

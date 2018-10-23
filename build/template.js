@@ -16,8 +16,11 @@ var template = exports.template = function template(params) {
   var env = params.env === 'production' ? '' : 'DEV';
   var ENTRY = params.env === 'production' ? '../dist/bundle.app.js' : 'main.js';
   var CSS = params.env === 'production' ? '../dist/main.css' : 'client/css/main.css';
-  console.log(ENTRY);
   var lan = params.ln;
+  var agent = params.agent;
+  if (agent === null || agent.length == 0) {
+    ENTRY = '', CSS = CSS.replace('main', 'station');
+  }
   /*
     `<!doctype html>
     <html>

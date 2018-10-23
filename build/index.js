@@ -41,7 +41,8 @@ var app = (0, _express2.default)();
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 
-var lng = void 0;
+var lng = void 0,
+    agent = void 0;
 var PORT = process.env.PORT || 8000;
 var ENV = process.env.NODE_ENV || 'development';
 console.log(ENV);
@@ -82,10 +83,12 @@ app.get('/dist/img/:id', function (req, res) {
 // === ENTRY Route ===========================================
 app.get('*', function (req, res) {
   lng = req.headers['accept-language'].split(',')[0].split('-')[0];
+  agent = req.headers['user-agent'].match(/(Mobile)/g);
   var lan = lng.match(/^(es)/) ? 'es' : 'en';
   var params = {
     ln: lan,
-    env: ENV
+    env: ENV,
+    agent: agent
   };
   var markup = (0, _template.template)(params);
   res.send(markup);
