@@ -11,7 +11,7 @@ import userRouter from './routes/user'
 import authRouter from './routes/auth'
 import dataRouter from './routes/data'
 
-import { template } from './template'
+import { template, tmp_present } from './template'
 /* -------------------------------------------------------------- */
 
 let app = express()
@@ -38,6 +38,7 @@ if(ENV === 'development'){
   }))
   app.use(wpHot(compiler))
   app.use('/client', express.static(path.join(__dirname, '../client')))
+  app.use('/dist', express.static(path.join(__dirname, '../dist')))
 } else {
   // PRODUCTION configuration
   app.use('/dist', express.static(path.join(__dirname, '../dist')))
@@ -56,6 +57,19 @@ app.get('/client/css/img/:id', (req,res) => {
 })
 app.get('/dist/img/:id', (req,res) => {
   res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id)
+})
+
+app.get('/present', (req,res) => {
+  lng = req.headers['accept-language'].split(',')[0].split('-')[0]
+  agent = (req.headers['user-agent']).match(/(Mobile)/g)
+  const lan = (lng.match(/^(es)/))? 'es' : 'en'
+  const params = {
+    ln: lan,
+    env: ENV,
+    agent: agent
+  }
+  const markup = tmp_present(params)
+  res.send(markup)
 })
 
 // === ENTRY Route ===========================================

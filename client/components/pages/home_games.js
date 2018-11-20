@@ -27,9 +27,8 @@ class GamesPage extends React.Component {
 
   render(){
     const lan = this.state.lan[this.props.lan]
-    console.log(this.props.credit)
     return (
-      <div className='home col-md-6 welcome game'>
+      <div className='home welcome game'>
         <h2>{lan[0]}</h2><br/>
         <h1>{'{ '+lan[1]+' }'}</h1>
         <span>{lan[2]}</span>
@@ -38,7 +37,11 @@ class GamesPage extends React.Component {
           saveCredit={this.saveCredit}
           user_id={this.props.user_id}
         />
-        <Button color='black' inverted floated='right' content={lan[4]} icon='arrow right' labelPosition='right' />
+        <Button color='black' inverted floated='right'
+          content={lan[4]}
+          icon='arrow right'
+          labelPosition='right'
+        />
       </div>
     )
   }

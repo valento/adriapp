@@ -42,14 +42,15 @@ userRouter.use(_bodyParser2.default.urlencoded({ extended: true }));
 //userRouter.all('*', checkAuth)
 // ---- Get User Data: ------------------------------
 userRouter.get('/data/', _get_user_id2.default, function (req, res, next) {
-  var data = ['username', 'gender', 'credit', 'role'];
+  var data = ['username', 'gender', 'credit', 'role', 'country'];
   db.fetchById(req.user_id, data).then(function (user) {
     res.status(200).json({
       user: {
         username: user.username,
         credit: user.credit,
         role: Number(user.role),
-        gender: user.gender !== null ? user.gender : -1
+        gender: user.gender && user.gender !== null ? user.gender : -1,
+        country: user.country ? user.country : ''
       }
     });
   }).catch(function (error) {

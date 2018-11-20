@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import BQuestion from './ui/question'
-import { Button } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 
 class Bquiz extends React.Component {
   constructor(props) {
@@ -10,8 +10,20 @@ class Bquiz extends React.Component {
     this.state = this.initialState = {
       correct: null,
       answered: null,
-      credit: props.credit,
+      add_credit: 0,
       cancel_game: false,
+      ui: {
+        es: ['Si orpime Guardar Usted terminará este juego! Desea guardar?',
+              'Guardar',
+              'Seguir Jugando',
+              'Guardar Creditos'
+            ],
+        en: ['By clicking Save you\'l end this Game! Woul\'d you like to save?',
+              'Save',
+              'Keep Playing',
+              'Save Credits'
+            ]
+      },
       quiz: {
         es: [
           {q: 'Ella es una Influencer ', a: 0, win: 3,
@@ -68,29 +80,48 @@ class Bquiz extends React.Component {
     }
     this.addCredit = this.addCredit.bind(this)
     this.saveCredit = this.saveCredit.bind(this)
+    this.endGame = this.endGame.bind(this)
+    this.keepPlaying = this.keepPlaying.bind(this)
   }
 
   addCredit(add) {
     this.setState({
-      credit: this.state.credit + add
+      add_credit: this.state.add_credit + add
     })
   }
 
   saveCredit(e) {
-    const { credit } = this.state
-    const { user_id } = this.props
-    const data = { credit, user_id }
-    console.log('Representation Component: ', { data })
     //if(credit > this.initialState.credit){
-      this.props.saveCredit({data})
+      //this.props.saveCredit({data})
       this.setState({
         cancel_game: true
       })
     //}
   }
 
+  endGame(e) {
+    const { add_credit } = this.state
+    const { credit } = this.props
+    const { user_id } = this.props
+    let data = { credit, user_id }
+    data = {...data, credit: credit + add_credit}
+    console.log('Representation Component: ', { data })
+    this.props.saveCredit({data})
+    this.setState({
+      cancel_game: false,
+      add_credit: 0
+    })
+  }
+
+  keepPlaying(e) {
+    this.setState({
+      cancel_game: false
+    })
+  }
+
   render() {
     const options = this.state.quiz[this.props.lan]
+    const ui = this.state.ui[this.props.lan]
     return (
       <div className='quiz'>
         {options.map((option,i) =>
@@ -108,14 +139,30 @@ class Bquiz extends React.Component {
         <div className='total'>
           <Button primary floated='right'
             onClick={this.saveCredit}
-            disabled={(this.state.credit > this.initialState.credit) ? false : true}
+            disabled={(this.state.add_credit > 0) ? false : true}
           >
             <Button.Content visible >
-              {(this.props.lan === 'es') ? ('Guarda ' + this.state.credit + ' ya!') : ('Save ' + this.state.credit + ' Now')}
+              {(this.props.lan === 'es') ?
+                ('Guarda ' + (this.props.credit + this.state.add_credit) + ' Ya!') :
+                ('Save ' + (this.props.credit + this.state.add_credit) + ' Now!')
+              }
             </Button.Content>
           </Button>
         </div>
         <div className="clearfix"></div>
+        <Modal
+          open={this.state.cancel_game}
+          size='mini'
+        >
+          <Modal.Header>{ui[3]}</Modal.Header>
+          <Modal.Content>
+            {ui[0]}
+          </Modal.Content>
+          <Modal.Actions>
+            <Button content={ui[2]} onClick={this.keepPlaying}/>
+            <Button content={ui[1]} onClick={this.endGame} />
+          </Modal.Actions>
+        </Modal>
       </div>
     )
   }

@@ -11,7 +11,7 @@ export default class Account extends React.Component {
 
   render() {
     return (
-      <div className='dash credit'>
+      <div className='text-center'>
         {(this.props.isAuthenticated)?
           (<Link to='/account'>
             <HeartBeats credit={this.props.credit} view={this.props.view} role={this.props.role}/>

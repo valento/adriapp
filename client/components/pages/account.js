@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Icon, Button, Accordion } from 'semantic-ui-react'
+import { Grid, Icon, Button, Accordion, Divider } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import HeartBeats from '../ui/heartBeats'
 import Credits from '../ui/credits'
@@ -18,7 +18,7 @@ class Account extends React.Component {
         ]
       },
       faq: {
-        es: [{q:'"Para qué los Creditos?',
+        es: [{q:'Para qué los Creditos?',
               a:'Cada acción en este app le \'costará\' Creditos! Usted los necesita en gran cantidad y debe trbajar duro para conseguir más en cada oportunidad!'
             },
             {q:'"Qué es el Latido',
@@ -55,43 +55,46 @@ class Account extends React.Component {
     const ques = this.state.faq[this.props.lan]
     const { activeIndex } = this.state
     return (
-      <div className='container account'>
-        <div className='row col-12 col-md-6'>
-          <h3>{lan[0] + this.props.user}</h3>
-        </div>
-        <i className='row col-12 col-md-6'>{lan[1]}</i>
-        <hr/>
-        <div className='row col-12 col-md-6'>
-          <div className='col'>
-            <Credits view={2} credit={this.props.credit} lan={this.props.lan} />
-          </div>
-          <div className='col'>
-            <HeartBeats view={2} role={this.props.role} lan={this.props.lan} />
-          </div>
-        </div>
-        <hr/>
-        <div className='row col-12 col-md-6 left'>
-          {<Accordion fluid styled>
-            {ques.map((que, i) => {
-              return (
-                <div>
-                <Accordion.Title active={activeIndex === i+1} index={i+1}
-                  onClick={this.handleClick}
-                  className='accordion-white-title'>
-                  <Icon name='dropdown' />
-                    {que.q}
-                </Accordion.Title>
-                <Accordion.Content active={activeIndex === i+1}>
-                  <span>
-                    {que.a}
-                  </span>
-                </Accordion.Content>
-                </div>
-              )})
-            }
-          </Accordion>}
-        </div>
-    </div>
+      <div className='grid-no-margin'>
+        <Grid columns='equal' className='account'>
+          <Grid.Row>
+            <Grid.Column>
+              <h3>{lan[0] + this.props.user}</h3>
+              <i>{lan[1]}</i>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row className='text-center grid-top'>
+            <Grid.Column>
+              <Credits view={2} credit={this.props.credit} lan={this.props.lan} />
+            </Grid.Column>
+            <Grid.Column>
+              <HeartBeats view={2} role={this.props.role} lan={this.props.lan} />
+            </Grid.Column>
+          </Grid.Row>
+          <Divider inverted />
+          <Grid.Row>
+            {<Accordion fluid styled>
+              {ques.map((que, i) => {
+                return (
+                  <div>
+                  <Accordion.Title active={activeIndex === i+1} index={i+1}
+                    onClick={this.handleClick}
+                    className='accordion-white-title'>
+                    <Icon name='dropdown' />
+                      {que.q}
+                  </Accordion.Title>
+                  <Accordion.Content active={activeIndex === i+1}>
+                    <span>
+                      {que.a}
+                    </span>
+                  </Accordion.Content>
+                  </div>
+                )})
+              }
+            </Accordion>}
+          </Grid.Row>
+        </Grid>
+      </div>
     )
   }
 }

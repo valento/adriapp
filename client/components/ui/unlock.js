@@ -1,9 +1,9 @@
 import React from 'react'
-import { Icon } from 'semantic-ui-react'
+import { Icon, Grid } from 'semantic-ui-react'
 
 function Unlock(props) {
   return (
-    <div>
+    <Grid.Column textAlign='center'>
       <Icon
         onClick={
           (e) =>{
@@ -14,7 +14,7 @@ function Unlock(props) {
         name='arrow alternate circle down'
         size='huge'
       />
-    </div>
+    </Grid.Column>
   )
 }
 

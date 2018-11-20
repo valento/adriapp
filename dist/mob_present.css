@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  background: #000 url(img/img_000.jpg) no-repeat top center fixed;
+  background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.home {
+  min-height: 100vh;
+  color: white;
+}

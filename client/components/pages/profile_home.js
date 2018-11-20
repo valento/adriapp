@@ -43,7 +43,6 @@ class ProfileHome extends React.Component {
         <div className='cover'>
           <h2>{lng[0]}</h2>
           <Divider inverted />
-          <div>
             <Form>
               <Button as='div' labelPosition='right' fluid>
                 <Button basic inverted fluid icon labelPosition='left' disabled={!(gender < 0)}>
@@ -51,12 +50,12 @@ class ProfileHome extends React.Component {
                   {lng[2] + gen}
                 </Button>
                 <Label disabled tag={true}>
-                  {(gender < 0)? '+3' : '+0'}
+                  {(gender < 0 || gender === null)? '+3' : '+0'}
                 </Label>
               </Button>
 
               <Form.Group inline>
-                <div className='col middle white-radio'>
+                <div className='middle white-radio'>
                   <Form.Radio
                     label={lng[3]}
                     name='gender'
@@ -65,7 +64,7 @@ class ProfileHome extends React.Component {
                     onChange={this.handleChanges}
                   />
                 </div>
-                <div className='col middle white-radio'>
+                <div className='middle white-radio'>
                   <Form.Radio fitted
                     label={lng[4]}
                     name='gender'
@@ -77,7 +76,6 @@ class ProfileHome extends React.Component {
               </Form.Group>
 
               <Divider inverted />
-              <div>
                 <Button fluid as='div' labelPosition='right' name='country'>
                   <Dropdown
                     button fluid labeled selection basic
@@ -89,9 +87,7 @@ class ProfileHome extends React.Component {
                     {'+3'}
                   </Label>
                 </Button>
-              </div>
               <Divider inverted />
-              <div>
                 {/*disabled={this.props.username !== 'Anon'}*/}
                 <Input fluid
                   disabled={this.props.username !== 'Anon'}
@@ -104,7 +100,6 @@ class ProfileHome extends React.Component {
                     'Username: Anon'
                   }
                 />
-              </div>
               <Divider inverted />
               <div className='sbmt'>
                 <Button fluid color='blue'
@@ -112,7 +107,6 @@ class ProfileHome extends React.Component {
                 />
               </div>
             </Form>
-          </div>
         </div>
       </div>
     )

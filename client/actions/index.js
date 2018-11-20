@@ -72,7 +72,7 @@ export const saveUserData = data => dispatch => {
     const {user_id, ...updateSet} = newset
     const user = {...updateSet}
     //for( key in  {...rest} ){
-      console.log(user)
+      console.log('Action - saveUserData: ',user)
     //}
     //switch(data[key])
     dispatch(updateUser(user))

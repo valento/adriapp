@@ -87,18 +87,26 @@ a {
 .profile {
   background: url(img/profile.jpg) no-repeat top center fixed;
   background-size: cover;
+  color: white;
+}
+.profile .ui.checkbox label {
+  margin-top: 10px;
+  color: #fff;
+}
+.profile .ui.input>input {
+  color: white;
+  border: 1px solid white;
+  background: none;
+  text-align: center;
 }
 /* -- USER Home Page -------------------------------- */
 .account {
+  margin-top: 6px;
   color: #fff;
   text-align: center;
 }
 .account .left {
   text-align: left;
-}
-.user {
-  min-height: 100vh;
-  padding-top: 6px;
 }
 /* -- GAMEs Home Page --------------------------------------- */
 .game {
@@ -564,6 +572,10 @@ hr {
 .sbmt {
   margin: 8px auto;
   text-align: center;
+}
+.white-radio {
+  text-align: center;
+  color: white;
 }
 
 /* ====== ANIMATIONS: ===================================== */

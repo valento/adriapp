@@ -11,7 +11,7 @@ export default class Credits extends React.Component {
             'Los Creditos le compran cosas... Vaya ganandolos'
           ],
         en: ['Credits', 'Get +',
-            'You need these to buy stuff... Lot\'s of it'
+            'You need these to buy stuff... Lots of it!'
           ]
     }}
   }

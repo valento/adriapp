@@ -1,4 +1,5 @@
 import React from 'react'
+import { Grid } from 'semantic-ui-react'
 import Signup from '../ui/signup'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -28,14 +29,14 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <div>
+      <Grid.Column>
         <Signup
           submit={this.onSubmit}
           onChecked={this.props.onChecked}
           lan={this.props.lan}
           onLadies={this.onLadies}
         />
-      </div>
+      </Grid.Column>
     )
   }
 }

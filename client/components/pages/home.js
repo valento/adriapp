@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Segment, Grid, TransitionablePortal } from 'semantic-ui-react'
 import Unlock from '../ui/unlock'
 import NextEvent from '../ui/next_event'
 import Signup from '../ui/signup'
 import LaCatalista from '../brand/lacatalista'
 import LoginPage from '../pages/login'
 import WelcomeUserPage from '../pages/welcomeUserPage'
-import Slide from '@material-ui/core/Slide'
 import PropTypes from 'prop-types'
 
 class Home extends React.Component {
@@ -29,16 +29,21 @@ class Home extends React.Component {
 
   render() {
     return(
-      <div>
-        <div className='row col-md-10'>
-          <div className='col cata'>
-            <LaCatalista lan={this.props.lan} />
-          </div>
-          <div className='col calendar'>
-            <NextEvent date='September 19, 2018' lan={this.props.lan} />
-          </div>
-        </div>
-          <div className='col-md-6 opening'>
+      <div className='home'>
+      <Grid columns='equal'>
+        <Grid.Row>
+          <Grid.Column>
+            <div className='cata'>
+              <LaCatalista lan={this.props.lan} />
+            </div>
+          </Grid.Column>
+          <Grid.Column>
+            <div className='calendar'>
+              <NextEvent date='September 19, 2018' lan={this.props.lan} />
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
             {!this.props.isAuthenicated ?
               (<Unlock onClick={this.onSlideUnlock} />) :
               (<WelcomeUserPage
@@ -48,10 +53,16 @@ class Home extends React.Component {
                 role={this.props.role}
               />)
             }
-            <Slide direction="up" in={this.state.register_open} mountOnEnter unmountOnExit>
-              <LoginPage history={this.props.history} onChecked={this.onSlideUnlock}/>
-            </Slide>
-          </div>
+        </Grid.Row>
+        <TransitionablePortal open={this.state.register_open} transition={{animation:'fly up', duration:500}}>
+          <Segment basic style={{width: '90vw', left: '2%', position: 'fixed', top: '55%', zIndex: 100 }}>
+            <LoginPage
+              history={this.props.history}
+              onChecked={this.onSlideUnlock}
+            />
+          </Segment>
+        </TransitionablePortal>
+      </Grid>
       </div>
   )}
 }

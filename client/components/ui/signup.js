@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Form, Input, Icon, Button, Message } from 'semantic-ui-react'
+import { Form, Input, Icon, Button, Message, Grid } from 'semantic-ui-react'
 import { userSignUpRequest } from '../../actions/signUpActions'
 import api from '../../api/user'
 
@@ -98,8 +98,9 @@ class Signup extends React.Component {
     const lan_ui = this.state.lan_ui[this.props.lan]
     const { errors, messages, pass, new_user, loading } = this.state
     return (
-      <div className='register-card'>
-        <h2>{lan[0]}</h2>
+      <Grid className='register-card'>
+        <Grid.Row className='grid-top'><h2>{lan[0]}</h2></Grid.Row>
+        <Grid.Row className='grid-top'>
         <Form size='mini' inverted onSubmit={this.onSubmit} loading={loading}>
 
             <Form.Input required inline fluid inverted
@@ -153,17 +154,9 @@ class Signup extends React.Component {
                 {lan_ui[2]}
               </Button>
             </Button.Group>
-            <div className='clearfix'></div>
         </Form>
-
-        {(!this.props.gender)? (
-          <div>
-            <hr/>
-            <Link to='/ladies' onClick={this.onClick} className='h2-ladies'>
-              {lan[2]} <Icon name='arrow alternate circle right'/>
-            </Link>
-          </div>) : null}
-      </div>
+      </Grid.Row>
+      </Grid>
     )
   }
 }
