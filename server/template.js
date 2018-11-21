@@ -17,7 +17,6 @@ return (`<!DOCTYPE html>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>... from Adri with Love</title>
       <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400i|Alex+Brush|Roboto:300,400,500|Dancing+Script|Poiret+One|Merriweather|Tangerine" rel="stylesheet">
-
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
       <link rel="stylesheet" href=${CSS}>
       <script>
@@ -44,13 +43,12 @@ return (`<!DOCTYPE html>
 // -- CATALISTA PRESENTATION Template Creator
 
 export const tmp_present = function(params) {//{ params, body, initialState }
-const env = (params.env === 'production')? '' : 'DEV'
-let ENTRY = '/dist/present.js'
+const env = (params.env === 'production')? 'PRO' : 'DEV'
+let ENTRY = (params.env === 'production')? '../dist/bundle.present.js' : 'present.js'
 let CSS = '/dist/mob_present.css'
 const lan = params.ln
 const agent = params.agent
 if (agent === null || agent.length == 0) {
-  ENTRY = 'present.js',
   CSS = CSS.replace('mob','station')
 }
 return (`<!DOCTYPE html>

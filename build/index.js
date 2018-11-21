@@ -50,7 +50,7 @@ var ENTRY = ENV === 'production' ? '../dist/index.html' : '../client/index.html'
 
 if (ENV === 'development') {
   /* ------ IN MEMORY bundle configuration ---------------------------- */
-  var wpConfig = require('../webpack.conf.js')(ENV);
+  var wpConfig = require(process.env.MULTIENTRY ? '../webpack.conf.multientry.js' : '../webpack.conf.js')(ENV);
   var webpack = require('webpack');
   var wpMiddle = require('webpack-dev-middleware');
   var wpHot = require('webpack-hot-middleware');
@@ -60,6 +60,7 @@ if (ENV === 'development') {
   }));
   app.use(wpHot(compiler));
   app.use('/client', _express2.default.static(_path2.default.join(__dirname, '../client')));
+  app.use('/dist', _express2.default.static(_path2.default.join(__dirname, '../dist')));
 } else {
   // PRODUCTION configuration
   app.use('/dist', _express2.default.static(_path2.default.join(__dirname, '../dist')));
@@ -78,6 +79,19 @@ app.get('/client/css/img/:id', function (req, res) {
 });
 app.get('/dist/img/:id', function (req, res) {
   res.redirect(301, '//s3.eu-central-1.amazonaws.com/' + 'adriapp' + '/' + req.params.id);
+});
+
+app.get('/present', function (req, res) {
+  lng = req.headers['accept-language'].split(',')[0].split('-')[0];
+  agent = req.headers['user-agent'].match(/(Mobile)/g);
+  var lan = lng.match(/^(es)/) ? 'es' : 'en';
+  var params = {
+    ln: lan,
+    env: ENV,
+    agent: agent
+  };
+  var markup = (0, _template.tmp_present)(params);
+  res.send(markup);
 });
 
 // === ENTRY Route ===========================================

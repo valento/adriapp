@@ -28,7 +28,7 @@ const ENTRY = ENV === 'production' ? '../dist/index.html' : '../client/index.htm
 
 if(ENV === 'development'){
 /* ------ IN MEMORY bundle configuration ---------------------------- */
-  const wpConfig = require('../webpack.conf.js')(ENV)
+  const wpConfig = require(process.env.MULTIENTRY ? '../webpack.conf.multientry.js' : '../webpack.conf.js')(ENV)
   const webpack = require('webpack')
   const wpMiddle = require('webpack-dev-middleware')
   const wpHot = require('webpack-hot-middleware')
