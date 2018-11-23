@@ -4,13 +4,14 @@ if(module.hot){
 
 import React from 'react'
 import { render } from 'react-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import HomePage from './components/present/home'
 
-class Present extends React.Component {
-  render() {
-    return (
-      <div>Hola, you Bussy Man</div>
-    )
-  }
-}
+const lng = window.PRELOADED_INIT_STATE
+const Routes = (
+  <Router>
+    <Route render = {(props) => <HomePage lan={lng} {...props}/>}/>
+  </Router>
+)
 
-render(<Present />, document.getElementById('app'))
+render(Routes, document.getElementById('app'))

@@ -7,6 +7,7 @@ export default function LaCatalista(props) {
     es: [' La...\n', 'CATALISTA\n', 'Quien ??'],
     en: ['Catalista Who?']
   }
+  const l = lan[props.lan]
   return (
     <div className='lista v-center'>
       <div className='v-center'>
@@ -14,12 +15,12 @@ export default function LaCatalista(props) {
           <div>
             <div className='big'>
               <Icon name='question circle' />
-              {lan[props.lan][0]}
+              {l[0]}
             </div>
-            <div>{lan[props.lan][1]}</div>
+            <div>{l[1]}</div>
             <div>
             <Icon name='exclamation triangle' color='orange' />
-              {lan[props.lan][2]}
+              {l[2]}
             </div>
           </div>
         </Link>

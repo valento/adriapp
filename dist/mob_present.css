@@ -14,6 +14,54 @@ a {
 }
 
 .home {
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
   color: white;
+  background-color: rgba(0,0,0,.9);
+}
+.content {
+  border-top: 1px dashed #666;
+  background-color: rgba(10, 30, 20, 0.8);
+}
+
+.brand-content {
+  display: flex;
+}
+.brand {
+  display: flex;
+  margin: auto;
+  padding: 16px;
+  width: 250px;
+  height: 250px;
+  border: 2px solid #444;
+  background-color: rgba(5,25,15,.3);
+}
+.element {
+  position: relative;
+  top: 38%;
+  width: 100%;
+  max-height: 100px;
+  text-align: center;
+}
+.cat {
+  margin: 0 auto;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 4em;
+  text-decoration: underline;
+  line-height: 1.3em;
+}
+.catalista {
+  font-size: 1.2em;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ============== MISC =============== */
+.v-center {
+  display: flex;
+  justify-content: center;
+}
+.half-screen {
+  width: 100vw;
+  height: 50vh;
 }
