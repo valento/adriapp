@@ -90,10 +90,10 @@ a {
    color: white;
    border-left: 1px solid #888;
  }
- .quiz.ui.menu .que{
+ .quiz.ui.menu .que {
    min-width: 64%;
  }
- .quiz.ui.menu a.item:hover {
+ .quiz.ui.menu .item.disabled {
    color: red;
    background-color: white;
  }

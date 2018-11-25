@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid } from 'semantic-ui-react'
+import { Button, Container, Grid } from 'semantic-ui-react'
 import Catgame from './catgame'
 
 export default class Home extends React.Component {
@@ -12,17 +12,20 @@ export default class Home extends React.Component {
       }
     }
   }
+
+
   render() {
     const { lan } = this.state
     const l = lan[this.props.lan]
     return (
-      <div className=''>
+      <div>
         {(this.props.screen === 'mobile')?
           (
             <Grid>
               <Grid.Row columns={1}>
                 <Grid.Column>
                   <Catgame lan={this.props.lan}/>
+                  <Button basic inverted fluid>Save Now: </Button>
                 </Grid.Column>
               </Grid.Row>
             </Grid>
