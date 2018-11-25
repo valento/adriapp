@@ -31,12 +31,11 @@ var tmp_present = exports.tmp_present = function tmp_present(params) {
   var env = params.env === 'production' ? 'PRO' : 'DEV';
   var ENTRY = params.env === 'production' ? '../dist/bundle.present.js' : 'present.js';
   var CSS = '/dist/mob_present.css';
-  var lan = params.ln;
   var agent = params.agent;
   if (agent === null || agent.length == 0) {
     CSS = CSS.replace('mob', 'station');
   }
-  return '<!DOCTYPE html>\n  <html>\n    <head>\n      <meta charset="utf-8">\n      <meta name="viewport" content="width=device-width, initial-scale=1">\n      <title>... from Adri with Love</title>\n      <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400i|Alex+Brush|Roboto:300,400,500|Dancing+Script|Poiret+One|Merriweather|Tangerine" rel="stylesheet">\n      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">\n      <link rel="stylesheet" href=' + CSS + '>\n      <script>\n        window.PRELOADED_INIT_STATE = \'' + lan + '\'\n      </script>\n    </head>\n\n  <!-- ==================================================================== -->\n\n    <body>\n\n      <div id="app" class="shadow">\n        <h1>' + env + '</h1>\n      </div>\n\n      <script type="module" src=' + ENTRY + '></script>\n\n    </body>\n\n  </html>\n';
+  return '<!DOCTYPE html>\n  <html>\n    <head>\n      <meta charset="utf-8">\n      <meta name="viewport" content="width=device-width, initial-scale=1">\n      <title>... from Adri with Love</title>\n      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700|Roboto:300,400,500|Dancing+Script|Poiret+One|Merriweather|Tangerine" rel="stylesheet">\n      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">\n      <link rel="stylesheet" href=' + CSS + '>\n      <script>\n        window.PRELOADED_INIT_STATE = \'' + JSON.stringify(params) + '\'\n      </script>\n    </head>\n\n  <!-- ==================================================================== -->\n\n    <body>\n\n      <div id="app" class="shadow">\n        <h1>' + env + '</h1>\n      </div>\n\n      <script type="module" src=' + ENTRY + '></script>\n\n    </body>\n\n  </html>\n';
 };
 
 // END == END == END == END == END == END == END == END == END == END ==

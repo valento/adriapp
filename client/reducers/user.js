@@ -14,7 +14,7 @@ export default function user(state={}, action) {
     case USER_LOGGED_IN:
       return action.user
     case USER_GENDER:
-      return {...state, gender: action.gender}
+      return {...state, gender: action.user.gender}
     case USER_ROLE:
       return {...state, role: action.user.role }
     case USER_ROLE_UPGRADED:

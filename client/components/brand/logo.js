@@ -1,4 +1,5 @@
 import React from 'react'
+import HeartBeats from '../present/heartBeats'
 
 export default class Logo extends React.Component {
   constructor() {
@@ -14,13 +15,18 @@ export default class Logo extends React.Component {
   render() {
     const { lng } = this.state
     const l = lng[this.props.lan]
+    let v = (this.props.screen === 'pc')? 1 : 0
     return (
       <div className='brand-content'>
+        {(this.props.screen === 'pc')? (<div className='brand-header'><h1>Intro</h1></div>) : null}
         <div className='brand'>
-          <h3>0</h3>
+          <div className='anumber'>0</div>
           <div className='element'>
             <div className='cat'>{l[0]}</div>
             <div className='catalista'>{l[1]}</div>
+            <div className='mass'>
+              <HeartBeats role={1} view={v} credit={6017/1000} lan={this.props.lan}/>
+            </div>
           </div>
         </div>
       </div>

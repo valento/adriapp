@@ -46,7 +46,6 @@ export const tmp_present = function(params) {//{ params, body, initialState }
 const env = (params.env === 'production')? 'PRO' : 'DEV'
 let ENTRY = (params.env === 'production')? '../dist/bundle.present.js' : 'present.js'
 let CSS = '/dist/mob_present.css'
-const lan = params.ln
 const agent = params.agent
 if (agent === null || agent.length == 0) {
   CSS = CSS.replace('mob','station')
@@ -61,7 +60,7 @@ return (`<!DOCTYPE html>
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
       <link rel="stylesheet" href=${CSS}>
       <script>
-        window.PRELOADED_INIT_STATE = '${lan}'
+        window.PRELOADED_INIT_STATE = '${JSON.stringify(params)}'
       </script>
     </head>
 

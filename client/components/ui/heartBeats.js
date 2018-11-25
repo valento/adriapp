@@ -19,7 +19,6 @@ export default class HeartBeats extends React.Component {
     let r = Math.floor((this.props.role.toString().slice(0,1))/2)
     if(r > 3) r = 3
     //if(this.props.credit < 10) r = 4
-    console.log(r)
     const st = ['','credit-big','credit-middle']
     const s = ['large', 'huge', 'big']
     const c = ['grey', 'blue','purple','yellow','red']

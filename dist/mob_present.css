@@ -22,39 +22,87 @@ a {
 .content {
   border-top: 1px dashed #666;
   background-color: rgba(10, 30, 20, 0.8);
+  padding: 20px 12px;
 }
-
 .brand-content {
   display: flex;
+  justify-content: center;
 }
 .brand {
-  display: flex;
   margin: auto;
   padding: 16px;
   width: 250px;
   height: 250px;
   border: 2px solid #444;
-  background-color: rgba(5,25,15,.3);
+  background-image: linear-gradient(to bottom right, rgba(25,45,35,0), rgba(0,0,0,1));
+
+}
+.anumber {
+  display: block;
+  text-align: center;
 }
 .element {
   position: relative;
-  top: 38%;
+  top: 15%;
   width: 100%;
   max-height: 100px;
+  text-align: center;
+}
+.element .menu-icon-label {
+  position: relative;
+  /*max-width: 34px;*/
+  top: -8px;
+  color: #fff;
+  font-size: 10px;
   text-align: center;
 }
 .cat {
   margin: 0 auto;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  font-size: 4em;
+  font-size: 6em;
   text-decoration: underline;
   line-height: 1.3em;
 }
 .catalista {
-  font-size: 1.2em;
+  font-size: 1.6em;
   font-family: 'Montserrat', sans-serif;
 }
+.mass{
+  margin-top: 12px;
+}
+
+.game {
+}
+.game h1 {
+  margin: 0;
+}
+
+.quiz, .quiz.ui.label, .quiz.ui.menu {
+  width: 100%;
+  background: none;
+  background-color: none;
+  color: white;
+  border-color: #888;
+  margin: 10px 0;
+}
+ .quiz.ui.menu .item {
+   color: white;
+   border-left: 1px solid #888;
+ }
+ .quiz.ui.menu .que{
+   min-width: 64%;
+ }
+ .quiz.ui.menu a.item:hover {
+   color: red;
+   background-color: white;
+ }
+
+ .support-text {
+   padding: 0;
+   color: #666;
+   font-style: italic;
+ }
 
 /* ============== MISC =============== */
 .v-center {
@@ -64,4 +112,11 @@ a {
 .half-screen {
   width: 100vw;
   height: 50vh;
+}
+.floating {
+  position: absolute;
+}
+.floating.top {
+  top: -6px;
+  right: -12px;
 }
