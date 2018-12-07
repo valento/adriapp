@@ -3,7 +3,7 @@ if(module.hot){
 }
 
 import React from 'react'
-import rootReducer from './rootReducer.js'
+import rootReducer from './rootReducer'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import decode from 'jwt-decode'

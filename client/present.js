@@ -23,7 +23,9 @@ if(agent === null || agent.length == 0) {
 const composeInhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const state = {
-  user: {},
+  user: {
+    credits: 6017
+  },
   settings: {
     lan: ln,
     agent: agent

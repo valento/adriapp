@@ -25,7 +25,6 @@ export default class Home extends React.Component {
               <Grid.Row columns={1}>
                 <Grid.Column>
                   <Catgame lan={this.props.lan}/>
-                  <Button basic inverted fluid>Save Now: </Button>
                 </Grid.Column>
               </Grid.Row>
             </Grid>

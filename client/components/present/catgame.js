@@ -34,7 +34,14 @@ export default class Catgame extends React.Component {
   }
 
   onAnswer(correct) {
-    //
+    // Score
+    if(correct) {
+      this.setState({score: this.state.score + 3})
+    }
+  }
+
+  onClick() {
+    // Save Credits
   }
 
   render() {
@@ -56,6 +63,7 @@ export default class Catgame extends React.Component {
             </div>
           )
         })}
+        <Button basic inverted fluid onClick={this.onClick}>Save Now: {this.state.score}</Button>
       </div>
     )
   }
